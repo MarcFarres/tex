@@ -1,0 +1,54 @@
+{% extends 'AppBundle:content:admin_tests.html.twig' %}
+
+
+
+{% block pageContent %}
+
+<div class="one_col_contenedor">
+	
+
+	<table id="tests_table" class="stripe" cellspacing="0" width="100%">
+		<thead>
+			<tr>
+				<th>Data Inici</th>
+                    <th>Linia</th>
+                    <th>Partida</th>
+                    <th>Color</th>
+                    <th>Descripcio</th>
+                    <th>Tests Favorables</th>
+                    <th>Tests Desfavorables</th>
+                    <th>Accions</th>
+			</tr>
+		</thead>
+
+		
+
+		<tbody>
+		  
+{% for OF in OF_list %}
+        
+          <tr>
+            <td>{{ OF.data|date('Y-m-d') }}</td>
+            <td>{{ OF.getLinia().numero }}</td>
+            <td>{{ OF.getNumPartida() }}</td>
+            <td>{{OF.color}}</td>
+            <td>{{OF.descripcio}}</td>
+
+            <td></td>
+            <td></td>
+            
+            <td><a href="{{ path('iniciar_test',{'id':OF.id}) }}">Go</a></td>
+          </tr>
+
+{% endfor %}
+
+		</tbody>
+
+	</table>
+
+
+
+</div>
+
+{% endblock pageContent %}
+

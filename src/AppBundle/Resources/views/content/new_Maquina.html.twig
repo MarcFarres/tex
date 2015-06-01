@@ -1,0 +1,41 @@
+{% extends 'AppBundle:content:index.html.twig' %}
+
+
+
+{% block pageContent %}
+   
+  <div class="two-cols-contenedor">
+
+  	<div class="left_side">
+
+      {% image '@AppBundle/Resources/public/images/maquinaria.png'
+        filter='' output='/images/maquinaria.png' %}
+        <img src="{{ asset_url }}" alt="Maquines"/>
+
+      {% endimage %}
+
+
+
+    </div>
+
+    <div class="right_side">
+
+    	{# Incluimos el formulario para añadir linias de fabricación #}
+  {{ 
+    include(
+    'AppBundle:form:intranet_admin.html.twig',
+    {
+        "form":form,
+        "form_title":"Crear Màquina",
+  }, 
+  with_context = false
+  ) 
+    }} 
+    
+    </div>
+
+  </div>
+
+{% endblock %}
+
+

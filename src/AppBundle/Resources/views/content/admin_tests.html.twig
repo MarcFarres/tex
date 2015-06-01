@@ -1,0 +1,94 @@
+{% extends 'AppBundle:layout:intranet_layout.html.twig' %}
+
+
+{% block content_menu %}
+  
+  <header id="admin-tests_menu-sup">
+
+     <nav class="menu-sup_frame">
+
+      <a 
+        class="frame-element" 
+        href="{{ path('nova_OF') }}"
+      >
+
+         <div class="icon">
+           <span class='fa fa-cutlery'></span>
+         </div>
+         <div class="title">
+          Nou Test
+          </div>
+      </a>
+
+
+      <a 
+        class="frame-element" 
+        href="{{ path('admin_tests') }}"
+      >
+
+         <div class="icon">
+           <span class='fa fa-cutlery'></span>
+         </div>
+         <div class="title">
+          Tests Actuals
+          </div>
+      </a>
+
+      <a 
+        class="frame-element" 
+        href="{{ path('tests_historial') }}"
+      >
+
+        <div class="icon">
+          <span class='fa fa-database'></span>
+        </div>
+
+        <div class="title">
+          Historial
+        </div>
+
+      </a>
+
+      
+     </nav>
+
+   </header>
+
+{% endblock %}
+
+
+{% block pageContent %}
+  <div class="one_col_contenedor">
+    <table id="tests_table" class="stripe" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>Data Inici</th>
+            <th>Linia</th>
+            <th>Partida</th>
+            <th>Color</th>
+            <th>Descripcio</th>
+            <th>Accions</th> 
+          </tr>
+        </thead>
+
+        <tbody>
+
+  {% for OF in OF_list %}
+        
+          <tr>
+            <td>{{ OF.data|date('Y-m-d') }}</td>
+            <td>{{ OF.getLinia().numero }}</td>
+            <td>{{ OF.getNumPartida() }}</td>
+            <td>{{OF.color}}</td>
+            <td>{{OF.descripcio}}</td>
+            <td><a href="{{ path('iniciar_test',{'id':OF.id}) }}">Go</a></td>
+          </tr>
+
+  {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+
+{# pageContent #}
+{% endblock %}

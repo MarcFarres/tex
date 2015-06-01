@@ -1,0 +1,23 @@
+{% extends "AppBundle:layout:intranet_layout.html.twig" %}
+
+ 
+{% block pageContent %}
+
+  {{ include(
+    'AppBundle:include:general_view.html.twig',
+    {
+      "linias":linias,
+    }, 
+  with_context = false
+  )  
+  }}
+
+{% endblock %}
+
+
+{#
+{% image '@AppBundle/Resources/public/images/maquinaria.png'
+    filter='' output='/images/maquinaria.png' %}
+    <img src="{{ asset_url }}" alt="Maquines"/>
+{% endimage %}
+#}

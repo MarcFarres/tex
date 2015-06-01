@@ -1,0 +1,19 @@
+
+
+.two-cols-contenedor
+{
+  @extend %column_container;
+
+  >.left_side
+  {
+    @include flex();
+    padding:20px 40px 20px 20px;
+  }
+
+  >.right_side
+  {
+    @include flex();
+    padding:20px 20px 20px 40px;
+  }
+  
+}

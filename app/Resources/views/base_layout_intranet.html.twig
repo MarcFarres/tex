@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    {% block metas %}
+        <meta charset="UTF-8" />
+
+    {% endblock metas %}
+
+    <title>
+
+      {% block title %}{% endblock title %}
+
+    </title>
+
+        {% block stylesheets %}
+        
+        
+            {% stylesheets 'assets/css/dataTable.css' filter='cssrewrite' %}
+
+                <link rel="stylesheet" href="{{ asset_url }}">
+
+            {% endstylesheets %}
+            
+
+        {% endblock stylesheets %}
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        
+    </head>
+
+    <body>
+
+      <div class="intranet-base-parent">
+          
+        <div class="layout-menu">
+
+          {% block menu_lat %} {% endblock menu_lat %}
+
+        </div>
+          
+
+        <div class="layout-content">
+
+          <div class="layout-content-menu">
+            {% block content_menu %} {% endblock content_menu %}
+          </div>
+           
+          <div class='layout-content-final'> 
+            {% block pageContent %} {% endblock pageContent %}
+          </div>
+
+        </div>
+          
+
+      </div>
+
+    </body>
+
+    {% block javascripts %}
+
+            
+            {% javascripts 
+                'assets/js/common/jquery-dev.js'
+                'assets/js/common/jquery-ui.js'
+                'assets/js/common/modernizr.js'
+                'assets/js/common/dataTable.js'
+                'assets/js/common/utils.js'
+            %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+    {% endblock javascripts %}
+
+</html>
+

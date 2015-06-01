@@ -1,0 +1,50 @@
+
+
+%row_container{
+  @include flexbox();
+  @include flex-dir(column);            // establece la dirección vertical como la principal
+  @include justify-content(flex-start); // se colocan de arriba hacia abajo
+  @include align-items(stretch);        // las rows rellenan todo el ancho disponible
+  @include align-content(stretch);  
+
+}
+
+%column_container{
+  @include flexbox();
+  @include flex-dir(row);               // establece la dirección horizontal como la principal
+  @include justify-content(flex-start); // se colocan de izquierda a derecha
+  @include align-items(stretch);        // las columns rellenan todo el alto disponible
+  @include align-content(stretch); 
+}
+
+
+%row{
+  @include flexbox();
+  @include flex-dir(row);  /* contiene columnas */
+  @include justify-content(space-around); /* eje principal */
+  @include align-items(stretch);        /* eje secundario */
+  @include align-content(stretch);      /* espacio extra en eje secundario */
+  @include flex(1);
+}
+
+%column{
+  @include flexbox();
+  @include flex-dir(column);  /* contiene filas */
+  @include justify-content(space-around); /* eje principal */
+  @include align-items(stretch);        /* eje secundario */
+  @include align-content(stretch);      /* espacio extra en eje secundario */
+  @include flex(1);
+
+}
+
+%element-3cols{
+  width:31%;
+}
+
+%element-2cols{
+  width:45%;
+}
+
+%element-1col{
+  width:100%;
+}

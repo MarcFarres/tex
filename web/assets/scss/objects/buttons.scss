@@ -1,0 +1,21 @@
+
+// botones para expandir información
+// botón que rota hacia arriba/abajo
+%rotating{
+ 
+  @include transform-transition(.5s,linear);
+
+
+  &.clicked
+  {
+    
+    @include rotate(180deg);
+    @include origin(50%,50%);
+  }
+
+  &.unclicked
+  {
+    @include rotate(0deg);
+    @include origin(50%,50%);
+  }
+}

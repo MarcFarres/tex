@@ -1,0 +1,68 @@
+/*
+   Extiende al base layout: "columns-base-layout"
+*/
+
+.intranet-base-parent{
+
+// es un contenedor flexible de columnas
+//====================================
+@extend .columns-base-layout-parent; 
+// -----------------------------------
+  overflow:hidden;
+
+  //height:100%;
+ 
+  .layout-menu
+  {
+    background-color: $admin-bcolor_menu;
+    // anula la proporción por defecto
+    max-width:220px;
+    min-width:175px;
+
+    >#intranet_menu_lat
+    {
+      margin-top:150px;
+
+      >.list_element
+      {
+        margin:10px 0 0 0;
+
+        >.list_icon
+        {
+          margin:0 7px 0 15px;
+          color:$intranet-menu-lat_icon;
+
+          &.in
+          {
+            color:$orange;
+            @include scale(1.2,1.2);
+          }
+        }
+
+        >.list_link
+        {
+          color:$intranet-menu-lat_color;
+        }
+      } // li   
+    } // intranet_menu_lat
+  } // layout menu
+
+  // los contenedores de cada página individual
+  .layout-content
+  { 
+    
+    min-width:900px;
+
+    >.layout-content-menu
+    {
+      border-bottom:solid 1px #ddd;
+      overflow:hidden;
+    } // content menu
+
+    >.layout-content-final
+    {
+      overflow-y:scroll;
+      background-color:$admin-bcolor_content;
+    } // content menu
+  } 
+}

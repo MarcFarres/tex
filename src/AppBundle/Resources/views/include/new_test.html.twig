@@ -1,0 +1,55 @@
+{# Lista con los tests de una máquina para la OF actual #}
+    
+        <div class="maquina_list_tests">
+          <h2> Tests. Màquina {{ maquina.numero }}</h2>
+          <table class="intranet_table_list mesures">
+            <thead>
+              <tr>
+                <th>Dia</th>
+                <th>Hora</th>
+                <th>Finalitzat</th>
+                <th>Resultat</th>
+                <th>Accions</th>
+              </tr>
+            </thead>
+
+          <tbody>
+
+          {% if resultats|length > 0 %}
+
+            {% for resultat in resultats %}
+            <tr>
+              <td> {{ resultat.data | date('d-m-Y')  }}</td>
+              <td> {{ resultat.data | date('H:i:s')  }}</td>
+              <td> {{ resultat.done ? 'Si' : 'No' }}</td>
+              <td> 
+                {% if resultat.done %}
+                  {% if resultat.testok %}             
+                    OK
+                  {% else %}
+                    ERROR
+                  {% endif %}
+                {% else %}
+                  NO FINALITZAT
+                {% endif %}
+              </td>
+              <td><a href="{{path('render_result',{'resultat_id':resultat.id})}}">Veure</a></td>
+            </tr>
+            {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+
+    
+
+        <div class="actions">
+          <a href="{{path('nou_test',{'OF_id':OF.id,'maquina_id':maquina.id})}}">Nou test</a>
+          <a href="{{path('maquina_report',{'maquina':maquina.id})}}"> Report dels tests realitzats a la màquina </a>
+        </div>
+
+        </div>
+        {% block TestSpace %}
+           
+          
+
+        {% endblock TestSpace %}

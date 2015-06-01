@@ -1,0 +1,113 @@
+
+
+.general-view_container
+{
+  @extend %column_container;
+
+  .general-view_linia
+  {
+  	@include flex();
+    @extend %row_container;
+
+    >.linia-num
+    {
+      @extend %column_container;
+
+      >.num
+      {
+      	@extend %column_container;
+      	height:60px;
+      	width:60px;
+      	margin:auto;
+      	background-color: $emerald;
+
+      	@include rounded(50%);
+
+      	>span
+      	{
+      		margin:auto;
+      	} // span
+      } // num
+    } // linia num
+
+    >.sublinia_container
+    {
+      @extend %column_container;
+      height:160px;
+
+    	>.sublinia
+    	{
+        height:100px;
+        width:120px;
+
+        margin:auto;
+        background-color:$blue-river;
+
+        @include rounded(3px);
+
+        >.sublinia-num
+        {
+          @extend %column_container;
+          height:30px;
+          background-color:$silver;
+
+          >.num
+          {
+           	@extend %column_container;
+           	height:20px;
+           	width:20px;
+           	background-color:white;
+           	margin:auto;
+           	@include rounded(50%);
+
+           	>span
+           	{
+           	  margin:auto;
+           	}
+          }
+
+        } // sublinia num
+
+        >.sublinia-familia
+        {
+          text-align: center;
+          padding:5px;
+          font-size:12px;   
+           
+        } // sublinia-familia
+
+        >.sublinia-maquines
+        {
+          @extend %column_container;
+          @include flex-wrap(wrap);
+
+          >.maquina
+          {
+           	@extend %column_container;
+            height:25px;
+           	width:25px;
+           	background-color:$alizarin;
+           	color:white;
+           	margin:auto;
+           	@include rounded(5px);
+            
+            &.no_test{background-color:white;}
+            &.not_finished{background-color:$carrot;}
+            &.test_ok{background-color:$emerald;}
+            &.errors{background-color:$alizarin;}
+            &.maquina_actual{
+              background-color:$sun;
+              border:solid 2px yellow;
+            }
+
+           	>span
+           	{
+              margin:auto;
+           	}
+          }
+
+        }// sublinia-maquines
+    	} // sublinia
+    } // sublinia container
+  }
+}

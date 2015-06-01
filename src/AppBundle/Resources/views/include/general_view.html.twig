@@ -1,0 +1,60 @@
+{#
+
+  - Variables que recibe:
+    . lista con las linias - $linias
+    . maquines_form
+
+#}
+
+<div class="general-view_container">
+
+{% if linias is iterable %}
+
+{% for linia in linias %}
+  
+  {{ include(
+    'AppBundle:include:linia_template.html.twig',
+    {
+      "linia":linia,
+    }, 
+    with_context = false
+    )  
+  }}
+  
+
+	
+{% endfor %}
+
+{% else %}
+  {% if maquina_actual is defined %}
+    {{ include(
+    'AppBundle:include:linia_template.html.twig',
+    {
+      "linia":linias,
+      "viewMode":viewMode,
+      "OF":OF,
+      "maquina_actual":maquina_actual,
+    }, 
+    with_context = false
+    )  
+  }}
+   {% else %}
+   {{ include(
+    'AppBundle:include:linia_template.html.twig',
+    {
+      "linia":linias,
+      "viewMode":viewMode,
+      "OF":OF,
+    }, 
+    with_context = false
+    )  
+  }}
+  {% endif %}
+
+
+
+{% endif %}
+
+
+
+</div>

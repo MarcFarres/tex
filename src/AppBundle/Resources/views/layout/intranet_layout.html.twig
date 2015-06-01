@@ -1,0 +1,94 @@
+{% extends '::base_layout_intranet.html.twig' %}
+
+
+{% block stylesheets %}
+
+{{ parent() }}
+
+	{% stylesheets 
+	 'assets/css/intranet.css' 
+	 'assets/css/fontawessome.css'
+	  filter='cssrewrite'
+	 %}
+		
+	<link rel="stylesheet" href="{{ asset_url }}" />
+
+{% endstylesheets %}
+
+{% endblock stylesheets %}
+
+
+{% block menu_lat %}
+
+	<ul id='intranet_menu_lat'>
+		    
+		    <li class="list_element">
+
+		      <span class="fa fa-dashcube list_icon"></span>
+
+
+			  <a 
+			    href="{{ path('visio_general') }}"
+			    class='list_link'
+			    > Visió general </a>	
+
+		    </li>
+
+			<li class="list_element sublist">
+
+				<span class="fa fa-cutlery list_icon"></span>	
+
+			  <a 
+			    href="{{ path('admin_tests') }}"
+  				class='list_link'
+  			  > Tests de qualitat </a>
+
+			  <span class="fa pointable sublist_button unclicked"></span>
+
+			  <ul class="sublist_container out">
+
+			  	<li class="sublist_element">
+
+			  		<a 
+			  		  class="sublist_link"
+			  		  href="#"
+			  		> Nou test </a>
+
+			  	</li>
+
+			  	<li class="sublist_element">
+			  		<a 
+			  		  class="sublist_link"
+			  		  href="#"
+			  		> Historial </a>
+
+			  	</li>
+
+			  </ul>
+		    </li>
+		
+		
+		  <li class="list_element sublist">
+
+		  	<span class="fa fa-users list_icon"></span>	
+
+		  	<a 
+		  	  href="#"
+		  	  class='list_link'
+		  	> Paràmetres </a>
+
+		  </li>
+	    
+		<li class="list_element sublist">
+
+			<span class="fa fa-wrench list_icon"></span>
+
+			<a 
+			  href="#"
+			  class='list_link'
+			> Estadístiques </a>
+		</li>
+		
+	</ul>
+
+{% endblock menu_lat %}

@@ -1,0 +1,95 @@
+/*------------------------------------*\
+  $Animation
+  * 
+  ** se utiliza para crear las animaciones de nuestra página en:
+  ** 'effects/animations.scss'
+\*------------------------------------*/
+
+@mixin keyFrames($name){ 
+	@keyframes #{$name} {
+ 		@content;
+ 	}
+ 	@-webkit-keyframes #{$name} {
+ 		@content;
+	}
+	@-moz-keyframes #{$name} {
+		@content;
+	}
+	@-o-keyframes #{$name} { 
+ 		@content
+ 	}
+}
+
+@mixin animation($name,$time : 1s){
+	-webkit-animation: $name $time; 
+    animation: $name $time;
+}
+
+@mixin animation-timing($timing : ease){
+-webkit-animation-timing-function: $timing; /* Chrome, Safari, Opera */
+    animation-timing-function:$timing;
+}
+
+@mixin animation-fill($mode : forwards){
+	-webkit-animation-fill-mode: $mode; 
+    animation-fill-mode: $mode;
+}
+
+
+@mixin animation-iteration-count($it-count)
+{
+  -webkit-animation-iteration-count: $it-count;
+  animation-iteration-count: $it-count;
+}
+
+
+@mixin animation-alternate()
+{
+  -webkit-animation-direction: alternate; /* Chrome, Safari, Opera */
+  animation-direction: alternate;
+}
+
+
+/*------------------------------------*\
+  $Bind-animation
+  * 
+  ** para subscribirse a una animación
+  ** params : $name,$time,$timing,$delay,direction,it-count
+\*------------------------------------*/
+
+@mixin bind-animation($name , $time:.5 , $timing:ease , $delay:0 , $direction : normal , $it-count : 1 , $mode : forwards){ 
+	
+	@include animation($name,$time); 
+	
+	@include animation-timing($timing);
+
+	-webkit-animation-delay: $delay; /* Chrome, Safari, Opera */
+    animation-delay: $delay;
+
+	-webkit-animation-direction: $direction; 
+    animation-direction: $direction;
+
+	-webkit-animation-iteration-count: $it-count;
+    animation-iteration-count: $it-count;
+
+    @include animation-fill($mode);
+} 
+
+
+// animación de las transformaciones
+
+@mixin transform-transition($time,$type,$other_transitions...){
+
+	-webkit-transition: -webkit-transform $time $type,$other_transitions;
+    -moz-transition: -moz-transform $time $type,$other_transitions;
+    -o-transition: -o-transform $time $type,$other_transitions;
+    transition: transform $time $type,$other_transitions;
+}
+
+@mixin transform-animate($time,$type){
+
+  -webkit-transition: -webkit-transform $time $type;
+    -moz-transition: -moz-transform $time $type;
+    -o-transition: -o-transform $time $type;
+    transition: transform $time $type;
+}

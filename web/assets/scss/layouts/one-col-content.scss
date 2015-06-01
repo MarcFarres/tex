@@ -1,0 +1,6 @@
+.one-col-contenedor
+{
+  @extend %row_container;
+  @include align-content(space-around);
+  padding:10px;
+}

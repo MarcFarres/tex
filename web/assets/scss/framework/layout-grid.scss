@@ -1,0 +1,15 @@
+/*------------------------------------*\
+  $~Flex Responsive Structure
+    **  Ejemplo de grid para X columnas
+
+
+\*------------------------------------*/
+
+%layout-flex{
+  @include flexbox();
+  @include flex-dir(row);  /* contiene columnas */
+  @include justify-content(flex-start); /* eje principal */
+  @include align-items(stretch);        /* eje secundario */
+  @include align-content(stretch);      /* espacio extra en eje secundario */
+}
+

@@ -1,0 +1,75 @@
+// sobreescribimos los estilos para el wrapper de la tabla de tests (historial)
+#tests_table_wrapper
+{
+  margin:50px;
+  background-color: $clouds;
+  @include rounded(4px);
+}
+
+.dataTables_info{display:none;}
+
+// número de elementos mostrados
+.dataTables_length{
+	//display:none
+	margin:25px;
+
+	>label
+	{
+	  >select
+	  {
+	  	
+		padding:5px;
+		font-size:16px;	
+		border:none;
+		@include rounded(3px);
+		border:solid 1px $concrete;
+	  }	
+	}
+}
+
+// la ventana de búsqueda
+.dataTables_filter{
+	//display:none
+	margin:25px;
+	>label
+	{
+	  >input
+	  {
+		padding:5px;
+		font-size:16px;
+		@include rounded(3px);
+		border:solid 1px $concrete;
+	  }
+	}
+}
+
+
+#tests_table
+{
+
+  >thead
+  {
+	>tr
+	{
+	  >th
+	  {
+		text-align: left;
+		font-size: 22px;
+		padding-left:20px;
+		border:solid 1px #ddd;
+	  }
+	}
+  } // thead
+
+  >tbody
+  {
+  	>tr
+  	{
+  	  >td
+  	  {
+  	  	 padding-left:20px;
+  	  	 height:40px;
+  	  }
+  	}
+  }
+}

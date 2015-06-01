@@ -1,0 +1,45 @@
+
+.intranet_table_list
+{
+	width:100%;
+
+	>thead
+	{
+
+       >tr
+       {
+          text-align: center;
+
+       	  >th
+       	  {
+            text-align: center;
+            border:solid 1px #333;
+            
+       	  }
+       }
+	} // thead
+
+	>tbody
+	{
+     
+      >tr
+        {
+          text-align: center;
+          &:nth-child(2n)
+          {
+          	background-color: #666;
+          	color:white;
+          }
+          &:nth-child(2n+1)
+          {
+          	background-color: #333;
+          	color:white;
+          }
+
+       	   >td
+       	   {
+             text-align: center;
+       	   }
+        }
+	} // tbody
+}

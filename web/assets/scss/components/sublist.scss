@@ -1,0 +1,78 @@
+/*
+  Estructura:
+  
+    li.sublist 
+      > span.sublist_button
+      > ul.sublist_container
+        > li.sublist_element
+          > a.sublist_link
+
+
+  Tiene dependéncias con:
+
+  	. objects/buttons.scss
+    . config/config_common.scss
+  	. framework/*
+    . fontawessome
+
+*/
+
+.sublist
+// support in/out
+{
+
+  >.sublist_container
+  {
+    overflow:hidden;
+    list-style: dotted;
+    list-style-type:square;
+    padding-left:50px;
+    
+    &.in{
+      height:auto;
+      
+      >.sublist_element
+      {
+        height:25px;
+        // centrado del contenido con márgenes
+        &:first-child{margin-top:15px;}
+        &:last-child{margin-bottom:15px;}
+        @include opacity(1);
+      }
+    }
+
+    &.out{>.sublist_element{height:0;}}
+
+    >.sublist_element
+    {
+      @include transition(height .5s);
+      color:$orange;
+      @include opacity(0);
+
+      >.sublist_link
+      {
+        color:$orange;
+        @include transition(padding-left .2s);
+        padding-left:0;
+
+        &:hover{padding-left:5px;}
+      }
+    }
+  }
+}
+
+// botón para expandir/retraer el contenido extra
+// support click/unclick 
+.sublist_button
+{
+  // *objects/buttons
+  @extend %rotating;
+  margin-left:5px;
+  
+  // el icono de la flecha
+  &::before{content:'\f0d7';}
+
+  &.clicked{color:$orange;}  
+
+  &.unclicked{color:$orange;}
+}

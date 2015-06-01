@@ -1,0 +1,35 @@
+{% extends 'AppBundle:content:Test_ini.html.twig' %}
+
+{% block TestSpace %}
+
+{% if resultat.done %}
+	<p>Lol</p>
+  {% set OF = resultat.test.of %}  
+
+    {{ include(
+    'AppBundle:include:resultat_maquina.html.twig',
+    {
+    "maquina":maquina,
+    "resultat":resultat,
+    "OF":OF,
+    }, 
+    with_context = false
+    )  
+    }}
+
+{% else %}
+
+  {{ include(
+    'AppBundle:include:test.html.twig',
+    {
+      "resultat":resultat,
+      "mesuraForm":mesuraForm,
+      "resultParamsForm":resultParamsForm,
+    }, 
+    with_context = false
+    )  
+  }}
+
+{% endif %}  
+
+{% endblock %}

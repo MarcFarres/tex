@@ -1,0 +1,76 @@
+{#
+  Variables que es reben:
+
+    . OF - Ordre de Fabricació
+    . resultat - Resultat associat al test i a la màquina
+#}
+
+
+{% set maquina = resultat.maquina %}
+{% set sublinia = maquina.sublinia %}
+
+
+<p>Parametres a mostrar: </p>
+
+<p> Maquina num. {{ maquina.numero }}</p>
+<p> Of: {{ OF.numero }}</p>
+
+<p>Data del test</p>
+<p>dia: {{ resultat.data | date('d-m-Y') }} </p>
+<p>hora: {{ resultat.data | date('H:i:s') }}</p>
+
+<p> Finalitzat? {{ resultat.done ? 'Si' : 'No' }}</p>
+<p> Exit? {{ resultat.testok ? 'Si' : 'No' }}</p>
+
+<p>Longitud del fil mesurat: {{ resultat.longitud }} m</p>
+<p> mitjana esperada en la densitat del fil: {{ resultat.mitjanaesp }} gr/m</p>
+<p> mitjana obtinguda: {{ resultat.mitjana }} gr/m</p>
+
+<p> Descentratge permés (en valor absolut): {{ resultat.descmax }}% gr/m </p>
+<p> Descentratge obtingut: {{ resultat.descentratge }}% gr/m </p>
+
+<p> Desviació standard de les dades experimentals: {{ resultat.dev }} </p>
+<p>Desviació standard prevista: {{ resultat.devmax }}</p>
+
+{% set mesures = resultat.getmesures() %}
+{% set mesures_length = mesures | length %}
+
+<p>numero de mesures realitzades: {{ mesures_length }}</p>
+<table class="intranet_table_list mesures">
+  <thead>
+      <tr>
+        <th>mesura num.</th>
+        <th>Pes</th>
+        <th>Densitat</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+{% for mesura in mesures %}
+
+  <tr>
+    <td>{{ mesura.numero }}</td> 
+    <td>{{ mesura.pes.valor }} {{  mesura.pes.unitat }}</td> 
+    <td>{{ mesura.densitat.valor }} {{ mesura.densitat.unitat }}</td> 
+
+  </tr>
+{% endfor %}
+
+  </tbody>
+
+</table>
+
+<h2> Accions </h2>
+<ul> 
+  <li><a href="
+      {{
+      path('reopen_result',{'resultat':resultat.id}) 
+      }}
+    ">Reempendre el test</a></li>
+  <li><a href="">Veure Report (imprimible)</a></li>
+  <li><a href="
+      {{
+      path('delete_result',{'resultat':resultat.id,'OF':OF.id, 'Maquina':maquina.id}) 
+      }}
+    ">Eliminar test</a></li>
+</ul>

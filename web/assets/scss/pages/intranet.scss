@@ -1,0 +1,112 @@
+/*
+Author: Marc Farrés Pijuan  
+Author 
+Description: 
+Version: 0.1
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+*/
+
+//framework 
+	// variables , mixins , animaciones , reset , layout-grid 
+	@import "../framework/framework.scss" ;     
+
+// elementos
+	// utils
+	
+
+// variables:
+	
+	// variables globales
+	  @import "../config/config_common";
+ 
+
+// efectos
+  //@import "../functions/effects";
+  //@import "../animations/generic-animations";  
+ 
+// Objetos   
+  // base del layout 
+    @import "../layouts/columns-base-layout"; 
+  // base del layout 
+    @import "../objects/intranet-forms";
+    // listas ordenadas (tablas)
+    @import "../objects/list";
+    // botones utilizados 
+    @import "../objects/buttons";
+    @import "../objects/frames";
+   
+
+// Componentes
+	
+  // listas desplegables
+  @import "../components/sublist"; 
+
+  // entorno de visión general de las máquinas
+  @import "../components/general_view";
+
+
+// contenedores
+    
+	// layout estructural    
+	@import "../layouts/intranet-layout"; 
+
+  // layout a dos columnas del contenido
+  @import "../layouts/two-cols-content";  
+  @import "../layouts/one-col-content"; 
+
+	// estilos y utilidades comunes a todas las páginas
+	//@import "common";
+
+// Texturas
+@import "../textures/dataTable";
+
+// Las diferentes páginas que componen la web
+    //la home
+
+
+
+
+.frame-element
+{
+  background-color:lighten($clouds,3);
+}
+
+
+.clear{
+  clear:both;
+}
+
+
+// menu superior del contenido
+#admin-tests_menu-sup
+{
+  @extend %column_container;
+  @include justify-content(space-around);
+
+  position:relative;
+  height:120px; 
+
+  background-color:$admin-menuSup-color;
+
+  >.menu-sup_frame
+  {
+    // los frames que contiene están definidos en:
+    // 'objects/frames.scss'
+
+    @extend %column_container; 
+    height:100%;
+    padding:0 20px;
+    margin:auto;
+  }
+}
+
+// contenedor de información
+.info-contenedor
+{
+  @extend %column_container;
+  @include flex-wrap(wrap);
+  @include justify-content(space-around);
+  
+}
+

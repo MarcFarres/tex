@@ -1,0 +1,68 @@
+{{form_start(form)}}
+    
+    {% set count = 0 %}
+    	<div class='form_info'>
+        
+
+		</div>
+
+		<div class='form_validation'>
+
+			{{form_errors(form)}}
+
+		</div>
+
+		    <h2>
+		    	{{form_title}}
+		    	{% if form_mode is defined and form_mode == 'plegable' %}
+		    		<span class='fa pointable sublist_button unclicked'></span>
+		    	{% endif %}
+		    </h2>
+
+		    <div class="separator"></div>
+
+		<br /><br />
+
+	{# -------------------------------------------------- #}
+
+    <div 
+      class=
+      "fields 
+      {% if form_mode is defined and form_mode == 'plegable' %}plegable out{% endif %}"
+    >
+        
+    	{% for field in form %}
+			{# no renderizamos aún los field 'hidden' #}
+			{% if "hidden" not in field.vars.block_prefixes %}
+
+				{% if "button" not in field.vars.block_prefixes %}
+
+			    <fieldset class='fieldset'>
+			  
+	               {{ form_row(field) }}
+	          
+		        </fieldset>
+                {% else %}
+
+                  {% if count == 0 %}
+                    </div>{# fields #}
+                    {% set count = 1 %}
+                    
+                  {% endif %}
+
+
+
+                    <div class="buttons">
+                        {{ form_row(field) }}
+                    </div>
+                {% endif %}
+
+		    {% endif %}
+
+    	{% endfor %}
+    	
+
+    	{{ form_rest(form) }}
+
+    {# -------------------------------------------------- #}
+

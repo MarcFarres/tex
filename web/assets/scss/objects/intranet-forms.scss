@@ -1,0 +1,92 @@
+/*
+  Estilos para los formularios usados en la intranet
+*/
+
+
+.intranet-form
+{
+  position:relative;
+	border:solid 1px darken($intranet-form-border,5);
+	width:100%;
+	background-color:white;
+
+  >h2
+  {
+    padding:10px 0 10px 25px;
+    color:$intranet-form-title;
+    background-color:lighten($clouds,3);
+    >span{
+      float:right;
+      margin-right:30px;
+    }
+  }
+
+	.fieldset
+	{
+    position:relative;
+    margin:25px 15px;
+       
+    >div
+    {
+      @extend %column_container;
+    }      
+	}
+  
+  .buttons
+  {
+     position:relative;
+     float:left;
+  }
+
+	.intranet-label
+	{
+	  @include flex(3);
+	  text-align: right;
+	  padding:7px 25px 7px 0;
+	  color: darken($intranet-form-label,5);
+	}
+
+	.intranet-input
+	{
+    @include flex(7);
+    @include rounded(3px);
+    border:solid 1px darken($intranet-form-input,5);
+    padding:7px 10px 7px 10px;
+	}
+
+	.intranet-submit
+	{
+    @include rounded(3px);
+    border:solid 1px darken($intranet-form-input,5);
+    background-color:$blue_river;
+    color:white;
+    margin:20px 20px;
+    padding:10px;
+	}
+  .intranet-accept
+  {
+    @include rounded(3px);
+    border:solid 1px darken($intranet-form-input,5);
+    background-color:$emerald;
+    color:white;
+    margin:20px 20px;
+    padding:10px;
+  }
+  .intranet-repeat
+  {
+    @include rounded(3px);
+    border:solid 1px darken($intranet-form-input,5);
+    background-color:$alizarin;
+    color:white;
+    margin:20px 20px;
+    padding:10px;
+  }
+  .fields{
+    overflow:hidden;
+    
+    &.in{}
+    &.out{
+      height:0;
+    }
+  }
+}

@@ -1,0 +1,5 @@
+_wdt:
+    resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
+    prefix:   /_wdt
+app:
+    resource: "@AppBundle/Resources/config/routing.yml"

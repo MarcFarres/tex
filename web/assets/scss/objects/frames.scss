@@ -1,0 +1,125 @@
+
+
+/* =======================================================
+  Frame diseñado para mostrar icono y texto con reacción 
+  al hover
+  */.frame-element/*
+  --------------------------------------------------------
+*/{
+  width:120px;
+  height:100px;
+    
+  @include rounded(3px);
+  margin: auto 10px;
+
+  &:first-child
+  {
+    margin-left:150px;
+  }
+  &:last-child
+  {
+    margin-right:150px;
+  }
+
+  >.icon
+  {
+    @extend %column_container;
+    height:75px;
+    >span
+    {
+      font-size:2rem;
+      color:#dbe1e8;
+      margin:auto;
+    }
+  }
+  >.title
+  {
+    text-align: center;
+    color:#1bbae1;
+    font-size:15px;
+    font-weight: bold;
+  }
+
+  &:hover
+  {
+    cursor:pointer;
+    background-color:$admin-menuSup-hover;
+    >.icon
+    {
+      >span
+      {
+        color:$admin-menuSup-hover-color;
+        @include opacity(.6);
+      }
+    } // hover icon
+    >.title
+    {
+      color:$admin-menuSup-hover-color;
+    } // hover title       
+  } // menu-element hover
+} // frame element
+
+
+
+/* =======================================================
+  Frame diseñado para mostrar información y opcionalmente
+  alguna opción
+  */.frame-info/*
+  --------------------------------------------------------
+*/{
+  width:150px;
+  height:120px;
+  @include rounded(3px);
+  border: solid 2px darken($clouds,3);
+
+  background-color:lighten($clouds,3);
+
+  &:first-child
+  {
+    margin-left:0;
+  }
+  &:last-child
+  {
+    margin-right:0;
+  }
+
+  >.title
+  {
+    height:30px;
+    background-color:darken($clouds,3);
+    @extend %column_container;
+
+    >span{
+      margin:auto;
+    }
+  }
+
+  >.content
+  {
+
+    height:90px;
+
+    >.text
+    {
+      @extend %column_container;
+      height:55px;
+      
+      >span
+      {
+        margin:auto;
+      }
+    }
+    >.buttons
+    {
+      @extend %column_container;
+      height:35px;
+      border-top:solid 1px black;
+
+      >span{
+        margin:auto;
+      }
+    }
+
+  }
+
+} // frame info

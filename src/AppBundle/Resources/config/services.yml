@@ -1,0 +1,8 @@
+services:
+#    app.example:
+#        class: AppBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+  of.manager:
+    class: AppBundle\Service\OfManager
+    arguments: ["@doctrine.orm.entity_manager"]

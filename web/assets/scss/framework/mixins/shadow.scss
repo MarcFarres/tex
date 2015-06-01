@@ -1,0 +1,30 @@
+
+
+
+/* ====================  /*
+	$Shadow
+/* ==================== */
+
+@mixin shadow($x,$y,$blur,$color){
+	@include prefix(box-shadow,$x $y $blur $color);
+
+}
+
+/* ====================  /*
+	$In shadow
+/* ==================== */
+
+@mixin in_shadow($x,$y,$blur,$color){
+	@include prefix(box-shadow,inset $x $y $blur $color);
+
+}
+
+
+/* ====================  /*
+	$Box shadow
+/* ==================== */
+
+@mixin box-shadow($shadow...) {
+  -webkit-box-shadow: $shadow; // iOS <4.3 & Android <4.1
+          box-shadow: $shadow;
+}

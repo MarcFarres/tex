@@ -1,0 +1,81 @@
+<div class="general-view_linia">
+  	 <div class="linia-num">
+
+  	 	<div class="num"><span>Linia {{ linia.id }}</span></div>
+  	 	 
+  	 </div>
+     
+     {% set sublinias = linia.getSublinies() %}
+
+  	 {% for sublinia in sublinias %}
+
+       <div class="sublinia_container">
+
+          <div class="sublinia">
+
+            <div class="sublinia-num">
+              <div class="num">
+                <span>{{ sublinia.numero }}</span>
+              </div>
+            </div>
+
+            <div class="sublinia-familia">
+            	{% set familia = sublinia.getFamilia() %}
+            	<div class="familia">
+            	  <span><a href="{{ path('nova_sublinia') }}/{{ sublinia.id }}">{{ familia.nom }}</a></span>
+            	</div>
+            </div>
+
+            <div class="sublinia-maquines">
+            
+              {% set maquines = sublinia.getMaquines() %}
+
+              	{% for maquina in maquines %}   
+
+{% if viewMode is defined and viewMode == 'testView'%}
+
+  {{ render(controller(
+    'AppBundle:Test:getTestMaquina',
+    { 'maquina_id': maquina.id ,'OfId' : OF.id }
+    )) 
+  }}
+            
+{% else %}
+          <div class="maquina">
+						<span>
+                {{ maquina.numero }}
+            </span>
+
+					</div>
+{% endif %}
+
+              	{% endfor %}
+
+            </div>
+
+          </div>
+
+       </div>
+
+
+       
+    {% endfor %}
+
+
+  </div>
+  
+
+  {#
+  
+
+
+    {% for maquina in sublinia %}
+
+    
+
+    {% endfor %}
+
+
+  
+
+  #}

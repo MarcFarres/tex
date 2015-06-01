@@ -1,0 +1,116 @@
+/*
+
+  Transform:
+  ================================================================================
+
+    . $Rotate
+        - rotateX($degs)
+        - rotateY($degs)
+        - rotateZ($degs)
+    
+    . $Translate
+        - translateZ($z)
+        - translate3D($x,$y,$z)
+
+    .$Perspective
+
+    .$Scale
+
+---------------------------------------------------------------------------------------
+
+*/
+
+
+/* ====================  /*
+    $Rotate
+/* ==================== */
+
+@mixin rotate($degs){
+  -ms-transform: rotate($degs); 
+  -webkit-transform: rotate($degs); 
+  transform: rotate($degs);
+}
+
+@mixin rotateX($degs){
+	-ms-transform: rotateX($degs); 
+  -webkit-transform: rotateX($degs); 
+  transform: rotateX($degs);
+}
+
+@mixin rotateY($degs){
+	-ms-transform: rotateY($degs); 
+    -webkit-transform: rotateY($degs); 
+    transform: rotateY($degs);
+}
+
+@mixin rotateZ($degs){
+	-ms-transform: rotateZ($degs); 
+    -webkit-transform: rotateZ($degs); 
+    transform: rotateZ($degs);
+}
+
+/* ====================  /*
+    $Translate
+/* ==================== */
+
+@mixin translate($x:0,$y:0){
+  -webkit-transform: translate($x, $y);
+  -moz-transform: translate($x, $y);
+  -ms-transform: translate($x, $y);
+  -o-transform: translate($x, $y);
+  transform: translate($x, $y);
+}
+
+
+@mixin translate3d($x,$y,$z){
+	-ms-transform: translate3d($x,$y,$z); 
+    -webkit-transform: translate3d($x,$y,$z); 
+    transform: translate3d($x,$y,$z);
+}
+
+//
+@mixin perspective($n){
+	-ms-transform: perspective($n); 
+    -webkit-transform: perspective($n); 
+    transform: perspective($n);
+}
+// -----------------------------------
+
+
+@mixin preserve3d(){
+	transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+}
+
+// -------------------------------------
+
+
+
+@mixin scale($w,$h){
+  -ms-transform: scale($w,$h); 
+  -webkit-transform: scale($w,$h); 
+  transform: scale($w,$h);
+}
+
+
+
+
+@mixin perspective($value){
+  -webkit-perspective: $value; /* Chrome, Safari, Opera */
+  perspective: $value;
+}
+
+
+
+@mixin origin($x,$y){
+  -ms-transform-origin: $x $y;
+  -webkit-transform-origin: $x $y;
+  transform-origin: $x $y;
+}
+
+
+@mixin skew($x,$y){
+    -ms-transform: skew($x, $y); /* IE 9 */
+    -webkit-transform: skew($x, $y); /* Safari */
+    transform: skew($x, $y);
+}

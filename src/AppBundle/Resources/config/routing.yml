@@ -1,0 +1,96 @@
+visio_general:
+    path:     /
+    defaults: { _controller: AppBundle:General:index }
+
+
+admin_tests:
+    path: /tests
+    defaults: { _controller: AppBundle:Test:index }
+
+
+nova_linia:
+    path: /nova_linia
+    defaults: { _controller: AppBundle:General:newLinia }
+
+
+nova_sublinia:
+    path: /nova_sublinia/{id}
+    defaults: { _controller: AppBundle:General:newSublinia, id:0 }
+
+
+nova_familia:
+    path: /nova_familia
+    defaults: { _controller: AppBundle:General:newFamilia }
+
+
+nova_maquina:
+    path: /nova_maquina
+    defaults: { _controller: AppBundle:General:newMaquina }
+
+
+afegir_maquina:
+    path: /afegir_maquina/{id}
+    defaults: { _controller: AppBundle:General:addMaquina }
+
+
+nova_OF:
+    path: /tests/nova_OF
+    defaults: { _controller: AppBundle:Test:newOf }
+
+
+finalitzar_OF:
+    path: /tests/finalize_OF/{OF}
+    defaults: { _controller : AppBundle:Test:finalizeOf}
+
+
+OF_view:
+    path: /tests/OF_overview/{OF_id}
+    defaults: { _controller : AppBundle:Test:viewOf }
+
+
+iniciar_test:
+    path: /tests/test_inici/{id}/{maquina_id}
+    defaults: { _controller: AppBundle:Test:iniTest , maquina_id : false}
+
+
+iniciar_test_ajax:
+    path: /tests/test_inici
+    defaults: { _controller: AppBundle:Test:iniTestAjax }
+    requirements:
+        _method:  POST
+
+
+reopen_result:
+    path: /tests/reopen/{resultat}
+    defaults: { _controller: AppBundle:Test:reopenResult , resultat_id : fasle}
+
+
+render_result:
+    path: /tests/test/{resultat_id}
+    defaults: { _controller: AppBundle:Test:test , resultat_id : fasle}
+
+
+delete_result:
+    path: /tests/test/{resultat}/{OF}/{Maquina}
+    defaults: { _controller: AppBundle:Test:deleteResult }
+
+
+nou_test:
+    path: /tests/test/{OF_id}/{maquina_id}
+    defaults: { _controller: AppBundle:Test:newTest }
+
+
+tests_historial:
+    path: /tests/historial
+    defaults: { _controller: AppBundle:Test:showHistorial }
+
+
+llegir_mesura:
+    path: /llegir
+    defaults: { _controller: AppBundle:Test:llegirMesura }
+    requirements:
+        _method:  POST
+
+maquina_report:
+    path: /tests/report/maquina/{maquina}
+    defaults: { _controller: AppBundle:Test:maquinaReport }

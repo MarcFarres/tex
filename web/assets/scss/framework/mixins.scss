@@ -1,0 +1,238 @@
+/*------------------------------------*\
+  /mixins, Índice: 
+
+  ********************************************************
+  *******  faltan las explicaciones de cada mixin ********
+  ********************************************************
+  
+ Gradient:
+ */@import "mixins/gradient.scss";/* 
+  ================================================================================
+
+ Flex :
+ */@import "mixins/flex.scss";/* 
+ ================================================================================
+
+ Rounded :
+ */@import "mixins/rounded.scss";/*
+ ================================================================================
+
+ Transform :
+ */@import "mixins/transform.scss";/*
+ ================================================================================
+
+ Shadow :
+ */@import "mixins/shadow.scss";/*
+ ================================================================================
+
+ user-select :
+ */@import "mixins/user-select.scss";/*
+ ================================================================================
+
+ animations :
+ */@import "mixins/animation.scss";/*
+ ================================================================================
+
+ modernizr :
+ */@import "mixins/modernizr.scss";/*
+ ================================================================================
+
+
+		$Prefijos()
+
+		$Transition()
+
+		$Bezier-transition()
+		
+		$Opacity()
+
+		$media-query-bp()
+		
+		$Background-size()
+
+		$Max-Width()
+
+		$clearFix
+
+		$Tab-focus
+
+		$Align-text()
+
+*/
+
+
+/*------------------------------------*\
+  $Prefijos
+\*------------------------------------*/
+
+@mixin prefix($propiedad,$valor...)
+{
+	-webkit-#{$propiedad}:$valor;
+	-moz-#{$propiedad}:$valor;
+	-ms-#{$propiedad}:$valor;
+	-o-#{$propiedad}:$valor;
+	#{$propiedad}:$valor;
+}
+
+
+
+
+
+
+
+/* ====================  /*
+	$Transition
+/* ==================== */
+
+@mixin transition($values...){
+	-webkit-transition:$values;
+	-moz-transition:$values;
+	-o-transition:$values;
+	transition:$values;
+}
+
+// default transitions ...
+	%trans{ @include transition(all 0.5s ease) }
+
+/* ====================  /*
+	$Bezier-transition
+/* ==================== */
+
+@mixin bezier-transition($time,$p1:0.25,$p2:0.25,$p3:0.25,$p4:0.25)
+{
+  -webkit-transition:all $time cubic-bezier($p1,$p2,$p3,$p4);
+  -moz-transition:all $time cubic-bezier($p1,$p2,$p3,$p4);
+  -o-transition:all $time cubic-bezier($p1,$p2,$p3,$p4);
+  transition:all $time cubic-bezier($p1,$p2,$p3,$p4);
+}
+
+/*------------------------------------*\
+  $Opacity
+\*------------------------------------*/
+
+@mixin opacity($opacity : .5) 
+{
+  -webkit-opacity : $opacity;
+  -moz-opacity : $opacity;
+  opacity : $opacity;
+}
+
+
+/*------------------------------------*\
+  $Responsive ~ Breakpoints
+  $Media-query-bp
+\*------------------------------------*/
+
+@mixin media-query-bp($breakpoint, $query1: max, $query2: device-width, $target: only screen) {
+
+	// Check if media queries are supported
+	@if $target != "" 
+	{
+	  @media #{$target} and (#{$query1}-#{$query2}: #{$breakpoint}) 
+	  {		
+	    @content;
+	  }
+	}
+	@else 
+	{
+	  @media (#{$query1}-#{$query2}: #{$breakpoint}) 
+	  {
+	    @content;
+	  }
+	}	
+}
+
+/*------------------------------------*\
+  $Background-size
+\*------------------------------------*/
+
+@mixin background-size($size...){
+	-webkit-background-size: $size;
+	-moz-background-size: $size;
+	background-size: $size;
+}
+
+/*------------------------------------*\
+  $RetinaScreen
+\*------------------------------------*/
+
+@mixin retinize($file,$type,$width,$height){
+	background-image: url('../img' + $file + '.' + $type);
+	/*
+	@media (-webkit-min-device-pixel-ratio: 1.5),
+			(min--moz-device-pixel-ratio: 1.5),
+			(-o-min-device-pixel-ratio: 1.5),
+			(min-device-pixel-ratio: 1.5),
+			(min-resolution: 1.5dppx)
+			*/
+	@media #{$is-hidpi}
+	{
+	  &
+	  {
+		background-image: url('../img' + $file + '-2x.' + $type);
+		@include background-size($width,$height);
+	  }
+	}
+}
+
+/*------------------------------------*\
+  $Contenido
+\*------------------------------------*/
+
+@mixin contenido{
+	@if $flexbox-support == false {
+		display:table;
+	}
+	@else {
+		display:flex;
+	}
+} 
+
+/*------------------------------------*\
+  $Listas
+\*------------------------------------*/
+
+
+
+/*------------------------------------*\
+  $Max-Width
+\*------------------------------------*/
+
+@mixin max-width($width){
+	margin-left:auto;
+	margin-right:auto;
+	max-width:$width;
+	width:100%;
+}
+
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " ";   // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+
+/*------------------------------------*\
+  $Tab-focus
+\*------------------------------------*/
+
+@mixin tab-focus() {
+  // Default
+  outline: thin dotted;
+  // WebKit
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+@mixin Align-text($align)
+{
+  text-align:-moz-#{$align}; 
+  text-align:-webkit-#{$align};
+  text-align:#{$align};
+}
