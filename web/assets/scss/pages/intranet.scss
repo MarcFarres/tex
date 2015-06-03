@@ -28,7 +28,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 // Objetos   
   // base del layout 
     @import "../layouts/columns-base-layout"; 
-  // base del layout 
+  // base del layout  
     @import "../objects/intranet-forms";
     // listas ordenadas (tablas)
     @import "../objects/list";
@@ -46,7 +46,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
   @import "../components/general_view";
 
 
-// contenedores
+// contenedores 
     
 	// layout estructural    
 	@import "../layouts/intranet-layout"; 
@@ -97,7 +97,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
     @extend %column_container; 
     height:100%;
     padding:0 20px;
-    margin:auto;
+    margin:auto; 
   }
 }
 
@@ -107,6 +107,54 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
   @extend %column_container;
   @include flex-wrap(wrap);
   @include justify-content(space-around);
+
+  margin-top:30px;
   
 }
 
+
+.subsection_title
+{
+  position:relative;
+  width:500px;
+
+  font-family: Helvetica;
+  font-size:17px;
+  margin:50px auto -100px auto;
+
+  color:$green_sea;
+}
+
+
+
+#OF_left
+{
+  @include flex(3);
+
+  >.general-view_container
+  {
+    margin-top:0;
+    >.general-view_linia
+    {
+      margin-top:0;
+    }
+  }
+}
+
+#OF_right
+{
+  @include flex(7);
+  padding:0;
+}
+
+#results_list
+{
+  @include flex(5);
+  padding:5px;
+}
+
+#test_right
+{
+  @include flex(5);
+  padding:5px;
+}

@@ -1,0 +1,50 @@
+/*
+
+  Gradient:
+  ================================================================================
+
+    . $Linear
+        linear-gradient($from,$to)
+
+    . $Radial
+        gradient-radial-three-colors($color1,$color2,$color3)
+        gradient-radial($inner-color, $outer-color)
+
+    . $Horizontal
+        gradient-horizontal($start-color, $end-color, $start-percent, $end-percent)  
+
+    . $Vertical
+        gradient-vertical($start-color, $end-color, $start-percent, $end-percent)
+
+    . $Directional
+        gradient-directional($start-color, $end-color, $deg)
+
+    . $Striped
+        gradient-striped($color, $angle)
+
+---------------------------------------------------------------------------------------
+
+*/
+/* ====================  /*
+	$Linear gradient
+/* ==================== */
+/* ====================  /*
+	$Radial gradient
+/* ====================  */
+/* ====================  /*
+  $Gradient horizontal
+/* ====================  */
+/* ====================  /*
+  $Gradient vertical
+/* ====================  */
+/* ====================  /*
+  $Gradient directional
+/* ====================  */
+/* ====================  /*
+  $Gradient horizontal three colors
+/* ====================  */
+/* ====================  /*
+  $Striped
+/* ====================  */
+
+/*# sourceMappingURL=gradient.css.map */

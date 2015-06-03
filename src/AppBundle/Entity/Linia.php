@@ -31,6 +31,11 @@ class Linia
 
     /**
     * Bidirectional  (REVERSE SIDE)
+    * @ORM\OneToMany(targetEntity="Maquina",mappedBy="linia")
+    */ protected $maquines;
+
+    /**
+    * Bidirectional  (REVERSE SIDE)
     * @ORM\OneToMany(targetEntity="Of",mappedBy="linia")
     */ protected $ordres;
 
@@ -153,5 +158,38 @@ class Linia
     public function getOrdres()
     {
         return $this->ordres;
+    }
+
+    /**
+     * Add maquines
+     *
+     * @param \AppBundle\Entity\Maquina $maquines
+     * @return Linia
+     */
+    public function addMaquine(\AppBundle\Entity\Maquina $maquines)
+    {
+        $this->maquines[] = $maquines;
+
+        return $this;
+    }
+
+    /**
+     * Remove maquines
+     *
+     * @param \AppBundle\Entity\Maquina $maquines
+     */
+    public function removeMaquine(\AppBundle\Entity\Maquina $maquines)
+    {
+        $this->maquines->removeElement($maquines);
+    }
+
+    /**
+     * Get maquines
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMaquines()
+    {
+        return $this->maquines;
     }
 }

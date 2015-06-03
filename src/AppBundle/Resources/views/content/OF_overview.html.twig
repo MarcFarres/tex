@@ -1,10 +1,184 @@
 {% extends 'AppBundle:content:admin_tests.html.twig' %}
 
+{% set test = OF.getTest() %}
 
 {% block pageContent %}
    
-   {{ parent() }}
 
-   <p> Página de overview OF </p>
+<script>
+  var maquina_route = "{{ path('resultats_list_ajax') }}" ;
+  var ajax_route = "{{ path('llegir_mesura') }}" ;
+  var goToTest = "{{ path('render_result_ajax') }}" ;
+  var novamesura = "{{ path('nova_mesura_ajax') }}" ;
+  var finalitzar_resultat = "{{ path('finalitzar_resultat')}}" ;
+  var nou_resultat = "{{ path('nou_resultat') }}" ;
+
+</script>  
+
+<div class="one-col-contenedor">
+
+  <div class="info-contenedor">
+
+    <div class="frame-info blue">
+       <div class="title">
+         <span>Of num.</span>
+       </div>
+       <div class="content">
+        <div class="text">
+          <span>{{ OF.numero }}</span>
+        </div>
+         
+      </div>
+        
+    </div>
+
+    <div class="frame-info orange">
+      <div class="title">
+        <span>Linia</span>
+      </div>
+      <div class="content">
+        <div class="text">
+          <span>{{ OF.linia.numero }}</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="frame-info purple">
+      <div class="title">
+        <span>Color </span>
+      </div>
+      <div class="content">
+        <div class="text">
+          <span>{{ OF.color }}</span>
+        </div>
+ 
+      </div>
+    </div>
+
+    <div class="frame-info yellow">
+      <div class="title">
+        <span>Estat </span>
+      </div>
+      <div class="content">
+        <div class="text">
+          <span>{{ OF.done ? 'Finalitzat' : 'Obert'}}</span>
+        </div>
+      </div> 
+    </div> {# frame info #}
+
+
+    <div class="frame-info green">
+      <div class="title">
+        <span>Data inici </span>
+      </div>
+      <div class="content">
+        <div class="text">
+          <span>{{ OF.data | date('d - m - Y') }}</span>
+        </div>
+      </div> 
+    </div> {# frame info #}
+
+  </div> {# info contenedor #}
+
+</div> {# one-col contenedor #}
+
+<div class="one-col-contenedor">
+  {% if not OF.done %}
+  
+  <div class="frame-button">
+    <a href="{{ path('finalitzar_OF',{'OF':OF.id}) }}"> 
+      <span>
+      Finalitzar OF
+      </span>
+    </a>  
+  </div>
+
+   {% else %}
+  <a href="{{ path('finalitzar_OF',{'OF':OF.id}) }}"> 
+    Report de la OF
+  </a> 
+   {% endif %}
+</div> {# one-col contenedor #}
+
+<div class="two-cols-contenedor">
+
+  <div class="left_side" id='OF_left'>
+      
+{# Incluimos la plantilla para mostrar la visualización de linias de producción #}
+    {% if maquina is defined %}
+      {# estamos cargando la plantilla desde 'test_overview', hemos seleccionado una máquina #}
+      {{ include(
+        'AppBundle:include:general_view.html.twig',
+        {
+          "linias":linia,
+          "viewMode":'testView',
+          "OF":OF,
+          "maquina_actual":maquina.id,
+        }, 
+    with_context = false
+    )  
+    }}
+    
+    {% else %}
+    {# estamos cargando la plantilla sin ninguna máquina seleccionada #}
+{{ include(
+    'AppBundle:include:general_view.html.twig',
+      {
+      "linias":linia,
+      "viewMode":'testView',
+      "OF":OF,
+      }, with_context = false )  
+}}
+
+    {% endif %}
+
+  </div> {# left side #}
+
+  <div class="right_side" id='OF_right'>
+
+    <div class="one-col-contenedor">
+    
+
+      <div id="resultats_list_contenedor">
+
+      {% if maquina is defined %}
+        {# estamos cargando la plantilla desde 'test_overview', hemos seleccionado una máquina 
+
+        ===  Borrar en modo AJAX =============#}
+{{ include(
+        'AppBundle:include:resultats_list.html.twig',
+          {
+            "maquina":maquina,
+            "OF":OF,
+            "resultats":resultats,
+          },with_context = false )  
+}}
+      
+      {% else %}
+
+      Elige una maquina para inciar el test
+
+      {% endif %} 
+
+      </div> {# resultats list contenedor #}
+    
+    </div>
+    
+ 
+
+        <div id="test_contenedor" class="two-cols-contenedor">
+        {# Bloque donde se muestran los tests y los resultados#}
+        {% block TestSpace %}
+              
+
+        {% endblock TestSpace %}
+        </div> {# test contenedor #}
+
+    </div> {# two cols contenedor #}
+
+
 
 {% endblock pageContent %}
+
+

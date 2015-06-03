@@ -30,6 +30,22 @@ class NewMaquinaType extends AbstractType
             'label_attr' => array('class' => 'intranet-label'),
             'attr' => array('class' => 'intranet-input'),
         ))
+        ->add('linia','entity',
+          array(
+            'label'=>'Linia de produccio',
+            'class'=>'AppBundle:Linia',
+            'property'=>'numero',
+            'label_attr' => array('class' => 'intranet-label'),
+            'attr' => array('class' => 'intranet-input'),
+        ))
+        ->add('sublinia','entity',
+          array(
+            'label'=>'Sublinia de produccio',
+            'class'=>'AppBundle:Sublinia',
+            'property'=>'numero',
+            'label_attr' => array('class' => 'intranet-label'),
+            'attr' => array('class' => 'intranet-input'),
+        ))
         ->add('Crear', 'submit',
           array(
             'label'=>'Crear Maquina',

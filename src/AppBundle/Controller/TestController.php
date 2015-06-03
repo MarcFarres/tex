@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Process\Process;
 
 // Entities
 use AppBundle\Entity\Of;
@@ -65,6 +66,9 @@ class TestController extends Controller
 
     $this->repositoris['Maquina'] = $doctrine
       ->getRepository('AppBundle:Maquina');
+
+    $this->repositoris['Pes'] = $doctrine
+      ->getRepository('AppBundle:Pes');
   }
 
 /**
@@ -72,19 +76,67 @@ class TestController extends Controller
  pàgina inicial del administrador de tests
 
 */
-    public function indexAction()
-    {
-      $this->controllerIni();
-      $OF_repo = $this->repositoris['OF'] ;
+  public function indexAction()
+  {
+    return $this->render('AppBundle:content:admin_tests.html.twig');
+  }
 
-      $OF_list = $this->get('of.manager')->getUnDoneOf();
 
-      return $this->render(
-        'AppBundle:content:admin_tests.html.twig',array(
-        // array con las OF pendientes de finalizar
-        "OF_list" => $OF_list,
-        ));
-    }
+/**
+ 
+ (AJAX) formulari de nova mesura. Guardem la nova mesura en un resultat
+
+*/
+  public function novaMesuraAction(Request $request)
+  {
+    $this->controllerIni();
+
+    $resultat_id = $request->request->get('resultat_id');
+    $valor = $request->request->get('valor');
+    // el resultat a renderitzar
+    $resultat = $this->repositoris['Resultat']->findOneById($resultat_id);
+    
+    $Pes = new Pes();
+    $Pes->setValor($valor);
+    $Pes->setUnitat('gr');
+    
+    $Mesura = $this->get('of.manager')->newMesura($resultat,$Pes);
+
+    return $this->render(
+        'AppBundle:include:mesura_row.html.twig',array(
+        'mesura' => $Mesura, 
+      ));
+  }
+
+
+/**
+ 
+ (AJAX) Finalitzar un resultat
+
+*/
+  public function endResultatAction(Request $request)
+  {
+    $this->controllerIni();
+
+    $resultat_id = $request->request->get('resultat_id');
+    $resultat = $this->repositoris['Resultat']->findOneById($resultat_id);
+    $Test = $resultat->getTest();
+    $OF = $Test->getOf();
+
+    // finalitzem i guardem el resultat
+    $this->get('of.manager')->saveResultat($resultat);
+    // les variables utilitzades per el frontend
+    $maquina = $resultat->getMaquina();
+    $mesures = $resultat->getMesures();
+
+    return $this->render('AppBundle:include:resultat.html.twig',array(
+      "resultat"=>$resultat,
+      "mesures" => $mesures, 
+      "OF" => $OF,
+      "maquina" => $maquina,
+    )); 
+  }
+
 
 /**
  
@@ -97,7 +149,6 @@ class TestController extends Controller
       $OF = new Of();
       $form = $this->createForm(new NewOFType(), $OF);
 
-
       // comprovem si el formulari ja ha sigut enviat
       // -----------------------------------------------------------
       $form->handleRequest($request);
@@ -105,96 +156,60 @@ class TestController extends Controller
         if ($form->isValid()) { 
           // si el formulari es vàlid el guardem a la base de dades
           $this->get('of.manager')->newOf($OF);
-
           // nos redirigimos a la página donde se inicia el test
           return $this->redirect($this
             ->generateUrl('iniciar_test',array(
-              'id' => $OF->getId()
+              'OF' => $OF->getId()
               )), 301
           );
-
         }
+
         return $this->render(
-        	'AppBundle:content:new_OF.html.twig',
-        	array(
-            'form' => $form->createView(), 
+        	'AppBundle:content:new_OF.html.twig',array(
+          'form' => $form->createView(), 
         ));
     }
 
 /**
  
- segon pas: iniciar test
+ vista genral d'una OF
 
 */
-  public function iniTestAction($id ,$maquina_id ,Request $request)
+  public function iniTestAction(Of $OF ,Request $request)
   {   
     $this->controllerIni();
-    // mostrem les OF sense finalitzar
-    $OF_list = $this->get('of.manager')->getUnDoneOf();   
-    // recuperamos la OF solicitada
-    $OF = $this->repositoris['OF']->find($id);   
     // recuperamos la linia testeada
     $linia = $OF->getLinia(); 
-    // variables del frontend
-    $this->page_vars['OF'] = $OF;
-    $this->page_vars['OF_list'] = $OF_list;
-    $this->page_vars['linia'] = $linia;
-
-    $resultat = false;
-    $test = false;
 
     return $this->render(
-      'AppBundle:content:Test_ini.html.twig',
-      $this->page_vars
-    );
+      'AppBundle:content:OF_overview.html.twig',
+    array(
+      // variables del frontend
+      'OF' => $OF,
+      'linia' => $linia,
+    ));
   }
 
 
-/**
- 
- tercer pas: iniciar test  AJAX
-
-*/
-  public function iniTestAjaxAction(Request $request)
-  {   
-    $this->controllerIni();
-    // recuperamos las variables POST
-    $id = $request->request->get('id');
-    $maquina_id = $request->request->get('maquina_id');
-    // recuperamos los objetos
-    $maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
-    $OF = $this->repositoris['OF']->findOneById($id);
-    $linia = $OF->getLinia(); 
-    $test = $OF->getTest();
-    // la enviamos al frontend
-    $this->page_vars['linia'] = $linia;
-    $this->page_vars['OF'] = $OF;
-    $this->page_vars['maquina'] = $maquina;
-
-    $resultats = $this->get('of.manager')->getAllResultats($test->getId(),$maquina_id);
-    // Enviem la llista de resultats al frontend
-    $this->page_vars['resultats'] = $resultats;
-
-    return $this->render(
-      'AppBundle:include:new_test.html.twig',
-      $this->page_vars
-    );
-  }
 
 
   /**
  
- Renderitzem un nou resultat (new test vision)
+ Creem un nou resultat (new test vision)
 
 */
-public function newTestAction($OF_id , $maquina_id){
+public function newTestAction(Request $request){
   $this->controllerIni();
+
+  $OF_id = $request->request->get('OF_id');
+  $maquina_id = $request->request->get('maquina_id');
+
   $OF = $this->repositoris['OF']->findOneById($OF_id);
   $Maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
 
   $resultat = $this->get('of.manager')->newResultat($OF,$Maquina);
-  return $this->redirectToRoute('render_result',array('resultat_id'=>$resultat->getId()));
 
+  return $this->testAjaxAction($resultat->getId(),$request);
 }
 
 
@@ -214,6 +229,7 @@ public function newTestAction($OF_id , $maquina_id){
     $Test = $resultat->getTest();
     $OF = $Test->getOf();
     $Maquina = $resultat->getMaquina();
+    $mesures = $resultat->getMesures();
     $linia = $OF->getLinia();
     // obtenim tots els resultats associats a la maquina i al test
     $resultats = $this->get('of.manager')->getAllResultats($Test->getId(),$Maquina->getId());
@@ -226,6 +242,7 @@ public function newTestAction($OF_id , $maquina_id){
     $this->page_vars['resultats'] = $resultats;
     $this->page_vars['OF_list'] = $OF_list;
     $this->page_vars['linia'] = $linia;
+    $this->page_vars['mesures'] = $mesures;
 
     // la nova mesura de pes
     $Pes = new Pes(); 
@@ -251,9 +268,55 @@ public function newTestAction($OF_id , $maquina_id){
     $this->page_vars['resultParamsForm'] = $resultParamsForm->createView();  
 
   return $this->render(
-    'AppBundle:content:resultat.html.twig',
+    'AppBundle:content:test_overview.html.twig',
     $this->page_vars
   ); 
+}
+
+/**
+
+  test AJAX : carreguem un resultat (render_result_ajax)
+
+*/
+public function testAjaxAction($resultat_id = false, Request $request){
+    $this->controllerIni();
+    // el resultat a renderitzar
+    if(!$resultat_id){
+      // llamada ajax
+      $resultat_id = $request->request->get('resultat');
+    }
+    
+
+    $resultat = $this->repositoris['Resultat']->findOneById($resultat_id);
+    
+    $Test = $resultat->getTest();
+    $OF = $Test->getOf();
+    $maquina = $resultat->getMaquina();
+    $mesures = $resultat->getMesures();
+  
+
+    $page_to_render = '';
+    $page_vars = array();
+    $page_vars['resultat'] = $resultat;
+    $page_vars['mesures'] = $mesures;
+
+    if($resultat->getDone()){
+      $page_vars['OF'] = $OF;
+      $page_vars['maquina'] = $maquina;
+      $page_to_render = 'AppBundle:include:resultat.html.twig';
+    }
+    else{
+      $Pes = new Pes();
+      $mesuraForm = $this->createForm(new NewMesuraType(), $Pes);  
+      $resultParamsForm = $this->createForm(new ResultParamsType(), $resultat);
+
+      $page_to_render = 'AppBundle:include:test.html.twig'; 
+      $page_vars['resultParamsForm'] = $resultParamsForm->createView(); 
+      $page_vars['mesuraForm'] = $mesuraForm->createView();
+    }
+
+  return $this->render($page_to_render, $page_vars); 
+
 }
 
 
@@ -284,8 +347,26 @@ public function newTestAction($OF_id , $maquina_id){
 public function llegirMesuraAction(Request $request)    
 {
     $isAjax = $request->isXmlHttpRequest();
-    if ($isAjax) {   
-      $respuesta = $request->request->get('valor2');
+    if ($isAjax) {  
+
+      $respuesta = '';//$request->request->get('valor2');
+      
+      $process = new Process('python prueba.py');
+
+      $process->setIdleTimeout(10 * 60);
+
+      $process->run();
+
+
+
+    // executes after the command finishes
+    if (!$process->isSuccessful()) {
+      $respuesta .= $process->getErrorOutput();
+    }
+
+    $respuesta .= $process->getOutput();
+
+
       return new Response($respuesta,200);
     }
 
@@ -409,7 +490,7 @@ public function llegirMesuraAction(Request $request)
     $page_vars['OF_list'] = $OF_list;
 
     return $this->render(
-      'AppBundle:content:OF_overview.html.twig',
+      'AppBundle:content:OF_report.html.twig',
         $page_vars
     );
   }
@@ -428,7 +509,7 @@ public function llegirMesuraAction(Request $request)
 
     return $this
         ->render(
-          'AppBundle:content:OF_overview.html.twig',
+          'AppBundle:content:OF_report.html.twig',
            $page_vars
            );
 
@@ -445,7 +526,7 @@ public function llegirMesuraAction(Request $request)
 
     return $this
         ->render(
-          'AppBundle:content:OF_overview.html.twig',
+          'AppBundle:content:OF_report.html.twig',
            $page_vars
            );
   }
@@ -456,10 +537,54 @@ public function llegirMesuraAction(Request $request)
  Report d'una maquina
 
 */  
-  public function maquinaReportAction(Maquina $maquina, Request $request)    
+  public function maquinaReportAction(OF $OF, Maquina $maquina, Request $request)    
   {
 
 
+  }
+
+
+/**
+
+ Carrega la llista de OFs sense finalitzar
+
+*/
+public function list_OF_pendentsAction() 
+  {
+    // recuperem les OF sense finalitzar
+    $OF_list = $this->get('of.manager')->getUnDoneOf();
+
+    return $this->render(
+      'AppBundle:include:list_OF_pendents.html.twig',array(
+    "OF_list" => $OF_list,
+    ));
+}
+
+
+/**
+ 
+  (AjaX) enviem la llista dels resultats per a una màquina dins un test
+
+*/
+  public function listResultatsAction(Request $request)
+  {   
+    $this->controllerIni();
+    // recuperamos las variables POST
+    $OF_id = $request->request->get('id');
+    $maquina_id = $request->request->get('maquina_id');
+    // recuperamos los objetos
+    $maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
+    $OF = $this->repositoris['OF']->findOneById($OF_id);
+    $test = $OF->getTest();
+    // recuperem tots els resultats de la màquina dins el test actual
+    $resultats = $this->get('of.manager')->getAllResultats($test->getId(),$maquina_id);
+
+    return $this->render(
+      'AppBundle:include:resultats_list.html.twig',array(
+        'OF' => $OF,
+        'maquina' => $maquina,
+        'resultats' => $resultats,
+      ));
   }
 
 }

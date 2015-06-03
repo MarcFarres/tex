@@ -2,7 +2,7 @@
 #tests_table_wrapper
 {
   margin:50px;
-  background-color: $clouds;
+  background-color: transparent;
   @include rounded(4px);
 }
 
@@ -46,7 +46,7 @@
 
 #tests_table
 {
-
+  font-family: Helvetica;
   >thead
   {
 	>tr
@@ -54,7 +54,7 @@
 	  >th
 	  {
 		text-align: left;
-		font-size: 22px;
+		font-size: 20px;
 		padding-left:20px;
 		border:solid 1px #ddd;
 	  }
@@ -65,10 +65,29 @@
   {
   	>tr
   	{
+
+  	  &:nth-child(2n)
+  	  	{
+  	  	  background-color:#ddd;
+  	  	}
+
   	  >td
   	  {
-  	  	 padding-left:20px;
+  	  	 padding-left:25px;
   	  	 height:40px;
+
+  	  	 >.veure
+  	  	 {
+            color:green;
+  	  	 }
+  	  	 >.borrar
+  	  	 {
+            color:$alizarin;
+  	  	 }
+  	  	 >.table_icon
+  	  	 {
+            margin-right:15px;
+  	  	 }
   	  }
   	}
   }

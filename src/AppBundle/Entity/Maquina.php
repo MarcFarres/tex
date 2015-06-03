@@ -39,7 +39,12 @@ class Maquina
     * @ORM\OneToMany(targetEntity="Resultat" , mappedBy="maquina")
     **/ protected $resultats;
 
-
+    
+    /**
+    * Bidirectional    (OWNING SIDE) 
+    * @ORM\ManyToOne(targetEntity="Linia",inversedBy="maquines")
+    * @ORM\JoinColumn(name="linia_id",referencedColumnName="id")
+    **/ protected $linia;
 
     
     /**
@@ -160,5 +165,28 @@ class Maquina
     public function getResultats()
     {
         return $this->resultats;
+    }
+
+    /**
+     * Set linia
+     *
+     * @param \AppBundle\Entity\Linia $linia
+     * @return Maquina
+     */
+    public function setLinia(\AppBundle\Entity\Linia $linia = null)
+    {
+        $this->linia = $linia;
+
+        return $this;
+    }
+
+    /**
+     * Get linia
+     *
+     * @return \AppBundle\Entity\Linia 
+     */
+    public function getLinia()
+    {
+        return $this->linia;
     }
 }

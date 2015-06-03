@@ -1,0 +1,26 @@
+/*
+
+  Gradient:
+  ================================================================================
+
+    . $Rounded
+        rounded($radius)
+
+    . $Direction
+        border-top-radius($radius)
+        border-bottom-radius($radius)
+        border-left-radius($radius)
+        border-right-radius($radius)
+
+
+---------------------------------------------------------------------------------------
+
+*/
+/* ====================  /*
+  $Rounded ~~  default rounded
+/* ==================== */
+/* ====================  /*
+  $Direction rounded ~~  Single side border-radius
+/* ==================== */
+
+/*# sourceMappingURL=rounded.css.map */

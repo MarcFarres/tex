@@ -8,12 +8,22 @@
 
   	<div class="left_side">
 
-      {% image '@AppBundle/Resources/public/images/maquinaria.png'
+      {# {% image '@AppBundle/Resources/public/images/maquinaria.png'
         filter='' output='/images/maquinaria.png' %}
         <img src="{{ asset_url }}" alt="Maquines"/>
 
       {% endimage %}
-
+    #}
+    
+       {{ include(
+    'AppBundle:form:intranet_admin.html.twig',
+    {
+        "form":form,
+        "form_title":"Editar Sublinia",
+      }, 
+      with_context = false
+      )  
+      }} 
 
 
     </div>
@@ -21,15 +31,7 @@
     <div class="right_side">
 
     	{# Incluimos el formulario para añadir linias de fabricación #}
-  {{ include(
-    'AppBundle:form:intranet_admin.html.twig',
-    {
-        "form":form,
-        "form_title":"Crear Sublinia",
-  }, 
-  with_context = false
-  )  
-  }} 
+ 
 
     </div>
 

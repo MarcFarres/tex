@@ -1,0 +1,320 @@
+@charset "UTF-8";
+/*------------------------------------*\
+  /mixins, ├ìndice: 
+
+  ********************************************************
+  *******  faltan las explicaciones de cada mixin ********
+  ********************************************************
+  
+ Gradient:
+ */
+/*
+
+  Gradient:
+  ================================================================================
+
+    . $Linear
+        linear-gradient($from,$to)
+
+    . $Radial
+        gradient-radial-three-colors($color1,$color2,$color3)
+        gradient-radial($inner-color, $outer-color)
+
+    . $Horizontal
+        gradient-horizontal($start-color, $end-color, $start-percent, $end-percent)  
+
+    . $Vertical
+        gradient-vertical($start-color, $end-color, $start-percent, $end-percent)
+
+    . $Directional
+        gradient-directional($start-color, $end-color, $deg)
+
+    . $Striped
+        gradient-striped($color, $angle)
+
+---------------------------------------------------------------------------------------
+
+*/
+/* ====================  /*
+	$Linear gradient
+/* ==================== */
+/* ====================  /*
+	$Radial gradient
+/* ====================  */
+/* ====================  /*
+  $Gradient horizontal
+/* ====================  */
+/* ====================  /*
+  $Gradient vertical
+/* ====================  */
+/* ====================  /*
+  $Gradient directional
+/* ====================  */
+/* ====================  /*
+  $Gradient horizontal three colors
+/* ====================  */
+/* ====================  /*
+  $Striped
+/* ====================  */
+                                  /* 
+  ================================================================================
+
+ Flex :
+ */
+/*------------------------------------*\
+  #flex ~ ├ìndice:
+
+  		$Flexbox
+
+  		$Flex()
+			- none | <flex-grow> <flex-shrink> <flex-basis>
+			** longitud de los elementos flex
+
+  		$Inline-flex
+		
+		$Flex-dir(row)
+			- row / row-reverse / column / 'column-reverse'
+			** establece el eje principal
+
+		$Flex-wrap(nowrap)	
+			** controla el overflow de las nuevas lineas
+
+		$Flex-flow(row nowrap)
+			** se trata de un shorthand para los dos anteriores
+
+		$Order()	
+			** se realiza sobre un elemento de un contenedor flex
+			** por defecto todos tienen 0
+
+		$Flex-grow()
+			- un entero positivo
+
+		$Flex-shrink(1)	
+			- un entero positivo
+
+		$Flex-basis()
+			- un entero positivo
+
+		$Justify-content()
+			- flex-start | flex-end | center | space-between | space-around
+			** como se disponen en el eje principal
+
+		$Align-items()
+			- flex-start | flex-end | center | baseline | stretch
+			** como se disponen en el eje secundario
+
+		$Align-self()
+			- auto | flex-start | flex-end | center | baseline | stretch	
+			** como un elemento se dispone en el eje secundario
+
+		$Align-content()
+			- flex-start | flex-end | center | space-between | space-around | stretch
+			** gestiona el espacio vacio entre linieas en caso de overflow
+
+*/
+                              /* 
+ ================================================================================
+
+ Rounded :
+ */
+/*
+
+  Gradient:
+  ================================================================================
+
+    . $Rounded
+        rounded($radius)
+
+    . $Direction
+        border-top-radius($radius)
+        border-bottom-radius($radius)
+        border-left-radius($radius)
+        border-right-radius($radius)
+
+
+---------------------------------------------------------------------------------------
+
+*/
+/* ====================  /*
+  $Rounded ~~  default rounded
+/* ==================== */
+/* ====================  /*
+  $Direction rounded ~~  Single side border-radius
+/* ==================== */
+                                 /*
+ ================================================================================
+
+ Transform :
+ */
+/*
+
+  Transform:
+  ================================================================================
+
+    . $Rotate
+        - rotateX($degs)
+        - rotateY($degs)
+        - rotateZ($degs)
+    
+    . $Translate
+        - translateZ($z)
+        - translate3D($x,$y,$z)
+
+    .$Perspective
+
+    .$Scale
+
+---------------------------------------------------------------------------------------
+
+*/
+/* ====================  /*
+    $Rotate
+/* ==================== */
+/* ====================  /*
+    $Translate
+/* ==================== */
+                                   /*
+ ================================================================================
+
+ Shadow :
+ */
+/* ====================  /*
+	$Shadow
+/* ==================== */
+/* ====================  /*
+	$In shadow
+/* ==================== */
+/* ====================  /*
+	$Box shadow
+/* ==================== */
+                                /*
+ ================================================================================
+
+ user-select :
+ */
+                                     /*
+ ================================================================================
+
+ animations :
+ */
+/*------------------------------------*\
+  $Animation
+  * 
+  ** se utiliza para crear las animaciones de nuestra p├ígina en:
+  ** 'effects/animations.scss'
+\*------------------------------------*/
+/*------------------------------------*\
+  $Bind-animation
+  * 
+  ** para subscribirse a una animaci├│n
+  ** params : $name,$time,$timing,$delay,direction,it-count
+\*------------------------------------*/
+                                   /*
+ ================================================================================
+
+ modernizr :
+ */
+.opacity.csstransforms .test {
+  opacity: 0;
+  transform: translateX(10px); }
+.no-js .test, .no-opacity .test, .no-csstransforms .test {
+  visibility: hidden;
+  left: 10px; }
+
+                                   /*
+ ================================================================================
+
+
+		$Prefijos()
+
+		$Transition()
+
+		$Bezier-transition()
+		
+		$Opacity()
+
+		$media-query-bp()
+		
+		$Background-size()
+
+		$Max-Width()
+
+		$clearFix
+
+		$Tab-focus
+
+		$Align-text()
+
+*/
+/*------------------------------------*\
+  $Prefijos
+\*------------------------------------*/
+/* ====================  /*
+	$Transition
+/* ==================== */
+/* ====================  /*
+	$Bezier-transition
+/* ==================== */
+/*------------------------------------*\
+  $Opacity
+\*------------------------------------*/
+/*------------------------------------*\
+  $Responsive ~ Breakpoints
+  $Media-query-bp
+\*------------------------------------*/
+/*------------------------------------*\
+  $Background-size
+\*------------------------------------*/
+/*------------------------------------*\
+  $RetinaScreen
+\*------------------------------------*/
+/*------------------------------------*\
+  $Contenido
+\*------------------------------------*/
+/*------------------------------------*\
+  $Listas
+\*------------------------------------*/
+/*------------------------------------*\
+  $Max-Width
+\*------------------------------------*/
+/*------------------------------------*\
+  $Tab-focus
+\*------------------------------------*/
+/*------------------------------------*\
+    $RESET
+\*------------------------------------*/
+html, body, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption, article, aside, figure, footer, header, hgroup, menu, nav, section, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
+  background: transparent; }
+
+article, aside, figure, footer, header, hgroup, nav, section {
+  display: block; }
+
+*, *::before, *::after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box; }
+
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0; }
+
+img {
+  max-width: 100%; }
+
+ul {
+  list-style-type: none; }
+
+a, a:visited {
+  text-decoration: none;
+  color: black; }
+
+/*# sourceMappingURL=framework.css.map */

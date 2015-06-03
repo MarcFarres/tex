@@ -1,0 +1,8 @@
+.opacity.csstransforms .test {
+  opacity: 0;
+  transform: translateX(10px); }
+.no-js .test, .no-opacity .test, .no-csstransforms .test {
+  visibility: hidden;
+  left: 10px; }
+
+/*# sourceMappingURL=modernizr.css.map */

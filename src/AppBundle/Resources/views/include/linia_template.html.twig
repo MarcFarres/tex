@@ -22,7 +22,7 @@
             <div class="sublinia-familia">
             	{% set familia = sublinia.getFamilia() %}
             	<div class="familia">
-            	  <span><a href="{{ path('nova_sublinia') }}/{{ sublinia.id }}">{{ familia.nom }}</a></span>
+            	  <span><a href="{{ path('editar_sublinia',{'Sublinia':sublinia.id}) }}">{{ familia.nom }}</a></span>
             	</div>
             </div>
 
@@ -33,7 +33,7 @@
               	{% for maquina in maquines %}   
 
 {% if viewMode is defined and viewMode == 'testView'%}
-
+{# renderizamos cada màquina con el código de color adecuado #}
   {{ render(controller(
     'AppBundle:Test:getTestMaquina',
     { 'maquina_id': maquina.id ,'OfId' : OF.id }
@@ -41,12 +41,13 @@
   }}
             
 {% else %}
+
           <div class="maquina">
 						<span>
-                {{ maquina.numero }}
+                <a href="{{path('nova_maquina',{'maquina_id':maquina.id})}}">{{ maquina.numero }}</a>
             </span>
-
 					</div>
+
 {% endif %}
 
               	{% endfor %}

@@ -1,0 +1,72 @@
+{# Lista con los tests de una máquina para la OF actual #}
+    
+  <div class="maquina_list_tests">
+    <h2> Tests. Màquina {{ maquina.numero }}</h2>
+    <table class="intranet_table_list mesures">
+      <thead>
+        <tr>
+          <th>Dia</th>
+          <th>Hora</th>
+          <th>Finalitzat</th>
+          <th>Resultat</th>
+          <th>Accions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+{% if resultats|length > 0 %}
+
+{% for resultat in resultats %}
+
+        <tr>
+          <td> {{ resultat.data | date('d-m-Y')  }}</td>
+          <td> {{ resultat.data | date('H:i:s')  }}</td>
+          <td> {{ resultat.done ? 'Si' : 'No' }}</td>
+          <td> 
+
+{% if resultat.done %}
+
+  {% if resultat.testok %}             
+      OK
+  {% else %}
+      ERROR
+  {% endif %}
+
+{% else %}
+      NO FINALITZAT
+{% endif %}
+          </td>
+          <td >
+          {#  <a href="{{path(
+             'render_result',{'resultat_id':resultat.id})}}">
+</a> #}
+            <span class='gotest' data-resultat='{{resultat.id}}'>Veure</span>
+
+           </td>
+        </tr>
+
+{% endfor %}
+
+{% endif %}
+    </tbody>
+  </table>
+
+  <div class="actions">
+
+              <span 
+                id='new_result' 
+                data-ofId='{{OF.id}}' 
+                data-maquinaId='{{maquina.id}}' >
+                Nou test
+              </span>
+
+    <a href="{{path(
+            'maquina_report',{
+              'OF':OF.id,
+              'maquina':maquina.id
+              })}}"> 
+              Report dels tests realitzats a la màquina 
+    </a>
+  </div>
+</div>

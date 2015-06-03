@@ -41,7 +41,10 @@ class NewMesuraType extends AbstractType
     {
       $resolver->setDefaults([
         //'data_class' => 'Acme\TaskBundle\Entity\Task',
-        'attr' => ['class' => 'intranet-form']
+        'attr' => [
+          'class' => 'intranet-form',
+          'id' => 'novaMesura',
+        ]
       ]);
     }
 }

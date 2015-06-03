@@ -1,19 +1,6 @@
-{#
-  Variables que es reben:
-
-    . OF - Ordre de Fabricació
-    . resultat - Resultat associat al test i a la màquina
-#}
-
-
-{% set maquina = resultat.maquina %}
-{% set sublinia = maquina.sublinia %}
-
 
 <p>Parametres a mostrar: </p>
 
-<p> Maquina num. {{ maquina.numero }}</p>
-<p> Of: {{ OF.numero }}</p>
 
 <p>Data del test</p>
 <p>dia: {{ resultat.data | date('d-m-Y') }} </p>
@@ -32,7 +19,7 @@
 <p> Desviació standard de les dades experimentals: {{ resultat.dev }} </p>
 <p>Desviació standard prevista: {{ resultat.devmax }}</p>
 
-{% set mesures = resultat.getmesures() %}
+
 {% set mesures_length = mesures | length %}
 
 <p>numero de mesures realitzades: {{ mesures_length }}</p>

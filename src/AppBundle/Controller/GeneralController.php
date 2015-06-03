@@ -13,6 +13,7 @@ use AppBundle\Entity\Maquina;
 // formularis
 use AppBundle\Form\Type\NewLiniaType ;
 use AppBundle\Form\Type\NewSubliniaType ;
+use AppBundle\Form\Type\EditSubliniaType ;
 use AppBundle\Form\Type\NewFamiliaType ;
 use AppBundle\Form\Type\NewMaquinaType ;
 use AppBundle\Form\Type\MaquinaToSubliniaType ;
@@ -114,14 +115,55 @@ class GeneralController extends Controller
 
 
 /**
+  editar una sublinia
+*/
+     public function editSubliniaAction(Sublinia $Sublinia,Request $request)
+    {
+      
+      if(!$Sublinia)
+      {
+        throw $this->createNotFoundException("La sublinia no s'ha trobat");
+      }
+      $form = $this->createForm(new EditSubliniaType(), $Sublinia);
+
+
+      // comprovem si el formulari ja ha sigut enviat
+      // -----------------------------------------------------------
+      $form->handleRequest($request);
+
+        if ($form->isValid()) { 
+        // si el formulari es vàlid el guardem a la base de dades
+
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($Sublinia);
+          $em->flush();
+          
+          return $this->redirectToRoute('visio_general');
+        }
+        return $this->render(
+          'AppBundle:content:new_Sublinia.html.twig',
+          array(
+            'form' => $form->createView(), 
+        ));
+    }
+
+
+/**
   creació d'una nova maquina
 */
-     public function newMaquinaAction(Request $request)
+     public function newMaquinaAction($maquina_id, Request $request)
     {
+      $Maquina = '';
 
-      $Maquina = new Maquina();
+      if($maquina_id){
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Maquina');
+        $Maquina = $repo->findOneById($maquina_id); 
+      }
+      else{
+        $Maquina = new Maquina();
+      }
+      
       $form = $this->createForm(new NewMaquinaType(), $Maquina);
-
 
       // comprovem si el formulari ja ha sigut enviat
       // -----------------------------------------------------------
@@ -134,6 +176,7 @@ class GeneralController extends Controller
           $em->persist($Maquina);
           $em->flush();
 
+          return $this->redirectToRoute('visio_general');
         }
         return $this->render(
         	'AppBundle:content:new_Maquina.html.twig',
@@ -141,6 +184,8 @@ class GeneralController extends Controller
             'form' => $form->createView(), 
         ));
     }
+
+
 
 /**
   Afegir una maquina a una sublinia

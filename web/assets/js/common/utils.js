@@ -1,27 +1,8 @@
 
 (function(){
-/*
-   Índice de contenidos:
-   --------------------
-   
-   . variables globales
-   . helper functions
-
-*/
-
-
-/* ------------------------------[ variables globales: ]  */
-/* =======================================================*/
-
-
-
-/* -----------------------------------------------------  */
-
-
 
 
 $( document ).ready(function(){ });
-
   
   $('#tests_table').dataTable({
 
@@ -66,7 +47,7 @@ $('#intranet_menu_lat').on('click','.clicked',function(){
 
 // formularios ocultables
 // fade in content
-$('.intranet-form').on('click','.unclicked',function(){
+$('#test_contenedor').on('click','.unclicked',function(){
   // animación de la flecha
   click_element($(this));
   // expansión del contenido
@@ -74,7 +55,7 @@ $('.intranet-form').on('click','.unclicked',function(){
 });
 
 // fade out content
-$('.intranet-form').on('click','.clicked',function(){
+$('#test_contenedor').on('click','.clicked',function(){
   // animación de la flecha
   unclick_element($(this));
   // desparición del contenido
@@ -85,10 +66,58 @@ $('.intranet-form').on('click','.clicked',function(){
 /* ------------------------------[ AJAX ]  */
 // ================================================================
 
+// guardar una nova mesura de pes capturada
+
+$('#test_contenedor').on('submit','#novaMesura', function(){
+  
+  var params = $(this).serialize() ;
+
+$.ajax({ 
+  data:  params,
+  url:   novamesura,
+  type:  'post',
+  dataType: "html",
+  beforeSend: function () {
+     
+    } , 
+  success:  function (response) {
+    $('#mesures_body').append(response);
+  },
+  });
+
+
+return false;
+
+});
+
+
+// finalitzem un resultat
+
+$('#test_contenedor').on('submit','#endResult', function(){
+  
+  var params = $(this).serialize() ;
+
+$.ajax({ 
+  data:  params,
+  url:   finalitzar_resultat,
+  type:  'post',
+  dataType: "html",
+  beforeSend: function () {
+     
+    } , 
+  success:  function (response) {
+    $('#test_contenedor').html(response);
+  },
+  });
+
+
+return false;
+
+});
 
 // capturar les mesures de pes de la balança:
 
-$('#realitzar_mesura').on('click', function(){
+$('#test_contenedor').on('click','#realitzar_mesura', function(){
 
   var Id = $(this).attr('data-resultatId');
   var container = $(this);
@@ -113,11 +142,35 @@ $.ajax({
 
 });
 
+// generar un nou test
+
+$('#resultats_list_contenedor').on('click','#new_result', function(){
+
+  var OF_id = $(this).attr('data-ofId');
+  var maquina_id = $(this).attr('data-maquinaId');
+
+
+  var parametros ="OF_id=" + OF_id + "&maquina_id=" + maquina_id ;
+
+
+$.ajax({
+  data:  parametros,
+  url:   nou_resultat,
+  type:  'post',
+  beforeSend: function () {
+    
+    } , 
+  success:  function (response) {
+    $('#test_contenedor').html(response);
+  },
+  });
+
+});
+
 
 // carregar els tests d'una màquina
 
-
-$('.new_test').on('click', function(){
+$('.results_list').on('click', function(){
 
   var parametros = {
       "maquina_id" : $(this).attr('data-maquina'),
@@ -131,6 +184,30 @@ $('.new_test').on('click', function(){
     $.ajax({
       data:  parametros,
       url:   maquina_route,
+      type:  'post',
+      beforeSend: function () {
+        
+      } , 
+      success:  function (response) {
+      $('#resultats_list_contenedor').html(response);
+      // buidem la pantalla del test
+      $('#test_contenedor').html('');
+   },
+  });
+
+});
+
+
+$('#resultats_list_contenedor').on('click','.gotest',function(){
+ 
+  var parametros = {
+      "resultat" : $(this).attr('data-resultat'),
+    };
+
+
+    $.ajax({
+      data:  parametros,
+      url:   goToTest,
       type:  'post',
       beforeSend: function () {
         

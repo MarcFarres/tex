@@ -68,9 +68,10 @@
   --------------------------------------------------------
 */{
   width:150px;
-  height:120px;
+  height:110px;
   @include rounded(3px);
   border: solid 2px darken($clouds,3);
+  font-family: Helvetica;
 
   background-color:lighten($clouds,3);
 
@@ -88,6 +89,7 @@
     height:30px;
     background-color:darken($clouds,3);
     @extend %column_container;
+     font-weight: bold;
 
     >span{
       margin:auto;
@@ -97,16 +99,17 @@
   >.content
   {
 
-    height:90px;
+    height:80px;
 
     >.text
     {
       @extend %column_container;
-      height:55px;
+      height:100%;
       
       >span
       {
         margin:auto;
+        padding:6px;
       }
     }
     >.buttons
@@ -122,4 +125,106 @@
 
   }
 
+  &.blue
+  {
+    >.title
+    {
+      background-color:$blue_river;
+      color:white;
+    }
+
+    >.content
+    {
+
+    }
+  }
+
+  &.green
+  {
+    >.title
+    {
+      background-color:$emerald;
+      color:white;
+    }
+
+    >.content
+    {
+
+    }
+  }
+
+  &.yellow
+  {
+    >.title
+    {
+      background-color:$sun;
+      color:white;
+    }
+
+    >.content
+    {
+
+    }
+  }
+
+  &.purple
+  {
+    >.title
+    {
+      background-color:$amethyst;
+      color:white;
+    }
+
+    >.content
+    {
+
+    }
+  }
+
+  &.orange
+  {
+    >.title
+    {
+      background-color:$orange;
+      color:white;
+    }
+
+    >.content
+    {
+
+    }
+  }
+
 } // frame info
+
+
+/* =======================================================
+  Frame diseñado para mostrar botones que realizan 
+  diferentes acciones
+  */.frame-button/*
+  --------------------------------------------------------
+*/{
+    position:relative;
+    font-family: Helvetica;
+    font-size:16px;
+    float:left;
+    margin:15px;
+    padding:10px;
+    max-width:150px;
+    background-color:$emerald;
+    
+
+    @include rounded(8px);
+    @include shadow(3px ,3px ,6px, #333);
+
+    >a
+    {
+      @extend %column_container;
+      height:100%;
+
+      >span{
+        color:white;
+        margin:auto;
+      }
+    }
+  }

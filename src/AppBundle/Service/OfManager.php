@@ -2,7 +2,7 @@
 
 namespace AppBundle\Service;
 
-use AppBundle\Entity\Of as OF;
+use AppBundle\Entity\Of;
 use AppBundle\Entity\Maquina as Maquina;
 
 // entidades utilizadas
@@ -57,7 +57,7 @@ class OfManager
 */
   public function getUnDoneOf()
   {
-    $OF_list = $this->entityManager->getRepository('AppBundle:OF')
+    $OF_list = $this->entityManager->getRepository('AppBundle:Of')
       ->findBy(array(
         'done' => false,
       ),array(
@@ -114,7 +114,7 @@ class OfManager
 *
 *
 */
-  public function newResultat(OF $OF,Maquina $maquina)
+  public function newResultat(Of $OF,Maquina $maquina)
   {
   	$em = $this->entityManager;
 
@@ -190,6 +190,8 @@ class OfManager
     $em->persist($pes);
 
     $em->flush();
+
+    return $Mesura;
   }
 
 

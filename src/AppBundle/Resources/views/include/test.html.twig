@@ -4,34 +4,27 @@
     . OF - Ordre de Fabricació
     . resultat - Resultat associat al test i a la màquina
 #}
-
-
-{% set maquina = resultat.maquina %}
-{% set sublinia = maquina.sublinia %}
-
-<p> Maquina num. {{ maquina.numero }}</p>
-
+<div class="right_side">
 <p> Resultat id: {{ resultat.id }}</p>
 
 
 <p> Finalitzat? {{ resultat.done ? 'Si' : 'No' }}</p>
 <p> Exit? {{ resultat.testok ? 'Si' : 'No' }}</p>
 
-{{ 
-   include(
-    'AppBundle:form:intranet_admin.html.twig',
-    {
+
+{{ include( 'AppBundle:form:intranet_admin.html.twig', {
       "form":resultParamsForm,
       "form_title":"Parametres del test",
       "form_mode":"plegable",
-    }, 
-    with_context = false
-    ) 
-}}
+    }, with_context = false ) }}
+
+<input type="hidden" name='resultat_id' value='{{ resultat.id }}'>
+
 </form>
 
+</div>
+<div class="left_side">
 
-{% set mesures = resultat.getmesures() %}
 <table class="intranet_table_list mesures">
   <thead>
       <tr>
@@ -40,32 +33,30 @@
         <th>Densitat</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id='mesures_body'>
       
 {% for mesura in mesures %}
 
-  <tr>
-    <td>{{ mesura.numero }}</td> 
-    <td>{{ mesura.pes.valor }} {{  mesura.pes.unitat }}</td> 
-    <td>{{ mesura.densitat.valor }} {{ mesura.densitat.unitat }}</td> 
 
-  </tr>
+  {{ include('AppBundle:include:mesura_row.html.twig', {
+      "mesura":mesura
+    }, with_context = false ) }}
+
+
 {% endfor %}
 
   </tbody>
 
 </table>
 
-{{ 
-   include(
-    'AppBundle:form:intranet_admin.html.twig',
-    {
+
+{{ include( 'AppBundle:form:intranet_admin.html.twig', {
       "form":mesuraForm,
       "form_title":"Nova mesura",
-    }, 
-    with_context = false
-    ) 
-}}
+    }, with_context = false ) }}
+
+
+<input type="hidden" name='resultat_id' value='{{ resultat.id }}'>
 
 <div class='buttons'>
   <button 
@@ -79,6 +70,4 @@
 
 <div class="clear"></div>
 
-<script>
-  var ajax_route = '{{ path('llegir_mesura') }}' ;
-</script>
+</div>

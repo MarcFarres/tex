@@ -15,7 +15,12 @@ nova_linia:
 
 nova_sublinia:
     path: /nova_sublinia/{id}
-    defaults: { _controller: AppBundle:General:newSublinia, id:0 }
+    defaults: { _controller: AppBundle:General:newSublinia, id : false }
+
+
+editar_sublinia:
+    path: /editar_sublinia/{Sublinia}
+    defaults: { _controller: AppBundle:General:editSublinia }
 
 
 nova_familia:
@@ -24,8 +29,8 @@ nova_familia:
 
 
 nova_maquina:
-    path: /nova_maquina
-    defaults: { _controller: AppBundle:General:newMaquina }
+    path: /nova_maquina/{maquina_id}
+    defaults: { _controller: AppBundle:General:newMaquina , maquina_id : false}
 
 
 afegir_maquina:
@@ -49,25 +54,46 @@ OF_view:
 
 
 iniciar_test:
-    path: /tests/test_inici/{id}/{maquina_id}
-    defaults: { _controller: AppBundle:Test:iniTest , maquina_id : false}
+    path: /tests/test_inici/{OF}
+    defaults: { _controller: AppBundle:Test:iniTest }
 
 
-iniciar_test_ajax:
-    path: /tests/test_inici
-    defaults: { _controller: AppBundle:Test:iniTestAjax }
+resultats_list_ajax:
+    path: /tests/resultatsListAjax/
+    defaults: { _controller: AppBundle:Test:listResultats }
     requirements:
         _method:  POST
 
 
 reopen_result:
     path: /tests/reopen/{resultat}
-    defaults: { _controller: AppBundle:Test:reopenResult , resultat_id : fasle}
+    defaults: { _controller: AppBundle:Test:reopenResult , resultat_id : false}
 
 
 render_result:
     path: /tests/test/{resultat_id}
-    defaults: { _controller: AppBundle:Test:test , resultat_id : fasle}
+    defaults: { _controller: AppBundle:Test:test , resultat_id : false}
+
+
+render_result_ajax:
+    path: /tests/renderResult
+    defaults: { _controller: AppBundle:Test:testAjax}
+    requirements:
+        _method:  POST
+
+
+nova_mesura_ajax:
+    path: /tests/novaMesura
+    defaults: { _controller: AppBundle:Test:novaMesura}
+    requirements:
+        _method:  POST
+
+
+finalitzar_resultat:
+    path: /tests/finalitzar_resultat
+    defaults: { _controller: AppBundle:Test:endResultat}
+    requirements:
+        _method:  POST
 
 
 delete_result:
@@ -75,10 +101,11 @@ delete_result:
     defaults: { _controller: AppBundle:Test:deleteResult }
 
 
-nou_test:
-    path: /tests/test/{OF_id}/{maquina_id}
+nou_resultat:
+    path: /tests/new
     defaults: { _controller: AppBundle:Test:newTest }
-
+    requirements:
+        _method:  POST
 
 tests_historial:
     path: /tests/historial
@@ -92,5 +119,5 @@ llegir_mesura:
         _method:  POST
 
 maquina_report:
-    path: /tests/report/maquina/{maquina}
+    path: /tests/report/maquina/{OF}/{maquina}
     defaults: { _controller: AppBundle:Test:maquinaReport }
