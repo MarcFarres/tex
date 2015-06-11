@@ -218,6 +218,9 @@ class Resultat
         } // end foreach
 
         $resultat = $math->stdDev($values);
+        // apliquem la fórmula del client
+          $resultat = $resultat/($this->mitjana) ;
+          $resultat = $resultat * 100;
         // comprovacions ...
 
         $this->dev = $resultat;
