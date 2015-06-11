@@ -19,18 +19,18 @@
 
   <div class="info-contenedor">
 
-    <div class="frame-info blue">
+
+    <div class="frame-info yellow">
        <div class="title">
          <span>Of num.</span>
        </div>
        <div class="content">
         <div class="text">
           <span>{{ OF.numero }}</span>
-        </div>
-         
-      </div>
-        
+        </div>     
+      </div> 
     </div>
+
 
     <div class="frame-info orange">
       <div class="title">
@@ -40,11 +40,11 @@
         <div class="text">
           <span>{{ OF.linia.numero }}</span>
         </div>
-
       </div>
     </div>
 
-    <div class="frame-info purple">
+
+    <div class="frame-info green">
       <div class="title">
         <span>Color </span>
       </div>
@@ -52,11 +52,11 @@
         <div class="text">
           <span>{{ OF.color }}</span>
         </div>
- 
       </div>
     </div>
 
-    <div class="frame-info yellow">
+
+    <div class="frame-info purple">
       <div class="title">
         <span>Estat </span>
       </div>
@@ -68,7 +68,7 @@
     </div> {# frame info #}
 
 
-    <div class="frame-info green">
+    <div class="frame-info blue">
       <div class="title">
         <span>Data inici </span>
       </div>
@@ -79,26 +79,35 @@
       </div> 
     </div> {# frame info #}
 
+
   </div> {# info contenedor #}
 
 </div> {# one-col contenedor #}
 
 <div class="one-col-contenedor">
+  <div class="actions-contenedor">
   {% if not OF.done %}
   
-  <div class="frame-button">
-    <a href="{{ path('finalitzar_OF',{'OF':OF.id}) }}"> 
-      <span>
+  
+  <div class="action-button red">
+    <a 
+      href="{{ path('finalitzar_OF',{'OF':OF.id}) }}"
+      > 
+      <span class='fa fa-share-square-o'>
       Finalitzar OF
       </span>
     </a>  
   </div>
-
+ 
    {% else %}
-  <a href="{{ path('finalitzar_OF',{'OF':OF.id}) }}"> 
+  <a 
+    href="{{ path('finalitzar_OF',{'OF':OF.id}) }}"
+    class='fa fa-file-text'
+    > 
     Report de la OF
   </a> 
    {% endif %}
+ </div> {# actions contenedor #}
 </div> {# one-col contenedor #}
 
 <div class="two-cols-contenedor">
@@ -167,12 +176,12 @@
     
  
 
-        <div id="test_contenedor" class="two-cols-contenedor">
-        {# Bloque donde se muestran los tests y los resultados#}
-        {% block TestSpace %}
+        <div id="test_contenedor" class="one-col-contenedor">
+      {# Bloque donde se muestran los tests y los resultados#}
+      {% block TestSpace %}
               
 
-        {% endblock TestSpace %}
+      {% endblock TestSpace %}
         </div> {# test contenedor #}
 
     </div> {# two cols contenedor #}

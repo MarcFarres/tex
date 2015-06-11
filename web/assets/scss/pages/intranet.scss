@@ -19,31 +19,35 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
 	// variables globales
 	  @import "../config/config_common";
+    // los botones del framework
+    @import "../config/buttons";
  
 
 // efectos
   //@import "../functions/effects";
-  //@import "../animations/generic-animations";  
+  @import "../animations/common_animations";  
  
 // Objetos   
   // base del layout 
     @import "../layouts/columns-base-layout"; 
   // base del layout  
     @import "../objects/intranet-forms";
-    // listas ordenadas (tablas)
-    @import "../objects/list";
+    
     // botones utilizados 
+    @import "../objects/colors";
     @import "../objects/buttons";
     @import "../objects/frames";
-   
+    // listas ordenadas (tablas)
+    @import "../objects/list"; 
 
 // Componentes
 	
   // listas desplegables
   @import "../components/sublist"; 
-
   // entorno de visión general de las máquinas
   @import "../components/general_view";
+  // la pantalla donde se despliegan los resultados
+  @import "../components/resultats";
 
 
 // contenedores 
@@ -56,10 +60,14 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
   @import "../layouts/one-col-content"; 
 
 	// estilos y utilidades comunes a todas las páginas
-	//@import "common";
+	@import "common";
 
 // Texturas
-@import "../textures/dataTable";
+  @import "../textures/dataTable";
+  // las extensiones utilizadas de los botones del framework
+  @import "../textures/buttons";
+
+  @import "../textures/list";
 
 // Las diferentes páginas que componen la web
     //la home
@@ -151,6 +159,15 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 {
   @include flex(5);
   padding:5px;
+  &:hover{
+    cursor:pointer;
+  }
+}
+
+.pointer{
+  &:hover{
+    cursor:pointer;
+  }
 }
 
 #test_right

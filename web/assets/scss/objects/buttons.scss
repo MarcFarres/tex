@@ -1,14 +1,20 @@
 
-// botones para expandir información
-// botón que rota hacia arriba/abajo
-%rotating{
- 
-  @include transform-transition(.5s,linear);
+/* =======================================================
+  Botón con la interfaz [clicked / unclicked] que rota 180
+  grados al ser pulsado. 
 
+   - Dependencias 
+      . fontawessome : debe incluirse la clase 'fa' para que se muestre 
+      adecuadamente el icono de la flecha 
+  */%rotating/*
+  --------------------------------------------------------
+*/{
+  @include transform-transition(.5s,linear);
+  // el icono de la flecha, se supone que se ha añadido la clase 'fa'
+  &::before{content:'\f0d7';}
 
   &.clicked
   {
-    
     @include rotate(180deg);
     @include origin(50%,50%);
   }
@@ -18,4 +24,48 @@
     @include rotate(0deg);
     @include origin(50%,50%);
   }
+}
+
+
+/* =======================================================
+  Frame diseñado para mostrar botones que realizan 
+  diferentes acciones
+  */%frame-button/*
+  --------------------------------------------------------
+*/{
+  // interfaz de colores disponibles
+  &.blue{@extend .bg-blue;color:white;}
+  &.green{@extend .bg-green;color:white;}
+  &.yellow{@extend .bg-yellow;color:white;}
+  &.purple{@extend .bg-purple;color:white;}
+  &.orange{@extend .bg-orange;color:white;}
+  &.red{@extend .bg-red;color:white;}
+  
+  position:relative;
+  float:left;
+
+  font-family: $frame-button_font; 
+  font-size:$frame-button_fontSize;
+
+  margin:$frame-button_margin;
+  padding:$frame-button_padding;
+
+ 
+  @include rounded($frame-button_radius);
+  @include shadow(3px ,3px ,6px, #333);
+  text-shadow: 0px 0px 1px #000;
+  border: solid 1px transparent;
+  @include transition(box-shadow .1s linear);
+  
+  &.clickable_done{
+    @include animation(click_animation,.4s);
+  }
+    
+  &.clicked{ 
+    @include shadow(0px ,0px ,0px, #333);}
+
+  &.unclicked{
+    @include shadow(3px ,3px ,6px, #333);}
+
+  &:hover{cursor:pointer;}
 }

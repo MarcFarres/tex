@@ -1,0 +1,35 @@
+
+/* =======================================================
+  Botones standard para realizar las acciones comunes
+    - Dependencias
+      . colores del framework 'objects/colors'
+  */.action-button{/*
+  -[ parents ]--------------------------------------------
+  */@extend %frame-button;/* objects/buttons 
+  --------------------------------------------------------*/
+  
+
+  >a
+  {
+    @extend %column_container;
+    height:100%;
+    color:inherit;
+
+    >span
+    {
+      color:inherit;
+      margin:auto; 
+    }
+  }
+  // variante que utiliza acciones ajax
+  &.ajax
+  {
+    @extend %column_container;
+
+    >span
+    {
+      color:inherit;
+      margin:auto;
+    }
+  }
+}

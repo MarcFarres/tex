@@ -1,0 +1,33 @@
+/* =======================================================
+  Lista de datos para mostrar información rápida
+    - Dependencias
+      
+  */.data-list{/*
+  -[ parents ]--------------------------------------------
+  */@extend %table_list;/* objects/list 
+  --------------------------------------------------------*/
+  
+  position:relative;
+  width:70%;
+  margin:auto;
+
+  >tbody
+  {
+  	>tr
+  	{
+      
+  		>td
+  		{
+  		  >span
+  		  {
+  			color:black;
+            &:hover
+            {
+              cursor:pointer;
+            }
+  		  }
+  		}
+  	}
+  }
+
+}

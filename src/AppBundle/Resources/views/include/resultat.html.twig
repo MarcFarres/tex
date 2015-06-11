@@ -1,32 +1,86 @@
 
-<p>Parametres a mostrar: </p>
-
-
-<p>Data del test</p>
-<p>dia: {{ resultat.data | date('d-m-Y') }} </p>
-<p>hora: {{ resultat.data | date('H:i:s') }}</p>
-
-<p> Finalitzat? {{ resultat.done ? 'Si' : 'No' }}</p>
-<p> Exit? {{ resultat.testok ? 'Si' : 'No' }}</p>
-
-<p>Longitud del fil mesurat: {{ resultat.longitud }} m</p>
-<p> mitjana esperada en la densitat del fil: {{ resultat.mitjanaesp }} gr/m</p>
-<p> mitjana obtinguda: {{ resultat.mitjana }} gr/m</p>
-
-<p> Descentratge permés (en valor absolut): {{ resultat.descmax }}% gr/m </p>
-<p> Descentratge obtingut: {{ resultat.descentratge }}% gr/m </p>
-
-<p> Desviació standard de les dades experimentals: {{ resultat.dev }} </p>
-<p>Desviació standard prevista: {{ resultat.devmax }}</p>
-
-
 {% set mesures_length = mesures | length %}
 
-<p>numero de mesures realitzades: {{ mesures_length }}</p>
-<table class="intranet_table_list mesures">
+
+{# Paràmetres utilitzats en el test #}
+
+<div class="resultats-table_contenedor">
+
+  <h2> Resúm dels resultats </h2>
+
+<table id='resultat_dades' class='light_grey'>
+<thead>
+
+    <tr>
+      <th> Longitud del fil </th>
+      <th> nº de mesures realitzades </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>{{ resultat.longitud }} m</td>
+      <td>{{ mesures_length }}</td>
+    </tr>
+      
+  </tbody>
+</table>
+
+</div>
+
+  
+
+{# tabla que muestra los resultados resumidos del test #}
+
+<div class="resultats-table_contenedor">
+
+  <h2> Magnituds </h2>
+
+<table id='resultat_dades' class='light_grey'>
+  
+  <thead>
+
+    <tr>
+      <th> </th>
+      <th> Valor esperat </th>
+      <th> Valor obtingut </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td class='magnitude'>Mitjana</td>
+      <td>{{ resultat.mitjanaesp }} gr/m</td>
+      <td>{{ resultat.mitjana|number_format(2, '.', ',')}}  gr/m</td>
+    </tr>
+    <tr>
+      <td class='magnitude'>DESC%</td>
+      <td>{{ resultat.descmax }} gr/m</td>
+      <td class='{{ resultat.descentratge > resultat.descmax ? 'error' : '' }}'>{{ resultat.descentratge|number_format(2, '.', ',') }} gr/m</td>
+    </tr>
+    <tr>
+      <td class='magnitude'>CV%</td>
+      <td>{{ resultat.devmax }}</td>
+      <td class='{{ resultat.dev > resultat.devmax ? 'error' : '' }}'>{{ resultat.dev|number_format(2, ',', '.') }}</td>
+    </tr>  
+
+  </tbody>
+
+</table>
+
+</div>
+
+
+{# Tabla con las medidas tomadas #}
+
+<div class="resultats-table_contenedor">
+
+  <h2>Mesures de pes i densitat</h2>
+
+<table class="data-list light_grey cubic">
   <thead>
       <tr>
-        <th>mesura num.</th>
+        <th>nº</th>
         <th>Pes</th>
         <th>Densitat</th>
       </tr>
@@ -35,29 +89,28 @@
       
 {% for mesura in mesures %}
 
-  <tr>
-    <td>{{ mesura.numero }}</td> 
-    <td>{{ mesura.pes.valor }} {{  mesura.pes.unitat }}</td> 
-    <td>{{ mesura.densitat.valor }} {{ mesura.densitat.unitat }}</td> 
+  {{ include('AppBundle:include:mesura_row.html.twig', {
+      "mesura":mesura
+    }, with_context = false ) }}
 
-  </tr>
 {% endfor %}
 
   </tbody>
 
 </table>
 
-<h2> Accions </h2>
-<ul> 
-  <li><a href="
-      {{
+</div>
+
+
+
+<div class="resultats_actions clickable">
+<div class="action-button green">
+    <a href="{{
       path('reopen_result',{'resultat':resultat.id}) 
-      }}
-    ">Reempendre el test</a></li>
-  <li><a href="">Veure Report (imprimible)</a></li>
-  <li><a href="
-      {{
-      path('delete_result',{'resultat':resultat.id,'OF':OF.id, 'Maquina':maquina.id}) 
-      }}
-    ">Eliminar test</a></li>
-</ul>
+      }}"> 
+      <span class='fa fa-retweet'>
+          Reempendre el test 
+      </span>
+    </a>
+</div>
+</div>

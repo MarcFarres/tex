@@ -1,0 +1,23 @@
+
+/* ==================================================
+  Colores de fondo disponibles
+----------------------------------------------------*/
+.bg-blue{background-color:$blue_river}
+.bg-blue_light{background-color:lighten($blue_river,10)}
+
+.bg-green{background-color:$emerald}
+.bg-green_light{background-color:lighten($emerald,10)}
+
+.bg-yellow{background-color:$sun}
+.bg-yellow_light{background-color:lighten($sun,10)}
+
+.bg-purple{background-color:$amethyst}
+.bg-purple_light{background-color:lighten($amethyst,10)}
+
+.bg-orange{background-color:$orange}
+.bg-orange_light{background-color:lighten($orange,10)} 
+
+.bg-grey{background-color:$concrete}
+.bg-grey_light{background-color:lighten($concrete,10)}
+
+.bg-red{background-color:$alizarin}

@@ -2,5 +2,6 @@
 {
   @extend %row_container;
   @include align-content(space-around);
+  width:100%;
   padding:10px;
 }

@@ -1,6 +1,8 @@
 
 (function(){
 
+// el contenedor mas general considerado
+var main_parent = $('#main_parent');
 
 $( document ).ready(function(){ });
   
@@ -47,20 +49,29 @@ $('#intranet_menu_lat').on('click','.clicked',function(){
 
 // formularios ocultables
 // fade in content
-$('#test_contenedor').on('click','.unclicked',function(){
-  // animación de la flecha
-  click_element($(this));
+$('#test_contenedor').on('click','.plegable_form.unclicked',function(){
+
   // expansión del contenido
   in_element($(this).parent().parent().children('.plegable'));
 });
 
 // fade out content
-$('#test_contenedor').on('click','.clicked',function(){
-  // animación de la flecha
-  unclick_element($(this));
+$('#test_contenedor').on('click','.plegable_form.clicked',function(){
+
   // desparición del contenido
   out_element($(this).parent().parent().children('.plegable'));
 });
+
+// listas ocultables
+main_parent.on('click','.plegable_list.unclicked',function(){
+
+  out_element($(this).parent().parent().children('.plegable'));
+})
+
+main_parent.on('click','.plegable_list.clicked',function(){
+  
+  in_element($(this).parent().parent().children('.plegable'));
+})
 
 
 /* ------------------------------[ AJAX ]  */
@@ -148,21 +159,16 @@ $('#resultats_list_contenedor').on('click','#new_result', function(){
 
   var OF_id = $(this).attr('data-ofId');
   var maquina_id = $(this).attr('data-maquinaId');
-
-
   var parametros ="OF_id=" + OF_id + "&maquina_id=" + maquina_id ;
 
-
-$.ajax({
-  data:  parametros,
-  url:   nou_resultat,
-  type:  'post',
-  beforeSend: function () {
-    
-    } , 
-  success:  function (response) {
-    $('#test_contenedor').html(response);
-  },
+  $.ajax({
+    data:  parametros,
+    url:   nou_resultat,
+    type:  'post',
+    beforeSend: function () {} , 
+    success:  function (response) {
+      $('#test_contenedor').html(response);
+    },
   });
 
 });
@@ -210,10 +216,13 @@ $('#resultats_list_contenedor').on('click','.gotest',function(){
       url:   goToTest,
       type:  'post',
       beforeSend: function () {
-        
+        click_element($('.plegable_list'));
       } , 
       success:  function (response) {
-      $('#test_contenedor').html(response);
+        // desaparece la lista de rsultados
+        out_element($('#results_table'));
+        
+        $('#test_contenedor').html(response);
    },
   });
 
@@ -221,6 +230,13 @@ $('#resultats_list_contenedor').on('click','.gotest',function(){
 
 /* ------------------------------[ helper functions: ]  */
 // ================================================================
+
+
+// support a les interfaces css 'clicked / unclicked' i 'in / out'
+
+main_parent.on('click','.unclicked',function(){click_element($(this));});
+main_parent.on('click','.clicked',function(){unclick_element($(this));});
+main_parent.on('click','.clickable',function(){$(this).removeClass('.clickable_done').addClass('clickable_done')})
 
 function in_element(element){
   element.removeClass('out');

@@ -1,45 +1,153 @@
 
-.intranet_table_list
-{
+/* =======================================================
+  Tabla standard para mostrar información de diferente tipo
+  Tiene la opción de una doble indexación (vert. y horiz.), 
+    para ello hay que añadir la classe 'cubic'
+  */%table_list/*
+  --------------------------------------------------------
+*/{
+  // interfaz de colores disponibles
+  &.blue{ >tbody{  >tr{ &:nth-child(2n){
+      @extend .bg-blue;
+      color:white;
+    }&:nth-child(2n+1){
+      @extend .bg-blue_light;
+      color:$clouds;
+     }
+    } // tr
+  } // tbody
+  }
+
+  &.green{ >tbody{  >tr{ &:nth-child(2n){
+      @extend .bg-green;
+      color:white;
+    }&:nth-child(2n+1){
+      @extend .bg-green_light;
+      color:$clouds;
+     }
+    } // tr
+  } // tbody
+  }
+
+  &.yellow{ >tbody{  >tr{ &:nth-child(2n){
+      @extend .bg-yellow;
+      color:black;
+    }&:nth-child(2n+1){
+      @extend .bg-yellow_light;
+      color:#333;
+     }
+    } // tr
+  } // tbody
+  }
+
+  &.purple{>tbody{  >tr{ &:nth-child(2n){
+      @extend .bg-purple;
+      color:white;
+    }&:nth-child(2n+1){
+      @extend .bg-purple_light;
+      color:$clouds;
+     }
+    } // tr
+  } // tbody
+  }
+
+  &.orange{>tbody{  >tr{ &:nth-child(2n){
+      @extend .bg-orange;
+      color:white;
+    }&:nth-child(2n+1){
+      @extend .bg-orange_light;
+      color:$clouds;
+     }
+    } // tr
+  } // tbody
+  }
+
+  &.red{@extend .bg-red;color:white;}
+
+  &.light_grey{ >tbody{  >tr{ &:nth-child(2n){
+      background-color:white;
+      color:#000;
+    }&:nth-child(2n+1){
+      background-color:$clouds;
+      color:#333;
+     }
+    } // tr
+  } // tbody
+  }
+
+  position:relative;
+  // defualt width
 	width:100%;
+  // default font
+  font-family: Helvetica;
+  
 
 	>thead
 	{
 
-       >tr
-       {
-          text-align: center;
+    >tr
+    {
+      text-align: center;
+      background-color: #333;
 
-       	  >th
-       	  {
-            text-align: center;
-            border:solid 1px #333;
-            
-       	  }
-       }
+      >th
+      {
+        text-align: center;
+        border:solid 1px $clouds;
+        color:white;
+      }
+    } // tr
 	} // thead
 
 	>tbody
 	{
      
-      >tr
-        {
-          text-align: center;
-          &:nth-child(2n)
-          {
-          	background-color: #666;
-          	color:white;
-          }
-          &:nth-child(2n+1)
-          {
-          	background-color: #333;
-          	color:white;
-          }
+    >tr
+    {
+      text-align: center;
 
-       	   >td
-       	   {
-             text-align: center;
-       	   }
+      &:nth-child(2n)
+      {
+        background-color: #666;
+        color:white;
+      }
+      &:nth-child(2n+1)
+      {
+        background-color:white;
+        color:#333;
+      }
+      
+      >td
+      {
+        &.error
+        {
+          @extend .bg-red;
+          color:white;
         }
+        text-align: center; 
+      }
+    } // tr
 	} // tbody
+
+  // variaciones
+
+  &.cubic
+  {
+    >tbody
+    {
+      >tr
+      {
+        >td
+        {
+
+          &:first-child
+          {
+            background-color:darken($clouds,5);
+            color:#333;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
 }

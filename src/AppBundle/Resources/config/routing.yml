@@ -115,8 +115,7 @@ tests_historial:
 llegir_mesura:
     path: /llegir
     defaults: { _controller: AppBundle:Test:llegirMesura }
-    requirements:
-        _method:  POST
+   
 
 maquina_report:
     path: /tests/report/maquina/{OF}/{maquina}

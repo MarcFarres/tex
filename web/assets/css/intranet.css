@@ -352,7 +352,7 @@ a, a:visited {
   -ms-flex-line-pack: stretch;
   align-content: stretch; }
 
-.columns-base-layout-parent, .intranet-base-parent, .intranet-form .fieldset > div, .frame-element > .icon, .frame-info > .title, .frame-info > .content > .text, .frame-info > .content > .buttons, .frame-button > a, .main_title_container, .general-view_container, .general-view_container .general-view_linia > .linia-num, .general-view_container .general-view_linia > .linia-num > .num, .general-view_container .general-view_linia > .sublinia_container, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num > .num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina, .two-cols-contenedor, #admin-tests_menu-sup, #admin-tests_menu-sup > .menu-sup_frame, .info-contenedor {
+.columns-base-layout-parent, .intranet-base-parent, .intranet-form .fieldset > div, .frame-element > .icon, .frame-info > .title, .frame-info > .content > .text, .frame-info > .content > .buttons, .main_title_container, .general-view_container, .general-view_container .general-view_linia > .linia-num, .general-view_container .general-view_linia > .linia-num > .num, .general-view_container .general-view_linia > .sublinia_container, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num > .num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina, .resultat_row, .two-cols-contenedor, .action-button > a, .action-button.ajax, #admin-tests_menu-sup, #admin-tests_menu-sup > .menu-sup_frame, .info-contenedor {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -381,6 +381,61 @@ a, a:visited {
 
 /* $Colores generales usados en toda la web
 /* ---------------------------------------- */
+/*
+  frame-button
+*/
+@keyframes click_animation {
+  0% {
+    -webkit-box-shadow: 3px 3px 6px #333;
+    -moz-box-shadow: 3px 3px 6px #333;
+    -ms-box-shadow: 3px 3px 6px #333;
+    -o-box-shadow: 3px 3px 6px #333;
+    box-shadow: 3px 3px 6px #333; }
+  100% {
+    -webkit-box-shadow: 0px 0px 0px #333;
+    -moz-box-shadow: 0px 0px 0px #333;
+    -ms-box-shadow: 0px 0px 0px #333;
+    -o-box-shadow: 0px 0px 0px #333;
+    box-shadow: 0px 0px 0px #333; } }
+@-webkit-keyframes click_animation {
+  0% {
+    -webkit-box-shadow: 3px 3px 6px #333;
+    -moz-box-shadow: 3px 3px 6px #333;
+    -ms-box-shadow: 3px 3px 6px #333;
+    -o-box-shadow: 3px 3px 6px #333;
+    box-shadow: 3px 3px 6px #333; }
+  100% {
+    -webkit-box-shadow: 0px 0px 0px #333;
+    -moz-box-shadow: 0px 0px 0px #333;
+    -ms-box-shadow: 0px 0px 0px #333;
+    -o-box-shadow: 0px 0px 0px #333;
+    box-shadow: 0px 0px 0px #333; } }
+@-moz-keyframes click_animation {
+  0% {
+    -webkit-box-shadow: 3px 3px 6px #333;
+    -moz-box-shadow: 3px 3px 6px #333;
+    -ms-box-shadow: 3px 3px 6px #333;
+    -o-box-shadow: 3px 3px 6px #333;
+    box-shadow: 3px 3px 6px #333; }
+  100% {
+    -webkit-box-shadow: 0px 0px 0px #333;
+    -moz-box-shadow: 0px 0px 0px #333;
+    -ms-box-shadow: 0px 0px 0px #333;
+    -o-box-shadow: 0px 0px 0px #333;
+    box-shadow: 0px 0px 0px #333; } }
+@-o-keyframes click_animation {
+  0% {
+    -webkit-box-shadow: 3px 3px 6px #333;
+    -moz-box-shadow: 3px 3px 6px #333;
+    -ms-box-shadow: 3px 3px 6px #333;
+    -o-box-shadow: 3px 3px 6px #333;
+    box-shadow: 3px 3px 6px #333; }
+  100% {
+    -webkit-box-shadow: 0px 0px 0px #333;
+    -moz-box-shadow: 0px 0px 0px #333;
+    -ms-box-shadow: 0px 0px 0px #333;
+    -o-box-shadow: 0px 0px 0px #333;
+    box-shadow: 0px 0px 0px #333; } }
 /* estructura horizontal con:
 
      - menu lateral */
@@ -511,29 +566,63 @@ a, a:visited {
     .intranet-form .fields.out {
       height: 0; }
 
-.intranet_table_list {
-  width: 100%; }
-  .intranet_table_list > thead > tr {
-    text-align: center; }
-    .intranet_table_list > thead > tr > th {
-      text-align: center;
-      border: solid 1px #333; }
-  .intranet_table_list > tbody > tr {
-    text-align: center; }
-    .intranet_table_list > tbody > tr:nth-child(2n) {
-      background-color: #666;
-      color: white; }
-    .intranet_table_list > tbody > tr:nth-child(2n+1) {
-      background-color: #333;
-      color: white; }
-    .intranet_table_list > tbody > tr > td {
-      text-align: center; }
+/* ==================================================
+  Colores de fondo disponibles
+----------------------------------------------------*/
+.bg-blue, .blue.action-button, .blue#resultat_dades > tbody > tr:nth-child(2n), .blue.data-list > tbody > tr:nth-child(2n) {
+  background-color: #3498DB; }
 
+.bg-blue_light, .blue#resultat_dades > tbody > tr:nth-child(2n+1), .blue.data-list > tbody > tr:nth-child(2n+1) {
+  background-color: #5faee3; }
+
+.bg-green, .green.action-button, .green#resultat_dades > tbody > tr:nth-child(2n), .green.data-list > tbody > tr:nth-child(2n) {
+  background-color: #2ecc71; }
+
+.bg-green_light, .green#resultat_dades > tbody > tr:nth-child(2n+1), .green.data-list > tbody > tr:nth-child(2n+1) {
+  background-color: #54d98c; }
+
+.bg-yellow, .yellow.action-button, .yellow#resultat_dades > tbody > tr:nth-child(2n), .yellow.data-list > tbody > tr:nth-child(2n) {
+  background-color: #f1c40f; }
+
+.bg-yellow_light, .yellow#resultat_dades > tbody > tr:nth-child(2n+1), .yellow.data-list > tbody > tr:nth-child(2n+1) {
+  background-color: #f4d03f; }
+
+.bg-purple, .purple.action-button, .purple#resultat_dades > tbody > tr:nth-child(2n), .purple.data-list > tbody > tr:nth-child(2n) {
+  background-color: #9b59b6; }
+
+.bg-purple_light, .purple#resultat_dades > tbody > tr:nth-child(2n+1), .purple.data-list > tbody > tr:nth-child(2n+1) {
+  background-color: #b07cc6; }
+
+.bg-orange, .orange.action-button, .orange#resultat_dades > tbody > tr:nth-child(2n), .orange.data-list > tbody > tr:nth-child(2n) {
+  background-color: #f39c12; }
+
+.bg-orange_light, .orange#resultat_dades > tbody > tr:nth-child(2n+1), .orange.data-list > tbody > tr:nth-child(2n+1) {
+  background-color: #f5b043; }
+
+.bg-grey {
+  background-color: #95a5a6; }
+
+.bg-grey_light {
+  background-color: #b1bdbd; }
+
+.bg-red, .red.action-button, .red#resultat_dades, .red.data-list, #resultat_dades > tbody > tr > td.error, .data-list > tbody > tr > td.error {
+  background-color: #e74c3c; }
+
+/* =======================================================
+  Bot├│n con la interfaz [clicked / unclicked] que rota 180
+  grados al ser pulsado. 
+
+   - Dependencias 
+      . fontawessome : debe incluirse la clase 'fa' para que se muestre 
+      adecuadamente el icono de la flecha 
+  */
 .sublist_button {
   -webkit-transition: -webkit-transform 0.5s linear;
   -moz-transition: -moz-transform 0.5s linear;
   -o-transition: -o-transform 0.5s linear;
   transition: transform 0.5s linear; }
+  .sublist_button::before {
+    content: '\f0d7'; }
   .clicked.sublist_button {
     -ms-transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
@@ -548,6 +637,63 @@ a, a:visited {
     -ms-transform-origin: 50% 50%;
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%; }
+
+/* =======================================================
+  Frame dise├▒ado para mostrar botones que realizan 
+  diferentes acciones
+  */
+.action-button {
+  position: relative;
+  float: left;
+  font-family: Helvetica;
+  font-size: 16px;
+  margin: 15px;
+  padding: 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 3px 3px 6px #333;
+  -moz-box-shadow: 3px 3px 6px #333;
+  -ms-box-shadow: 3px 3px 6px #333;
+  -o-box-shadow: 3px 3px 6px #333;
+  box-shadow: 3px 3px 6px #333;
+  text-shadow: 0px 0px 1px #000;
+  border: solid 1px transparent;
+  -webkit-transition: box-shadow 0.1s linear;
+  -moz-transition: box-shadow 0.1s linear;
+  -o-transition: box-shadow 0.1s linear;
+  transition: box-shadow 0.1s linear; }
+  .blue.action-button {
+    color: white; }
+  .green.action-button {
+    color: white; }
+  .yellow.action-button {
+    color: white; }
+  .purple.action-button {
+    color: white; }
+  .orange.action-button {
+    color: white; }
+  .red.action-button {
+    color: white; }
+  .clickable_done.action-button {
+    -webkit-animation: click_animation 0.4s;
+    animation: click_animation 0.4s; }
+  .clicked.action-button {
+    -webkit-box-shadow: 0px 0px 0px #333;
+    -moz-box-shadow: 0px 0px 0px #333;
+    -ms-box-shadow: 0px 0px 0px #333;
+    -o-box-shadow: 0px 0px 0px #333;
+    box-shadow: 0px 0px 0px #333; }
+  .unclicked.action-button {
+    -webkit-box-shadow: 3px 3px 6px #333;
+    -moz-box-shadow: 3px 3px 6px #333;
+    -ms-box-shadow: 3px 3px 6px #333;
+    -o-box-shadow: 3px 3px 6px #333;
+    box-shadow: 3px 3px 6px #333; }
+  .action-button:hover {
+    cursor: pointer; }
 
 /* =======================================================
   Frame dise├▒ado para mostrar icono y texto con reacci├│n 
@@ -642,33 +788,79 @@ a, a:visited {
     color: white; }
 
 /* =======================================================
-  Frame dise├▒ado para mostrar botones que realizan 
-  diferentes acciones
+  Frame estructural sencillo para englobar listas u otros
+  elementos de una p├ígina
   */
-.frame-button {
+.maquina_list_tests, .resultats-table_contenedor {
   position: relative;
-  font-family: Helvetica;
-  font-size: 16px;
-  float: left;
-  margin: 15px;
-  padding: 10px;
-  max-width: 150px;
-  background-color: #2ecc71;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  -ms-border-radius: 8px;
-  -o-border-radius: 8px;
-  border-radius: 8px;
-  -webkit-box-shadow: 3px 3px 6px #333;
-  -moz-box-shadow: 3px 3px 6px #333;
-  -ms-box-shadow: 3px 3px 6px #333;
-  -o-box-shadow: 3px 3px 6px #333;
-  box-shadow: 3px 3px 6px #333; }
-  .frame-button > a {
-    height: 100%; }
-    .frame-button > a > span {
-      color: white;
-      margin: auto; }
+  width: 100%;
+  padding: 5px 5px 25px 5px;
+  background-color: white;
+  margin: 10px 0; }
+  .maquina_list_tests > h2, .resultats-table_contenedor > h2 {
+    text-align: center;
+    margin-bottom: 20px; }
+
+/* =======================================================
+  Tabla standard para mostrar informaci├│n de diferente tipo
+  Tiene la opci├│n de una doble indexaci├│n (vert. y horiz.), 
+    para ello hay que a├▒adir la classe 'cubic'
+  */
+#resultat_dades, .data-list {
+  position: relative;
+  width: 100%;
+  font-family: Helvetica; }
+  .blue#resultat_dades > tbody > tr:nth-child(2n), .blue.data-list > tbody > tr:nth-child(2n) {
+    color: white; }
+  .blue#resultat_dades > tbody > tr:nth-child(2n+1), .blue.data-list > tbody > tr:nth-child(2n+1) {
+    color: #ecf0f1; }
+  .green#resultat_dades > tbody > tr:nth-child(2n), .green.data-list > tbody > tr:nth-child(2n) {
+    color: white; }
+  .green#resultat_dades > tbody > tr:nth-child(2n+1), .green.data-list > tbody > tr:nth-child(2n+1) {
+    color: #ecf0f1; }
+  .yellow#resultat_dades > tbody > tr:nth-child(2n), .yellow.data-list > tbody > tr:nth-child(2n) {
+    color: black; }
+  .yellow#resultat_dades > tbody > tr:nth-child(2n+1), .yellow.data-list > tbody > tr:nth-child(2n+1) {
+    color: #333; }
+  .purple#resultat_dades > tbody > tr:nth-child(2n), .purple.data-list > tbody > tr:nth-child(2n) {
+    color: white; }
+  .purple#resultat_dades > tbody > tr:nth-child(2n+1), .purple.data-list > tbody > tr:nth-child(2n+1) {
+    color: #ecf0f1; }
+  .orange#resultat_dades > tbody > tr:nth-child(2n), .orange.data-list > tbody > tr:nth-child(2n) {
+    color: white; }
+  .orange#resultat_dades > tbody > tr:nth-child(2n+1), .orange.data-list > tbody > tr:nth-child(2n+1) {
+    color: #ecf0f1; }
+  .red#resultat_dades, .red.data-list {
+    color: white; }
+  .light_grey#resultat_dades > tbody > tr:nth-child(2n), .light_grey.data-list > tbody > tr:nth-child(2n) {
+    background-color: white;
+    color: #000; }
+  .light_grey#resultat_dades > tbody > tr:nth-child(2n+1), .light_grey.data-list > tbody > tr:nth-child(2n+1) {
+    background-color: #ecf0f1;
+    color: #333; }
+  #resultat_dades > thead > tr, .data-list > thead > tr {
+    text-align: center;
+    background-color: #333; }
+    #resultat_dades > thead > tr > th, .data-list > thead > tr > th {
+      text-align: center;
+      border: solid 1px #ecf0f1;
+      color: white; }
+  #resultat_dades > tbody > tr, .data-list > tbody > tr {
+    text-align: center; }
+    #resultat_dades > tbody > tr:nth-child(2n), .data-list > tbody > tr:nth-child(2n) {
+      background-color: #666;
+      color: white; }
+    #resultat_dades > tbody > tr:nth-child(2n+1), .data-list > tbody > tr:nth-child(2n+1) {
+      background-color: white;
+      color: #333; }
+    #resultat_dades > tbody > tr > td, .data-list > tbody > tr > td {
+      text-align: center; }
+      #resultat_dades > tbody > tr > td.error, .data-list > tbody > tr > td.error {
+        color: white; }
+  .cubic#resultat_dades > tbody > tr > td:first-child, .cubic.data-list > tbody > tr > td:first-child {
+    background-color: #dde4e6;
+    color: #333;
+    font-weight: bold; }
 
 /*
   Estructura:
@@ -736,8 +928,6 @@ a, a:visited {
 
 .sublist_button {
   margin-left: 5px; }
-  .sublist_button::before {
-    content: '\f0d7'; }
   .sublist_button.clicked {
     color: #f39c12; }
   .sublist_button.unclicked {
@@ -861,6 +1051,44 @@ a, a:visited {
             .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina > span {
               margin: auto; }
 
+.resultats_actions {
+  position: relative;
+  width: 100%;
+  padding: 5px;
+  height: 80px; }
+
+.resultat_row {
+  -ms-flex-pack: distribute;
+  -webkit-justify-content: space-around;
+  -moz-justify-content: space-around;
+  justify-content: space-around;
+  margin-bottom: 10px; }
+  .resultat_row > .resultat_column {
+    width: 250px;
+    padding: 5px; }
+    .resultat_row > .resultat_column > .resultat_column-titol {
+      padding: 7px 0 7px 10px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px; }
+    .resultat_row > .resultat_column > .resultat_column-contingut {
+      background-color: #fff;
+      padding: 15px 0 15px 10px;
+      text-align: center; }
+
+#resultat_dades {
+  width: 70%;
+  margin: auto; }
+  #resultat_dades > thead > tr {
+    background-color: #dde4e6; }
+    #resultat_dades > thead > tr > th {
+      color: #333; }
+  #resultat_dades > tbody > tr > td {
+    text-align: center; }
+    #resultat_dades > tbody > tr > td.magnitude {
+      background-color: #dde4e6;
+      color: #3498DB;
+      font-weight: bold; }
+
 /*
    Extiende al base layout: "columns-base-layout"
 */
@@ -900,7 +1128,7 @@ a, a:visited {
   -moz-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  padding: 20px 40px 20px 20px; }
+  padding: 20px 10px 20px 10px; }
 .two-cols-contenedor > .right_side {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
@@ -908,14 +1136,36 @@ a, a:visited {
   -moz-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  padding: 20px 20px 20px 40px; }
+  padding: 20px 10px 20px 10px; }
 
 .one-col-contenedor {
   -webkit-align-content: space-around;
   -moz-align-content: space-around;
   -ms-flex-line-pack: space-around;
   align-content: space-around;
+  width: 100%;
   padding: 10px; }
+
+.maquina_actual {
+  height: 50px;
+  width: 50px;
+  background-color: #f1c40f;
+  border: solid 2px yellow;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  color: white;
+  padding: 0 5px; }
+
+.plegable.in {
+  display: table; }
+.plegable.out {
+  display: none; }
+
+.pointable:hover {
+  cursor: pointer; }
 
 #tests_table_wrapper {
   margin: 50px;
@@ -972,6 +1222,46 @@ a, a:visited {
       color: #e74c3c; }
     #tests_table > tbody > tr > td > .table_icon {
       margin-right: 15px; }
+
+/* =======================================================
+  Botones standard para realizar las acciones comunes
+    - Dependencias
+      . colores del framework 'objects/colors'
+  */
+.action-button {
+                 /*
+-[ parents ]--------------------------------------------
+*/
+                        /* objects/buttons 
+--------------------------------------------------------*/ }
+  .action-button > a {
+    height: 100%;
+    color: inherit; }
+    .action-button > a > span {
+      color: inherit;
+      margin: auto; }
+  .action-button.ajax > span {
+    color: inherit;
+    margin: auto; }
+
+/* =======================================================
+  Lista de datos para mostrar informaci├│n r├ípida
+    - Dependencias
+      
+  */
+.data-list {
+             /*
+-[ parents ]--------------------------------------------
+*/
+                      /* objects/list 
+--------------------------------------------------------*/
+  position: relative;
+  width: 70%;
+  margin: auto; }
+  .data-list > tbody > tr > td > span {
+    color: black; }
+    .data-list > tbody > tr > td > span:hover {
+      cursor: pointer; }
 
 .frame-element {
   background-color: #f5f7f7; }
@@ -1040,6 +1330,11 @@ a, a:visited {
   -ms-flex: 5;
   flex: 5;
   padding: 5px; }
+  #results_list:hover {
+    cursor: pointer; }
+
+.pointer:hover {
+  cursor: pointer; }
 
 #test_right {
   -webkit-box-flex: 5;

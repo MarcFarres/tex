@@ -1,8 +1,38 @@
 {# Lista con los tests de una máquina para la OF actual #}
+
+{# Llista d'accions disponibles #}
+{# ==================================================== #}
+  <div class="resultats_actions clickable">
+    <div class="action-button ajax blue">
+      <span 
+        id='new_result' 
+        data-ofId='{{OF.id}}' 
+        data-maquinaId='{{maquina.id}}' 
+        class='fa fa-file'>
+          Nou test
+      </span>
+    </div>
     
+    
+    <div class="action-button green">
+      <a href="{{path(
+        'maquina_report',{
+          'OF':OF.id,
+          'maquina':maquina.id })}}"
+          > 
+          <span class='fa fa-file-text'>
+            Report 
+          </span>
+      </a>
+    </div>
+
+  </div>{#resultats_actions#}
+
   <div class="maquina_list_tests">
-    <h2> Tests. Màquina {{ maquina.numero }}</h2>
-    <table class="intranet_table_list mesures">
+
+    <h2> Tests de la Màquina <span class='maquina_actual'>{{ maquina.numero }}</span> <span class='fa pointable sublist_button plegable_list unclicked'></span> </h2>
+    
+    <table class="data-list light_grey plegable" id='results_table'>
       <thead>
         <tr>
           <th>Dia</th>
@@ -23,7 +53,7 @@
           <td> {{ resultat.data | date('d-m-Y')  }}</td>
           <td> {{ resultat.data | date('H:i:s')  }}</td>
           <td> {{ resultat.done ? 'Si' : 'No' }}</td>
-          <td> 
+          <td class='{{ resultat.done and not resultat.testok ? 'error' : 'ok' }}'> 
 
 {% if resultat.done %}
 
@@ -41,7 +71,7 @@
           {#  <a href="{{path(
              'render_result',{'resultat_id':resultat.id})}}">
 </a> #}
-            <span class='gotest' data-resultat='{{resultat.id}}'>Veure</span>
+            <span class='gotest veure fa fa-eye' data-resultat='{{resultat.id}}'></span>
 
            </td>
         </tr>
@@ -52,21 +82,5 @@
     </tbody>
   </table>
 
-  <div class="actions">
-
-              <span 
-                id='new_result' 
-                data-ofId='{{OF.id}}' 
-                data-maquinaId='{{maquina.id}}' >
-                Nou test
-              </span>
-
-    <a href="{{path(
-            'maquina_report',{
-              'OF':OF.id,
-              'maquina':maquina.id
-              })}}"> 
-              Report dels tests realitzats a la màquina 
-    </a>
-  </div>
+  
 </div>

@@ -199,32 +199,19 @@
 
 
 /* =======================================================
-  Frame diseñado para mostrar botones que realizan 
-  diferentes acciones
-  */.frame-button/*
+  Frame estructural sencillo para englobar listas u otros
+  elementos de una página
+  */%frame-container/*
   --------------------------------------------------------
 */{
-    position:relative;
-    font-family: Helvetica;
-    font-size:16px;
-    float:left;
-    margin:15px;
-    padding:10px;
-    max-width:150px;
-    background-color:$emerald;
-    
-
-    @include rounded(8px);
-    @include shadow(3px ,3px ,6px, #333);
-
-    >a
-    {
-      @extend %column_container;
-      height:100%;
-
-      >span{
-        color:white;
-        margin:auto;
-      }
-    }
+  position:relative;
+  width:100%;
+  padding:5px 5px 25px 5px;
+  background-color:white;
+  margin: 10px 0;
+  >h2
+  {
+    text-align: center;
+    margin-bottom:20px;
   }
+}

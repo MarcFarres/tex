@@ -1,0 +1,30 @@
+.maquina_actual
+{
+	height:50px;
+    width:50px;
+    background-color:$sun;
+    border:solid 2px yellow;
+    @include rounded(5px);
+    color:white;
+    padding:0 5px;
+}
+
+.plegable
+{
+	&.in
+	{
+      display:table;
+	}
+	&.out
+	{
+      display:none;
+	}
+}
+
+.pointable
+{
+	&:hover
+	{
+		cursor:pointer;
+	}
+}

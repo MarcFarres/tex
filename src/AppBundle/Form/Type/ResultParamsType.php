@@ -53,7 +53,7 @@ class ResultParamsType extends AbstractType
         ->add('Finalitzar_test', 'submit',
           array(
             'attr' => array(
-              'class' => 'intranet-accept',
+              'class' => 'intranet-repeat',
               'value' => 'Finalitzar test'),
         ));
     }
