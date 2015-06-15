@@ -1,6 +1,10 @@
 <tr>
     <td>{{ mesura.numero }}</td> 
     <td>{{ mesura.pes.valor }} {{  mesura.pes.unitat }}</td> 
-    <td>{{ mesura.densitat.valor }} {{ mesura.densitat.unitat }}</td> 
+    <td>{{ mesura.densitat.valor }} {{ mesura.densitat.unitat }} &nbsp;&nbsp;&nbsp;&nbsp;<span
+        class='borrar table_icon fa fa-close'
+        data-mesura='{{mesura.id}}'
+        data-resultat='{{resultat.id}}'
+        </span></td> 
 
  </tr>

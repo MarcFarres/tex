@@ -108,6 +108,7 @@ class TestController extends Controller
     return $this->render(
         'AppBundle:include:mesura_row.html.twig',array(
         'mesura' => $Mesura, 
+        'resultat' => $resultat,
       ));
   }
 
@@ -407,25 +408,97 @@ return new Response($read,200);
  Borrar un resultat
 
 */
-  public function deleteResultAction(Resultat $resultat,$OF,$Maquina){
-    if (!$resultat) {
-      throw $this->createNotFoundException("El resultat no s'ha trobat");
-    }
-
-    $em = $this->getDoctrine()->getEntityManager();
-
+  public function deleteResultAction(Request $request){
+    
+    $this->controllerIni();
+    // recuperamos las variables POST
+    $resultat_id = $request->request->get('resultat_id');
+    // recuperamos los objetos
+    $resultat = $this->repositoris['Resultat']->findOneById($resultat_id);
+    // les mesures del resultat
+    
     $mesures = $resultat->getMesures();
+    
+   
 
     foreach($mesures as $mesura)
     {
-      $em->remove($mesura);
+      $this->em->remove($mesura);
     }
 
-    $em->remove($resultat);
-    $em->flush();
+    $this->em->remove($resultat);
+    $this->em->flush();
 
-    return $this->redirectToRoute('iniciar_test',array('id'=>$OF,'maquina_id'=>$Maquina));
+    // recuperamos las variables POST
+    $OF_id = $request->request->get('id');
+    $maquina_id = $request->request->get('maquina_id');
+    // recuperamos los objetos
+    $maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
+    $OF = $this->repositoris['OF']->findOneById($OF_id);
+    $test = $OF->getTest();
+    // recuperem tots els resultats de la màquina dins el test actual
+    $resultats = $this->get('of.manager')->getAllResultats($test->getId(),$maquina_id);
+
+    return $this->render(
+      'AppBundle:include:resultats_list.html.twig',array(
+        'OF' => $OF,
+        'maquina' => $maquina,
+        'resultats' => $resultats,
+      ));
   }
+
+
+/**
+ 
+ Borrar una mesura
+
+*/
+  public function deleteMesuraAction(Request $request){
+    
+    $this->controllerIni();
+    // recuperamos las variables POST
+    $mesura_id = $request->request->get('mesura_id');
+    $OF_id = $request->request->get('OF_id');
+    // recuperamos los objetos
+    $mesura = $this->repositoris['Mesura']->findOneById($mesura_id);
+    // les mesures del resultat
+    $this->em->remove($mesura);
+    $this->em->flush();
+    
+    /**
+    falta generalitzar
+    */
+    $resultat_id = $request->request->get('resultat_id');
+    $resultat = $this->repositoris['Resultat']->findOneById($resultat_id);
+    
+    $Test = $resultat->getTest();
+    $OF = $Test->getOf();
+    $maquina = $resultat->getMaquina();
+    $mesures = $resultat->getMesures();
+  
+    $page_to_render = '';
+    $page_vars = array();
+    $page_vars['resultat'] = $resultat;
+    $page_vars['mesures'] = $mesures;
+
+    if($resultat->getDone()){
+      $page_vars['OF'] = $OF;
+      $page_vars['maquina'] = $maquina;
+      $page_to_render = 'AppBundle:include:resultat.html.twig';
+    }
+    else{
+      $Pes = new Pes();
+      $mesuraForm = $this->createForm(new NewMesuraType(), $Pes);  
+      $resultParamsForm = $this->createForm(new ResultParamsType(), $resultat);
+
+      $page_to_render = 'AppBundle:include:test.html.twig'; 
+      $page_vars['resultParamsForm'] = $resultParamsForm->createView(); 
+      $page_vars['mesuraForm'] = $mesuraForm->createView();
+    }
+
+  return $this->render($page_to_render, $page_vars);
+  }
+
 
 /**
  

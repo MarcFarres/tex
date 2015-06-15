@@ -61,8 +61,7 @@ iniciar_test:
 resultats_list_ajax:
     path: /tests/resultatsListAjax/
     defaults: { _controller: AppBundle:Test:listResultats }
-    requirements:
-        _method:  POST
+
 
 
 reopen_result:
@@ -85,8 +84,7 @@ render_result_ajax:
 nova_mesura_ajax:
     path: /tests/novaMesura
     defaults: { _controller: AppBundle:Test:novaMesura}
-    requirements:
-        _method:  POST
+
 
 
 finalitzar_resultat:
@@ -97,8 +95,13 @@ finalitzar_resultat:
 
 
 delete_result:
-    path: /tests/test/{resultat}/{OF}/{Maquina}
+    path: /tests/result/delete
     defaults: { _controller: AppBundle:Test:deleteResult }
+
+
+delete_mesura:
+    path: /tests/mesura/delete
+    defaults: { _controller: AppBundle:Test:deleteMesura }
 
 
 nou_resultat:

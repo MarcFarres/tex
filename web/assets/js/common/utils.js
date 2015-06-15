@@ -228,6 +228,59 @@ $('#resultats_list_contenedor').on('click','.gotest',function(){
 
 });
 
+
+
+$('#resultats_list_contenedor').on('click','.borrar',function(){
+ 
+  var parametros = {
+      "resultat_id" : $(this).attr('data-resultat'),
+      "maquina_id" : $(this).attr('data-maquina'),
+      "id" : $(this).attr('data-of')
+    };
+
+
+    $.ajax({
+      data:  parametros,
+      url:   borrar_resultat,
+      type:  'post',
+      beforeSend: function () {
+        click_element($('.plegable_list'));
+      } , 
+      success:  function (response) {
+        $('#resultats_list_contenedor').html(response);
+      // buidem la pantalla del test
+      $('#test_contenedor').html('');
+   },
+  });
+
+});
+
+
+
+$('#test_contenedor').on('click','.borrar',function(){
+ 
+  var parametros = {
+      "mesura_id" : $(this).attr('data-mesura'),
+      "resultat_id" : $(this).attr('data-resultat')
+    };
+
+
+    $.ajax({
+      data:  parametros,
+      url:   borrar_mesura,
+      type:  'post',
+      beforeSend: function () {
+        
+      } , 
+      success:  function (response) {
+        out_element($('#results_table'));
+        
+        $('#test_contenedor').html(response);
+   },
+  });
+
+});
+
 /* ------------------------------[ helper functions: ]  */
 // ================================================================
 

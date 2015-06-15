@@ -71,7 +71,18 @@
           {#  <a href="{{path(
              'render_result',{'resultat_id':resultat.id})}}">
 </a> #}
-            <span class='gotest veure fa fa-eye' data-resultat='{{resultat.id}}'></span>
+            <span 
+              class='gotest veure fa fa-eye' 
+              data-resultat='{{resultat.id}}'>
+            </span>
+
+            <span
+              class='borrar table_icon fa fa-close'
+              data-resultat='{{resultat.id}}'
+              data-of='{{OF.id}}' 
+              data-maquina='{{maquina.id}}'> 
+            </span>
+        
 
            </td>
         </tr>
