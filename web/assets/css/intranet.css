@@ -794,12 +794,13 @@ a, a:visited {
 .maquina_list_tests, .resultats-table_contenedor {
   position: relative;
   width: 100%;
-  padding: 5px 5px 25px 5px;
+  padding: 0 0 25px 0;
   background-color: white;
   margin: 10px 0; }
   .maquina_list_tests > h2, .resultats-table_contenedor > h2 {
     text-align: center;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+    background-color: #f5f7f7; }
 
 /* =======================================================
   Tabla standard para mostrar informaci├│n de diferente tipo
@@ -1040,13 +1041,13 @@ a, a:visited {
               background-color: #eee;
               color: #333; }
             .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina.not_finished {
-              background-color: #e67e22; }
+              background-color: #f1c40f; }
             .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina.test_ok {
               background-color: #2ecc71; }
             .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina.errors {
               background-color: #e74c3c; }
             .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina.maquina_actual {
-              background-color: #f1c40f;
+              background-color: #e67e22;
               border: solid 2px yellow; }
             .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina > span {
               margin: auto; }
@@ -1149,15 +1150,16 @@ a, a:visited {
 .maquina_actual {
   height: 50px;
   width: 50px;
-  background-color: #f1c40f;
-  border: solid 2px yellow;
+  background-color: #f39c12;
+  border: solid 2px #f39c12;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
   color: white;
-  padding: 0 5px; }
+  padding: 0 5px;
+  font-weight: bold; }
 
 .plegable.in {
   display: table; }

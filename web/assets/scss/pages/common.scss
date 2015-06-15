@@ -2,11 +2,12 @@
 {
 	height:50px;
     width:50px;
-    background-color:$sun;
-    border:solid 2px yellow;
+    background-color:$orange;
+    border:solid 2px $orange;
     @include rounded(5px);
     color:white;
     padding:0 5px;
+    font-weight: bold;
 }
 
 .plegable

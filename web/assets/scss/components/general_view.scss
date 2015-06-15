@@ -124,11 +124,11 @@
             }
             
             &.no_test{background-color:#eee;color:#333}
-            &.not_finished{background-color:$carrot;}
+            &.not_finished{background-color:$sun;}
             &.test_ok{background-color:$emerald;}
             &.errors{background-color:$alizarin;}
             &.maquina_actual{
-              background-color:$sun;
+              background-color:$carrot;
               border:solid 2px yellow;
             }
 
