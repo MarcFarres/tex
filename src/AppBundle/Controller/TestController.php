@@ -308,6 +308,7 @@ public function testAjaxAction($resultat_id = false, Request $request){
       $page_vars['OF'] = $OF;
       $page_vars['maquina'] = $maquina;
       $page_to_render = 'AppBundle:include:resultat.html.twig';
+
     }
     else{
       $Pes = new Pes();
@@ -318,7 +319,7 @@ public function testAjaxAction($resultat_id = false, Request $request){
       $page_vars['resultParamsForm'] = $resultParamsForm->createView(); 
       $page_vars['mesuraForm'] = $mesuraForm->createView();
     }
-
+  
   return $this->render($page_to_render, $page_vars); 
 
 }
@@ -660,6 +661,27 @@ public function list_OF_pendentsAction()
       'AppBundle:include:list_OF_pendents.html.twig',array(
     "OF_list" => $OF_list,
     ));
+}
+
+
+/**
+
+ Borra una OF no finalitzada
+
+*/
+public function deleteOFAction($OF) 
+  {
+    // borrem la OF sense finalitzar
+    $this->get('of.manager')->removeOf($OF);
+
+    // recuperem les OF sense finalitzar
+    $OF_list = $this->get('of.manager')->getUnDoneOf();
+
+    return $this->redirect($this
+            ->generateUrl('admin_tests',array(
+              'OF' => $OF
+              )), 301
+          );
 }
 
 

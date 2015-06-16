@@ -216,7 +216,7 @@ $('#resultats_list_contenedor').on('click','.gotest',function(){
       url:   goToTest,
       type:  'post',
       beforeSend: function () {
-        click_element($('.plegable_list'));
+       // click_element($('.plegable_list'));
       } , 
       success:  function (response) {
         // desaparece la lista de rsultados

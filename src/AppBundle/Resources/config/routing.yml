@@ -58,6 +58,11 @@ iniciar_test:
     defaults: { _controller: AppBundle:Test:iniTest }
 
 
+delete_test:
+    path: /tests/borrar/{OF}
+    defaults: { _controller: AppBundle:Test:deleteOF }
+
+
 resultats_list_ajax:
     path: /tests/resultatsListAjax/
     defaults: { _controller: AppBundle:Test:listResultats }

@@ -179,7 +179,7 @@ class Resultat
         // en percentatge
         $resultat = $resultat*100;
         // guardem el resultat
-        $this->descentratge = $resultat;
+        $this->descentratge = abs($resultat);
 
         return $this;
     }
@@ -418,7 +418,7 @@ evaluació de l'èxit del test
       // descentratge obtingut experimentalment
       $desc_obtingut = $this->getDescentratge();
       // en prenem el valor absolut
-      $desc_obtingut = $math->absValue($desc_obtingut);
+      $desc_obtingut = abs($desc_obtingut);
 
       $dev_maxim = $this->getDevMax();
       $dev_obtingut = $this->getDev();

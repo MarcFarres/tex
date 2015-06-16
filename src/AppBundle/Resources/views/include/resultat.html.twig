@@ -4,6 +4,8 @@
 
 {# Paràmetres utilitzats en el test #}
 
+
+
 <div class="resultats-table_contenedor">
 
   <h2> Resúm dels resultats </h2>
@@ -28,7 +30,7 @@
 
 </div>
 
-  
+ 
 
 {# tabla que muestra los resultados resumidos del test #}
 
@@ -42,7 +44,7 @@
 
     <tr>
       <th> </th>
-      <th> Valor esperat </th>
+      <th> Valors nominals </th>
       <th> Valor obtingut </th>
     </tr>
   </thead>
@@ -55,8 +57,8 @@
     </tr>
     <tr>
       <td class='magnitude'>DESC%</td>
-      <td>{{ resultat.descmax }} gr/m</td>
-      <td class='{{ resultat.descentratge > resultat.descmax ? 'error' : '' }}'>{{ resultat.descentratge|number_format(2, '.', ',') }} gr/m</td>
+      <td>{{ resultat.descmax }} %</td>
+      <td class='{{ resultat.descentratge > resultat.descmax ? 'error' : '' }}'>{{ resultat.descentratge|number_format(2, '.', ',') }} %</td>
     </tr>
     <tr>
       <td class='magnitude'>CV%</td>
@@ -89,9 +91,12 @@
       
 {% for mesura in mesures %}
 
-  {{ include('AppBundle:include:mesura_row.html.twig', {
-      "mesura":mesura
-    }, with_context = false ) }}
+  <tr>
+    <td>{{ mesura.numero }}</td> 
+    <td>{{ mesura.pes.valor }} {{  mesura.pes.unitat }}</td> 
+    <td>{{ mesura.densitat.valor }} {{ mesura.densitat.unitat }} &nbsp;&nbsp;&nbsp;&nbsp;</td> 
+
+  </tr>
 
 {% endfor %}
 
@@ -114,3 +119,4 @@
     </a>
 </div>
 </div>
+
