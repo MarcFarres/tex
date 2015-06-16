@@ -33,10 +33,10 @@ class OfManager
   // la data de creació de la OF
   $OF->setData(new \DateTime('today') );
   // el codi identificador
-  $numero = ''; 
-  $numero.=date("Y");
-  $numero.=$OF->getLinia()->getNumero();
-  $OF->setNumero($numero);    
+  //$numero = ''; 
+  //$numero.=date("Y");
+  //$numero.=$OF->getLinia()->getNumero();
+  //$OF->setNumero($numero);    
   // creem un nou test
   $test = new Test();
   $this->entityManager->persist($test);
