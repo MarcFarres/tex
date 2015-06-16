@@ -1,0 +1,26 @@
+/* =======================================================
+  Frame diseñado para mostrar información y opcionalmente
+  alguna opción
+  */.frame-infoOf/*
+  --------------------------------------------------------
+*/{
+
+	@extend %frame-info;
+    height:50px;
+    margin:auto;
+
+    >.title
+  {
+    height:20px;
+  }
+
+  >.content
+  {
+    height:30px;
+
+    >.buttons
+    {
+      display:none;
+    }
+  }
+}

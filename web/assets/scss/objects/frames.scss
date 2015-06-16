@@ -6,8 +6,8 @@
   */.frame-element/*
   --------------------------------------------------------
 */{
-  width:120px;
-  height:100px;
+  width:100px;
+  height:80px;
     
   @include rounded(3px);
   margin: auto 10px;
@@ -24,7 +24,7 @@
   >.icon
   {
     @extend %column_container;
-    height:75px;
+    height:55px;
     >span
     {
       font-size:2rem;
@@ -64,7 +64,7 @@
 /* =======================================================
   Frame diseñado para mostrar información y opcionalmente
   alguna opción
-  */.frame-info/*
+  */%frame-info/*
   --------------------------------------------------------
 */{
   width:150px;
@@ -72,7 +72,8 @@
   @include rounded(3px);
   border: solid 2px darken($clouds,3);
   font-family: Helvetica;
-
+  margin-top:0;
+  padding-top:0;
   background-color:lighten($clouds,3);
 
   &:first-child

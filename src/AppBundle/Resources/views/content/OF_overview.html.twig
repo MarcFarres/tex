@@ -2,27 +2,12 @@
 
 {% set test = OF.getTest() %}
 
-{% block pageContent %}
-   
 
-<script>
-  var maquina_route = "{{ path('resultats_list_ajax') }}" ;
-  var ajax_route = "{{ path('llegir_mesura') }}" ;
-  var goToTest = "{{ path('render_result_ajax') }}" ;
-  var novamesura = "{{ path('nova_mesura_ajax') }}" ;
-  var borrar_resultat = "{{ path('delete_result') }}" ;
-  var borrar_mesura = "{{ path('delete_mesura') }}" ;
-  var finalitzar_resultat = "{{ path('finalitzar_resultat')}}" ;
-  var nou_resultat = "{{ path('nou_resultat') }}" ;
+{% block content_submenu %} 
 
-</script>  
+<div class="one-col-contenedor info-contenedor">
 
-<div class="one-col-contenedor">
-
-  <div class="info-contenedor">
-
-
-    <div class="frame-info yellow">
+    <div class="frame-infoOf yellow">
        <div class="title">
          <span>Of num.</span>
        </div>
@@ -34,7 +19,7 @@
     </div>
 
 
-    <div class="frame-info orange">
+    <div class="frame-infoOf orange">
       <div class="title">
         <span>Linia</span>
       </div>
@@ -46,7 +31,7 @@
     </div>
 
 
-    <div class="frame-info green">
+    <div class="frame-infoOf green">
       <div class="title">
         <span>Color </span>
       </div>
@@ -58,7 +43,7 @@
     </div>
 
 
-    <div class="frame-info purple">
+    <div class="frame-infoOf purple">
       <div class="title">
         <span>Estat </span>
       </div>
@@ -67,10 +52,10 @@
           <span>{{ OF.done ? 'Finalitzat' : 'Obert'}}</span>
         </div>
       </div> 
-    </div> {# frame info #}
+    </div> {# frame info #} 
 
 
-    <div class="frame-info blue">
+    <div class="frame-infoOf blue">
       <div class="title">
         <span>Data inici </span>
       </div>
@@ -81,10 +66,13 @@
       </div> 
     </div> {# frame info #}
 
-
-  </div> {# info contenedor #}
-
 </div> {# one-col contenedor #}
+
+{% endblock content_submenu %}
+
+
+
+{% block content_options %}
 
 <div class="one-col-contenedor">
   <div class="actions-contenedor">
@@ -111,6 +99,25 @@
    {% endif %}
  </div> {# actions contenedor #}
 </div> {# one-col contenedor #}
+
+{% endblock content_options %}
+
+
+
+{% block pageContent %}
+   
+
+<script>
+  var maquina_route = "{{ path('resultats_list_ajax') }}" ;
+  var ajax_route = "{{ path('llegir_mesura') }}" ;
+  var goToTest = "{{ path('render_result_ajax') }}" ;
+  var novamesura = "{{ path('nova_mesura_ajax') }}" ;
+  var borrar_resultat = "{{ path('delete_result') }}" ;
+  var borrar_mesura = "{{ path('delete_mesura') }}" ;
+  var finalitzar_resultat = "{{ path('finalitzar_resultat')}}" ;
+  var nou_resultat = "{{ path('nou_resultat') }}" ;
+
+</script>  
 
 <div class="two-cols-contenedor">
 

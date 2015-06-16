@@ -352,7 +352,7 @@ a, a:visited {
   -ms-flex-line-pack: stretch;
   align-content: stretch; }
 
-.columns-base-layout-parent, .intranet-base-parent, .intranet-form .fieldset > div, .frame-element > .icon, .frame-info > .title, .frame-info > .content > .text, .frame-info > .content > .buttons, .main_title_container, .general-view_container, .general-view_container .general-view_linia > .linia-num, .general-view_container .general-view_linia > .linia-num > .num, .general-view_container .general-view_linia > .sublinia_container, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num > .num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina, .resultat_row, .two-cols-contenedor, .action-button > a, .action-button.ajax, #admin-tests_menu-sup, #admin-tests_menu-sup > .menu-sup_frame, .info-contenedor {
+.columns-base-layout-parent, .intranet-base-parent, .intranet-form .fieldset > div, .frame-element > .icon, .frame-infoOf > .title, .frame-infoOf > .content > .text, .frame-infoOf > .content > .buttons, .main_title_container, .general-view_container, .general-view_container .general-view_linia > .linia-num, .general-view_container .general-view_linia > .linia-num > .num, .general-view_container .general-view_linia > .sublinia_container, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num > .num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina, .resultat_row, .two-cols-contenedor, .action-button > a, .action-button.ajax, #admin-tests_menu-sup, #admin-tests_menu-sup > .menu-sup_frame, .info-contenedor {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -700,8 +700,8 @@ a, a:visited {
   al hover
   */
 .frame-element {
-  width: 120px;
-  height: 100px;
+  width: 100px;
+  height: 80px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
@@ -713,7 +713,7 @@ a, a:visited {
   .frame-element:last-child {
     margin-right: 150px; }
   .frame-element > .icon {
-    height: 75px; }
+    height: 55px; }
     .frame-element > .icon > span {
       font-size: 2rem;
       color: #dbe1e8;
@@ -738,7 +738,7 @@ a, a:visited {
   Frame dise├▒ado para mostrar informaci├│n y opcionalmente
   alguna opci├│n
   */
-.frame-info {
+.frame-infoOf {
   width: 150px;
   height: 110px;
   -webkit-border-radius: 3px;
@@ -748,42 +748,44 @@ a, a:visited {
   border-radius: 3px;
   border: solid 2px #e3e9eb;
   font-family: Helvetica;
+  margin-top: 0;
+  padding-top: 0;
   background-color: #f5f7f7; }
-  .frame-info:first-child {
+  .frame-infoOf:first-child {
     margin-left: 0; }
-  .frame-info:last-child {
+  .frame-infoOf:last-child {
     margin-right: 0; }
-  .frame-info > .title {
+  .frame-infoOf > .title {
     height: 30px;
     background-color: #e3e9eb;
     font-weight: bold; }
-    .frame-info > .title > span {
+    .frame-infoOf > .title > span {
       margin: auto; }
-  .frame-info > .content {
+  .frame-infoOf > .content {
     height: 80px; }
-    .frame-info > .content > .text {
+    .frame-infoOf > .content > .text {
       height: 100%; }
-      .frame-info > .content > .text > span {
+      .frame-infoOf > .content > .text > span {
         margin: auto;
         padding: 6px; }
-    .frame-info > .content > .buttons {
+    .frame-infoOf > .content > .buttons {
       height: 35px;
       border-top: solid 1px black; }
-      .frame-info > .content > .buttons > span {
+      .frame-infoOf > .content > .buttons > span {
         margin: auto; }
-  .frame-info.blue > .title {
+  .blue.frame-infoOf > .title {
     background-color: #3498DB;
     color: white; }
-  .frame-info.green > .title {
+  .green.frame-infoOf > .title {
     background-color: #2ecc71;
     color: white; }
-  .frame-info.yellow > .title {
+  .yellow.frame-infoOf > .title {
     background-color: #f1c40f;
     color: white; }
-  .frame-info.purple > .title {
+  .purple.frame-infoOf > .title {
     background-color: #9b59b6;
     color: white; }
-  .frame-info.orange > .title {
+  .orange.frame-infoOf > .title {
     background-color: #f39c12;
     color: white; }
 
@@ -863,6 +865,9 @@ a, a:visited {
     color: #333;
     font-weight: bold; }
 
+/* =======================================================
+  div destinado a dejar un espacio en blanco
+  */
 /*
   Estructura:
   
@@ -1117,8 +1122,16 @@ a, a:visited {
     min-width: 900px; }
     .intranet-base-parent .layout-content > .layout-content-menu {
       border-bottom: solid 1px #ddd;
-      overflow: hidden; }
+      overflow: hidden;
+      padding: 5px; }
+    .intranet-base-parent .layout-content > .layout-content-submenu {
+      position: relative;
+      background-color: #ecf0f1; }
+    .intranet-base-parent .layout-content > .layout-content-options {
+      position: relative;
+      background-color: #ecf0f1; }
     .intranet-base-parent .layout-content > .layout-content-final {
+      position: relative;
       overflow-y: scroll;
       background-color: #ecf0f1; }
 
@@ -1235,7 +1248,9 @@ a, a:visited {
 -[ parents ]--------------------------------------------
 */
                         /* objects/buttons 
---------------------------------------------------------*/ }
+--------------------------------------------------------*/
+  margin-top: auto;
+  height: 30px; }
   .action-button > a {
     height: 100%;
     color: inherit; }
@@ -1265,6 +1280,20 @@ a, a:visited {
     .data-list > tbody > tr > td > span:hover {
       cursor: pointer; }
 
+/* =======================================================
+  Frame dise├▒ado para mostrar informaci├│n y opcionalmente
+  alguna opci├│n
+  */
+.frame-infoOf {
+  height: 50px;
+  margin: auto; }
+  .frame-infoOf > .title {
+    height: 20px; }
+  .frame-infoOf > .content {
+    height: 30px; }
+    .frame-infoOf > .content > .buttons {
+      display: none; }
+
 .frame-element {
   background-color: #f5f7f7; }
 
@@ -1277,10 +1306,10 @@ a, a:visited {
   -moz-justify-content: space-around;
   justify-content: space-around;
   position: relative;
-  height: 120px;
+  height: 110px;
   background-color: #ffffff; }
   #admin-tests_menu-sup > .menu-sup_frame {
-    height: 100%;
+    height: 85px;
     padding: 0 20px;
     margin: auto; }
 
@@ -1293,7 +1322,14 @@ a, a:visited {
   -webkit-justify-content: space-around;
   -moz-justify-content: space-around;
   justify-content: space-around;
-  margin-top: 30px; }
+  width: 100%;
+  height: 60px;
+  top: 0;
+  left: 0;
+  margin: 0;
+  overflow: hidden;
+  background-color: #ecf0f1;
+  z-index: 90; }
 
 .subsection_title {
   position: relative;
@@ -1346,5 +1382,10 @@ a, a:visited {
   -ms-flex: 5;
   flex: 5;
   padding: 5px; }
+
+.actions-contenedor {
+  height: 30px;
+  padding: 0;
+  background-color: transparent; }
 
 /*# sourceMappingURL=intranet.css.map */
