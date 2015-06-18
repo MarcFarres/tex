@@ -1388,4 +1388,12 @@ a, a:visited {
   padding: 0;
   background-color: transparent; }
 
+#admin-tests_list-container {
+  position: relative; }
+
+#admin-tests_form-container {
+  position: relative;
+  width: 400px;
+  margin: auto; }
+
 /*# sourceMappingURL=intranet.css.map */

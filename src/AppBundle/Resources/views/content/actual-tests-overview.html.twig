@@ -1,0 +1,76 @@
+{% extends 'AppBundle:content:admin_tests.html.twig' %}
+
+{% block content_submenu %} 
+<script>
+  var tipus_route = "{{ path('actual_tests_list') }}" ;
+</script>
+  
+
+{% endblock content_submenu %}
+
+
+{% block content_options %}
+  
+  <div class="one-col-contenedor">
+    <div class="actions-contenedor" id='families_maquines'>
+{% set ultim = '' %}
+  {% for familia in families %}
+    {% if ultim != familia.tipus %}
+
+      <div class="action-button red"
+        data-tipus='{{familia.tipus}}'>
+
+      <span class='fa fa-share-square-o'>{{familia.tipus}}</span>
+      
+      {% set ultim = familia.tipus %}
+
+  </div>
+
+    {% endif %}
+  {% endfor %}
+  </div>
+</div>
+{% endblock content_options %}
+
+
+
+
+{% block pageContent %}
+ 
+
+
+<div class="two-cols-contenedor">
+
+  <div class="left_side" id='OF_left'>
+
+  </div> {# left side #}
+
+
+  <div class="right_side" id='OF_right'>
+
+    <div class="one-col-contenedor">
+
+      <div id="resultats_list_contenedor">
+
+
+      </div> {# resultats list contenedor #}
+    
+    </div>
+    
+ 
+
+     <div id="test_contenedor" class="one-col-contenedor">
+      {# Bloque donde se muestran los tests y los resultados#}
+      {% block TestSpace %}
+              
+
+      {% endblock TestSpace %}
+        </div> {# test contenedor #}
+
+    </div> {# two cols contenedor #}
+
+
+
+{% endblock pageContent %}
+
+

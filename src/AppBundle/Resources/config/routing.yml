@@ -8,6 +8,16 @@ admin_tests:
     defaults: { _controller: AppBundle:Test:index }
 
 
+actual_tests:
+    path:     /tests/actuals
+    defaults: { _controller: AppBundle:Test:actualTests }
+
+
+actual_tests_list:
+    path:     /tests/actuals/list
+    defaults: { _controller: AppBundle:Test:actualTestsList }
+
+
 nova_linia:
     path: /nova_linia
     defaults: { _controller: AppBundle:General:newLinia }

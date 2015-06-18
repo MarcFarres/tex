@@ -30,20 +30,29 @@ class OfManager
 *
 */
   public function newOf(OF $OF){
-  // la data de creació de la OF
-  $OF->setData(new \DateTime('today') );
-  // el codi identificador
-  //$numero = ''; 
-  //$numero.=date("Y");
-  //$numero.=$OF->getLinia()->getNumero();
-  //$OF->setNumero($numero);    
-  // creem un nou test
-  $test = new Test();
-  $this->entityManager->persist($test);
-  // l'assignem a la OF
-  $OF->setTest($test);
+    // la data de creació de la OF
+    $OF->setData(new \DateTime('today') );   
+    // creem un nou test
+    $test = new Test();
+    // l'assignem a la OF
+    $OF->setTest($test);
+    // guardem el test
+    $this->entityManager->persist($test);
+    // recuperem les maquines de la linia
+    $linia = $OF->getLinia();
+    $sublinies = $linia->getSublinies();
+
+    foreach($sublinies as $sublinia){
+      $maquines = $sublinia->getMaquines();
+      foreach($maquines as $maquina){
+        // generem un nou test per a cada màquina
+        $this->newResultat($OF,$maquina);
+      }// maquines
+    }// sublinies
+
   $OF->setDone(false);
-          
+  // guardem la nova OF
+  
   $this->entityManager->persist($OF);
   $this->entityManager->flush();
 

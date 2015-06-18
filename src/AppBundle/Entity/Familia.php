@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="familia")
- * @ORM\Entity(repositoryClass="AppBundle\Entity\OFRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\FamiliaRepository")
  */
 class Familia
 {
@@ -22,18 +22,20 @@ class Familia
 * El nom està format per tipus + model
 *
 * @ORM\Column(type="string", length=250)
-*/
-    protected $nom;
+*/protected $nom;
 
 /**
 * @ORM\Column(type="string", length=250 , nullable= true)
-*/   
-    protected $tipus;
+*/protected $tipus;
 
 /**
 * @ORM\Column(type="string", length=250 , nullable= true)
-*/
-    protected $model;
+*/protected $model;
+
+ /**
+* Bidirectional   
+* @ORM\OneToMany(targetEntity="Maquina",mappedBy="familia")
+**/protected $maquines;
 
 
 /**
@@ -136,4 +138,44 @@ class Familia
 
 */
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->maquines = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add maquines
+     *
+     * @param \AppBundle\Entity\Maquina $maquines
+     * @return Familia
+     */
+    public function addMaquine(\AppBundle\Entity\Maquina $maquines)
+    {
+        $this->maquines[] = $maquines;
+
+        return $this;
+    }
+
+    /**
+     * Remove maquines
+     *
+     * @param \AppBundle\Entity\Maquina $maquines
+     */
+    public function removeMaquine(\AppBundle\Entity\Maquina $maquines)
+    {
+        $this->maquines->removeElement($maquines);
+    }
+
+    /**
+     * Get maquines
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMaquines()
+    {
+        return $this->maquines;
+    }
 }

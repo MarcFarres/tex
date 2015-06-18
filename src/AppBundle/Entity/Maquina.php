@@ -30,8 +30,8 @@ class Maquina
     **/ protected $sublinia;
 
     /**
-    * Unidirectional    (OWNING SIDE) 
-    * @ORM\ManyToOne(targetEntity="Familia")
+    * Bidirectional   
+    * @ORM\ManyToOne(targetEntity="Familia",inversedBy="maquines")
     * @ORM\JoinColumn(name="familia_id",referencedColumnName="id")
     **/ protected $familia;
 

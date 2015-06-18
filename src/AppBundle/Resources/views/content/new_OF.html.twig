@@ -7,17 +7,11 @@
   <div class="two-cols-contenedor">
 
   	<div class="left_side">
-{# Incluimos el formulario para añadir productos #}
-  {{ 
-    include(
-    'AppBundle:form:intranet_admin.html.twig',
-    {
-        "form":form,
-        "form_title":"Crear Ordre de Fabricació",
- 	}, 
- 	with_context = false
- 	) 
-    }} 
+
+  {{include('AppBundle:form:intranet_admin.html.twig',{
+      "form":form,
+      "form_title":"Crear Ordre de Fabricació",
+ 	},with_context = false)}} 
 
     </div>
 

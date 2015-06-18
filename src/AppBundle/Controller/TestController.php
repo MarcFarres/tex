@@ -72,6 +72,9 @@ class TestController extends Controller
 
     $this->repositoris['Pes'] = $doctrine
       ->getRepository('AppBundle:Pes');
+
+    $this->repositoris['Familia'] = $doctrine
+      ->getRepository('AppBundle:Familia');
   }
 
 /**
@@ -79,11 +82,78 @@ class TestController extends Controller
  pàgina inicial del administrador de tests
 
 */
-  public function indexAction()
+  public function indexAction(Request $request)
   {
-    return $this->render('AppBundle:content:admin_tests.html.twig');
+    $OF = new Of();
+    $form = $this->createForm(new NewOFType(), $OF);
+    $form->handleRequest($request);
+
+    if ($form->isValid()) { 
+    // si el formulari es vàlid guardem la OF a la base de dades
+      $this->get('of.manager')->newOf($OF);
+    }
+    return $this->render('AppBundle:content:admin_tests.html.twig',array(
+      'form'=>$form->createView(), 
+    ));
   }
 
+/**
+
+ visió dels tests oberts ( per a entrar mesures )
+
+*/
+  public function actualTestsAction()
+  {
+    $this->controllerIni();
+    // recuperem les families de maquines
+    $families = $this->repositoris['Familia']->findAll();
+
+    return $this->render('AppBundle:content:actual-tests-overview.html.twig',array(
+      'families'=>$families,
+    ));
+
+  }
+
+/**
+
+ visió dels tests oberts ( per a entrar mesures )
+
+*/
+  public function actualTestsListAction(Request $request)
+  {
+    $this->controllerIni();
+    $tipus = $request->request->get('tipus');
+    //recuperem els tipus de maquines
+    $families = $this->repositoris['Familia']->findBy(array(
+        'tipus' => $tipus,
+      ));
+    //resuperem els tests a mostrar
+    $tests = array();
+    foreach($families as $familia){
+      // les maquines de la familia
+      $maquines = $familia->getMaquines();
+      foreach($maquines as $maquina){
+        // els tests de cada maquina
+        $maquina_id = $maquina->getId();
+        $maquina_tests = $this->repositoris['Resultat']->findBy(array(
+          'maquina' => $maquina_id,
+          // només recuperem els que estan oberts
+          'done'=>false,
+        ));
+
+        foreach($maquina_tests as $maquina_test){
+          //cadascun dels tests
+          $tests[] = $maquina_test;
+        }
+      }
+      
+    }
+
+    return $this->render('AppBundle:ajax:actual_tests_list.html.twig',array(
+      'resultats'=>$tests
+    ));
+
+  }
 
 /**
  
@@ -105,11 +175,9 @@ class TestController extends Controller
     
     $Mesura = $this->get('of.manager')->newMesura($resultat,$Pes);
 
-    return $this->render(
-        'AppBundle:include:mesura_row.html.twig',array(
+    return $this->render('AppBundle:include:mesura_row.html.twig',array(
         'mesura' => $Mesura, 
-        'resultat' => $resultat,
-      ));
+        'resultat' => $resultat,));
   }
 
 
@@ -152,7 +220,6 @@ class TestController extends Controller
 
       $OF = new Of();
       $form = $this->createForm(new NewOFType(), $OF);
-
       // comprovem si el formulari ja ha sigut enviat
       // -----------------------------------------------------------
       $form->handleRequest($request);
@@ -161,11 +228,10 @@ class TestController extends Controller
           // si el formulari es vàlid el guardem a la base de dades
           $this->get('of.manager')->newOf($OF);
           // nos redirigimos a la página donde se inicia el test
-          return $this->redirect($this
-            ->generateUrl('iniciar_test',array(
+          return $this->redirect($this->generateUrl(
+              'iniciar_test',array(
               'OF' => $OF->getId()
-              )), 301
-          );
+              )), 301 );
         }
 
         return $this->render(
@@ -658,8 +724,8 @@ public function list_OF_pendentsAction()
     $OF_list = $this->get('of.manager')->getUnDoneOf();
 
     return $this->render(
-      'AppBundle:include:list_OF_pendents.html.twig',array(
-    "OF_list" => $OF_list,
+      'AppBundle:ajax:list_OF_pendents.html.twig',array(
+      "OF_list" => $OF_list,
     ));
 }
 

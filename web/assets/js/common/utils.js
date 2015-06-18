@@ -153,6 +153,30 @@ $.ajax({
 
 });
 
+// obrim la llista de tests oberts d'una familia
+
+$('#families_maquines').on('click','.action-button', function(){
+
+  var tipus = $(this).attr('data-tipus');
+  
+  var parametros = {
+    "tipus" : tipus,
+  };
+
+$.ajax({
+  data:  parametros,
+  url:   tipus_route,
+  type:  'post',
+  beforeSend: function () {
+    } , 
+  success:  function (response) {
+
+    $('#OF_left').html(response);
+  },
+  });
+
+});
+
 // generar un nou test
 
 $('#resultats_list_contenedor').on('click','#new_result', function(){

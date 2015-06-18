@@ -6,11 +6,23 @@
   <header id="admin-tests_menu-sup">
 
      <nav class="menu-sup_frame">
+      
+      <a 
+        class="frame-element" 
+        href="{{ path('actual_tests') }}">
+
+        <div class="icon">
+          <span class='fa fa-dropbox'></span>
+        </div>
+
+        <div class="title">
+          Tests Oberts
+        </div>
+      </a>
 
       <a 
         class="frame-element" 
-        href="{{ path('nova_OF') }}"
-      >
+        href="{{ path('nova_OF') }}">
 
          <div class="icon">
            <span class='fa fa-external-link'></span>
@@ -23,8 +35,7 @@
 
       <a 
         class="frame-element" 
-        href="{{ path('admin_tests') }}"
-      >
+        href="{{ path('admin_tests') }}">
 
          <div class="icon">
            <span class='fa fa-flag-o'></span>
@@ -36,15 +47,14 @@
 
       <a 
         class="frame-element" 
-        href="{{ path('tests_historial') }}"
-      >
+        href="{{ path('tests_historial') }}">
 
         <div class="icon">
           <span class='fa fa-database'></span>
         </div>
 
         <div class="title">
-          Historial
+          Historial OF
         </div>
 
       </a>
@@ -58,11 +68,30 @@
 
 
 {% block pageContent %}
-  
-{{ render(controller(
-    'AppBundle:Test:list_OF_pendents'
-    )) 
-}}
+
+  <div id='admin-tests_list-container'>
+
+    {{ render(controller(
+      'AppBundle:Test:list_OF_pendents'
+      )) 
+    }}
+
+  </div>
+
+  <div class="one-col-contenedor">
+
+
+    <div id="admin-tests_form-container">
+    
+      {{include('AppBundle:form:intranet_admin.html.twig',{
+        "form":form,
+        "form_title":"Crear Ordre de Fabricació",
+      },with_context = false)}}
+
+    </div>{# admin-tests_form-container #}
+
+    
+  </div>{#one col contenedor #}
 
 {# pageContent #}
 {% endblock %}
