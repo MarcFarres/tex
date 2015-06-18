@@ -126,6 +126,34 @@ return false;
 
 });
 
+// finalitzem un resultat
+
+$('#test_contenedor').on('submit','#endResult', function(){
+  
+  var params = $(this).serialize() ;
+
+$.ajax({ 
+  data:  params,
+  url:   finalitzar_resultat,
+  type:  'post',
+  dataType: "html",
+  beforeSend: function () {
+     
+    } , 
+  success:  function (response) {
+    if($('#test_contenedor').hasClass('openedTests')) {
+      $('#resultats_list_contenedor').html(response);
+      $('#test_contenedor').html('');
+    }
+    else {$('#test_contenedor').html(response);}
+  },
+  });
+
+
+return false;
+
+});
+
 // capturar les mesures de pes de la balança:
 
 $('#test_contenedor').on('click','#realitzar_mesura', function(){
@@ -171,7 +199,7 @@ $.ajax({
     } , 
   success:  function (response) {
 
-    $('#OF_left').html(response);
+    $('#resultats_list_contenedor').html(response);
   },
   });
 
@@ -228,12 +256,17 @@ $('.results_list').on('click', function(){
 });
 
 
+// obrim un nou test desde el 'resultats list contenedor'
+
 $('#resultats_list_contenedor').on('click','.gotest',function(){
  
   var parametros = {
       "resultat" : $(this).attr('data-resultat'),
     };
-
+    
+    var clicked_element = $(this).parent().parent().parent().find('.clicked') ;
+    unclick_element(clicked_element);
+    click_element($(this).parent().parent());
 
     $.ajax({
       data:  parametros,
@@ -243,9 +276,7 @@ $('#resultats_list_contenedor').on('click','.gotest',function(){
        // click_element($('.plegable_list'));
       } , 
       success:  function (response) {
-        // desaparece la lista de rsultados
-        out_element($('#results_table'));
-        
+         
         $('#test_contenedor').html(response);
    },
   });
@@ -311,8 +342,8 @@ $('#test_contenedor').on('click','.borrar',function(){
 
 // support a les interfaces css 'clicked / unclicked' i 'in / out'
 
-main_parent.on('click','.unclicked',function(){click_element($(this));});
-main_parent.on('click','.clicked',function(){unclick_element($(this));});
+main_parent.on('click','.unclicked',function(){if(!$(this).hasClass('clickedException'))click_element($(this));});
+main_parent.on('click','.clicked',function(){if(!$(this).hasClass('clickedException'))unclick_element($(this));});
 main_parent.on('click','.clickable',function(){$(this).removeClass('.clickable_done').addClass('clickable_done')})
 
 function in_element(element){

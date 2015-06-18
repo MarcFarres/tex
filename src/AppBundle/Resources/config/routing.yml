@@ -108,6 +108,9 @@ finalitzar_resultat:
     requirements:
         _method:  POST
 
+finalitzar_resultat_tests_oberts:
+    path: /tests/finalitzar_resultat/tests_oberts
+    defaults: {_controller: AppBundle:Test:saveAndView}
 
 delete_result:
     path: /tests/result/delete

@@ -114,9 +114,31 @@ class TestController extends Controller
 
   }
 
+  /**
+
+ (Ajax) finalitzar test y veure la llista dels que queden
+
+*/
+  public function saveAndViewAction(Request $request)
+  {
+    $this->controllerIni();
+    $resultat_id = $request->request->get('resultat_id');
+    $resultat = $this->repositoris['Resultat']->findOneById($resultat_id);
+    $this->get('of.manager')->saveResultat($resultat);
+    // la maquina
+    $maquina = $resultat->getMaquina();
+    // la familia
+    $familia = $maquina->getFamilia();
+    // el tipus
+    $tipus = $familia->getTipus();
+    // modifiques el request per a poder renderitzar la llista
+    $request->request->set('tipus',$tipus);
+    return $this->actualTestsListAction($request);
+  }
+
 /**
 
- visió dels tests oberts ( per a entrar mesures )
+ (Ajax) La llista dels tests oberts
 
 */
   public function actualTestsListAction(Request $request)
@@ -138,7 +160,9 @@ class TestController extends Controller
         $maquina_tests = $this->repositoris['Resultat']->findBy(array(
           'maquina' => $maquina_id,
           // només recuperem els que estan oberts
-          'done'=>false,
+          'done'=>false),
+          array(
+          'data'=>'DESC'
         ));
 
         foreach($maquina_tests as $maquina_test){

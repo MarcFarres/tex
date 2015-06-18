@@ -3,6 +3,10 @@
 {% block content_submenu %} 
 <script>
   var tipus_route = "{{ path('actual_tests_list') }}" ;
+  var goToTest = "{{ path('render_result_ajax') }}" ;
+  var novamesura = "{{ path('nova_mesura_ajax') }}" ;
+  // cambiem el valor d'aquesta variable per a un comportament diferent
+  var finalitzar_resultat = "{{ path('finalitzar_resultat_tests_oberts')}}" ;
 </script>
   
 
@@ -12,23 +16,7 @@
 {% block content_options %}
   
   <div class="one-col-contenedor">
-    <div class="actions-contenedor" id='families_maquines'>
-{% set ultim = '' %}
-  {% for familia in families %}
-    {% if ultim != familia.tipus %}
-
-      <div class="action-button red"
-        data-tipus='{{familia.tipus}}'>
-
-      <span class='fa fa-share-square-o'>{{familia.tipus}}</span>
-      
-      {% set ultim = familia.tipus %}
-
-  </div>
-
-    {% endif %}
-  {% endfor %}
-  </div>
+    
 </div>
 {% endblock content_options %}
 
@@ -41,33 +29,53 @@
 
 <div class="two-cols-contenedor">
 
-  <div class="left_side" id='OF_left'>
+  <div class="left_side actual_tests" >
+
+      <div class="maquina_list_tests">
+        <h2> Tests Oberts </h2>
+        <div class="actions-contenedor" id='families_maquines'>
+{% set ultim = '' %}
+  {% for familia in families %}
+    {% if ultim != familia.tipus %}
+
+            <div class="action-button red"
+        data-tipus='{{familia.tipus}}'>
+
+              <span class='fa fa-share-square-o'>{{familia.tipus}}</span>
+      
+             {% set ultim = familia.tipus %}
+
+            </div>
+
+    {% endif %}
+  {% endfor %}
+
+      </div> {# buttons box #}
+      <div class="vertical-space_20"></div>
+    <div id="resultats_list_contenedor" class='one-col-contenedor'>
+      
+    </div>
+
+    </div> {# list box #}
+
+    
 
   </div> {# left side #}
 
 
-  <div class="right_side" id='OF_right'>
+  <div class="right_side actual_tests">
 
     <div class="one-col-contenedor">
 
-      <div id="resultats_list_contenedor">
-
-
-      </div> {# resultats list contenedor #}
-    
-    </div>
-    
- 
-
-     <div id="test_contenedor" class="one-col-contenedor">
+      <div id="test_contenedor" class="one-col-contenedor openedTests">
       {# Bloque donde se muestran los tests y los resultados#}
-      {% block TestSpace %}
-              
+      
+        
 
-      {% endblock TestSpace %}
-        </div> {# test contenedor #}
-
-    </div> {# two cols contenedor #}
+      </div> {# test contenedor #}
+    </div>{# one-col-contenedor #}
+  </div> {# right_side #}
+</div>
 
 
 

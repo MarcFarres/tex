@@ -1,9 +1,7 @@
 {% set test = '' %}
-  <div class="maquina_list_tests">
-
-    <h2> Tests de la Màquina </h2>
+  
     
-    <table class="data-list light_grey " id='results_table'>
+    <table class=" light_grey data-list " id='results_table'>
       <thead>
         <tr>
           <th>OF</th>
@@ -24,9 +22,9 @@
     {% set test = resultat.getTest() %}
     {% set of = test.getOf() %}
 
-        <tr>
+        <tr class='unclicked clickedException'>
           
-          <td> {{ of.numero }}</td>
+          <td><a href="{{ path('iniciar_test',{'OF':of.id}) }}">{{ of.numero }}</a></td>
           <td> {{ of.color }}</td>
           <td> {{ resultat.data | date('d-m-Y')  }}</td>
           <td> {{ resultat.data | date('H:i:s')  }}</td>
@@ -52,4 +50,3 @@
   </table>
 
   
-</div>

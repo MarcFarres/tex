@@ -1,7 +1,9 @@
 .one-col-contenedor
 {
+  position:relative;
   @extend %row_container;
   @include align-content(space-around);
   width:100%;
   padding:10px;
+  height:auto;
 }

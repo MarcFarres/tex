@@ -352,7 +352,7 @@ a, a:visited {
   -ms-flex-line-pack: stretch;
   align-content: stretch; }
 
-.columns-base-layout-parent, .intranet-base-parent, .intranet-form .fieldset > div, .frame-element > .icon, .frame-infoOf > .title, .frame-infoOf > .content > .text, .frame-infoOf > .content > .buttons, .main_title_container, .general-view_container, .general-view_container .general-view_linia > .linia-num, .general-view_container .general-view_linia > .linia-num > .num, .general-view_container .general-view_linia > .sublinia_container, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num > .num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina, .resultat_row, .two-cols-contenedor, .action-button > a, .action-button.ajax, #admin-tests_menu-sup, #admin-tests_menu-sup > .menu-sup_frame, .info-contenedor {
+.columns-base-layout-parent, .intranet-base-parent, .intranet-form .fieldset > div, .frame-element > .icon, .frame-infoOf > .title, .frame-infoOf > .content > .text, .frame-infoOf > .content > .buttons, .main_title_container, .general-view_container, .general-view_container .general-view_linia > .linia-num, .general-view_container .general-view_linia > .linia-num > .num, .general-view_container .general-view_linia > .sublinia_container, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num > .num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina, .resultat_row, .two-cols-contenedor, .action-button > a, .action-button.ajax, #admin-tests_menu-sup, #admin-tests_menu-sup > .menu-sup_frame, .info-contenedor, .actions-contenedor {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -569,7 +569,7 @@ a, a:visited {
 /* ==================================================
   Colores de fondo disponibles
 ----------------------------------------------------*/
-.bg-blue, .blue.action-button, .blue#resultat_dades > tbody > tr:nth-child(2n), .blue.data-list > tbody > tr:nth-child(2n) {
+.bg-blue, .blue.action-button, .blue#resultat_dades > tbody > tr:nth-child(2n), .blue.data-list > tbody > tr:nth-child(2n), .light_grey#resultat_dades > tbody > tr.clicked:nth-child(2n), .light_grey.data-list > tbody > tr.clicked:nth-child(2n), .light_grey#resultat_dades > tbody > tr.clicked:nth-child(2n+1), .light_grey.data-list > tbody > tr.clicked:nth-child(2n+1) {
   background-color: #3498DB; }
 
 .bg-blue_light, .blue#resultat_dades > tbody > tr:nth-child(2n+1), .blue.data-list > tbody > tr:nth-child(2n+1) {
@@ -808,6 +808,10 @@ a, a:visited {
   Tabla standard para mostrar informaci├│n de diferente tipo
   Tiene la opci├│n de una doble indexaci├│n (vert. y horiz.), 
     para ello hay que a├▒adir la classe 'cubic'
+      -Interficies
+       . colors (b,y,g,p,r,o)
+       . clicked / unclicked (para los tr)
+
   */
 #resultat_dades, .data-list {
   position: relative;
@@ -868,6 +872,15 @@ a, a:visited {
 /* =======================================================
   div destinado a dejar un espacio en blanco
   */
+/* =======================================================
+  deja un espacio vertical de 20px
+  */
+.vertical-space_20 {
+  position: relative;
+  height: 20px;
+  width: 100%;
+  background-color: transparent; }
+
 /*
   Estructura:
   
@@ -1143,6 +1156,13 @@ a, a:visited {
   -ms-flex: 1;
   flex: 1;
   padding: 20px 10px 20px 10px; }
+  .two-cols-contenedor > .left_side.actual_tests {
+    -webkit-box-flex: 5;
+    -webkit-flex: 5;
+    -moz-box-flex: 5;
+    -moz-flex: 5;
+    -ms-flex: 5;
+    flex: 5; }
 .two-cols-contenedor > .right_side {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
@@ -1151,14 +1171,23 @@ a, a:visited {
   -ms-flex: 1;
   flex: 1;
   padding: 20px 10px 20px 10px; }
+  .two-cols-contenedor > .right_side.actual_tests {
+    -webkit-box-flex: 5;
+    -webkit-flex: 5;
+    -moz-box-flex: 5;
+    -moz-flex: 5;
+    -ms-flex: 5;
+    flex: 5; }
 
 .one-col-contenedor {
+  position: relative;
   -webkit-align-content: space-around;
   -moz-align-content: space-around;
   -ms-flex-line-pack: space-around;
   align-content: space-around;
   width: 100%;
-  padding: 10px; }
+  padding: 10px;
+  height: auto; }
 
 .maquina_actual {
   height: 50px;
@@ -1264,6 +1293,9 @@ a, a:visited {
 /* =======================================================
   Lista de datos para mostrar informaci├│n r├ípida
     - Dependencias
+
+    - Interfaces
+      . clicked / unclicked
       
   */
 .data-list {
@@ -1385,8 +1417,13 @@ a, a:visited {
 
 .actions-contenedor {
   height: 30px;
-  padding: 0;
-  background-color: transparent; }
+  padding: 0 0 0 10px;
+  background-color: transparent;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  justify-content: space-between; }
 
 #admin-tests_list-container {
   position: relative; }

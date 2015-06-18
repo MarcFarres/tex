@@ -8,12 +8,20 @@
   {
     @include flex();
     padding:20px 10px 20px 10px;
+    &.actual_tests
+    {
+       @include flex(5);
+    }
   }
 
   >.right_side
   {
     @include flex();
     padding:20px 10px 20px 10px;
+    &.actual_tests
+    {
+       @include flex(5);
+    }
   }
   
 }

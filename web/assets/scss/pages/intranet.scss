@@ -144,7 +144,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
   color:$green_sea;
 }
 
-
+// proporcion en la ventana OF_overview
 
 #OF_left
 {
@@ -191,8 +191,10 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 .actions-contenedor
 {
   height:30px;
-  padding:0;
+  padding:0 0 0 10px;
   background-color: transparent;
+  @extend %column_container;
+  @include justify-content(space-between);
 }
 
 

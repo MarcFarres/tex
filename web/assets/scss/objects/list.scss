@@ -3,6 +3,10 @@
   Tabla standard para mostrar información de diferente tipo
   Tiene la opción de una doble indexación (vert. y horiz.), 
     para ello hay que añadir la classe 'cubic'
+      -Interficies
+       . colors (b,y,g,p,r,o)
+       . clicked / unclicked (para los tr)
+
   */%table_list/*
   --------------------------------------------------------
 */{
@@ -67,9 +71,11 @@
   &.light_grey{ >tbody{  >tr{ &:nth-child(2n){
       background-color:white;
       color:#000;
+      &.clicked{@extend .bg-blue;}
     }&:nth-child(2n+1){
       background-color:$clouds;
       color:#333;
+      &.clicked{@extend .bg-blue;}
      }
     } // tr
   } // tbody
