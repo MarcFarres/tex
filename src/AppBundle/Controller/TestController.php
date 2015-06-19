@@ -300,8 +300,8 @@ class TestController extends Controller
 public function newTestAction(Request $request){
   $this->controllerIni();
 
-  $OF_id = 33;//$request->request->get('OF_id');
-  $maquina_id = 2;//$request->request->get('maquina_id');
+  $OF_id = $request->request->get('OF_id');
+  $maquina_id = $request->request->get('maquina_id');
 
   $OF = $this->repositoris['OF']->findOneById($OF_id);
   $Maquina = $this->repositoris['Maquina']->findOneById($maquina_id);

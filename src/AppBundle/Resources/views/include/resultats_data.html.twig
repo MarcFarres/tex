@@ -5,11 +5,12 @@
 	{% set mesures = resultat.mesures %}
 	{% set mesures_length = mesures | length %}
 	{% set test = resultat.test %}
+    {% set maquina = resultat.maquina %}
     {% set OF = test.Of %}
 
     <div class="resultats-table_contenedor">
 
-  <h2> Resúm dels resultats </h2>
+  <h2> {{ maquina.familia.nom }} Maquina {{maquina.numero}} el dia: {{ resultat.data | date('d-m-Y')  }} </h2>
 
 <table id='resultat_dades' class='light_grey'>
 <thead>
@@ -17,17 +18,22 @@
     <tr>
       <th> OF </th>
       <th> Color </th>
+      <th> Linia </th>
+      <th> Hora </th>
     </tr>
   </thead>
 
   <tbody>
     <tr>
-      <td>{{ OF.numero }} m</td>
+      <td><a href="{{ path('iniciar_test',{'OF':OF.id}) }}">{{ OF.numero }}</a> </td>
       <td>{{ OF.color }}</td>
+      <td>{{ OF.getLinia().numero }}</td>
+      <td>{{ resultat.data | date('H:i:s')  }}</td>
     </tr>
       
   </tbody>
 </table>
+<div class="vertical-space_20"></div>
 <table class="data-list light_grey cubic">
   <thead>
       <tr>
@@ -52,6 +58,7 @@
   </tbody>
 
 </table>
+<div class="vertical-space_20"></div>
 <table id='resultat_dades' class='light_grey'>
   
   <thead>
