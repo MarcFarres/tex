@@ -373,6 +373,11 @@ main_parent.on('click','.unclicked',function(){if(!$(this).hasClass('clickedExce
 main_parent.on('click','.clicked',function(){if(!$(this).hasClass('clickedException'))unclick_element($(this));});
 main_parent.on('click','.clickable',function(){$(this).removeClass('.clickable_done').addClass('clickable_done')})
 
+
+$('.action-button').on('click',function(){
+
+   $('.action-button.clicked').removeClass('clicked').addClass('unclicked');
+})
 function in_element(element){
   element.removeClass('out');
   element.addClass('in');

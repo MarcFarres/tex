@@ -34,12 +34,12 @@
   --------------------------------------------------------
 */{
   // interfaz de colores disponibles
-  &.blue{@extend .bg-blue;color:white;}
+  &.blue{@extend .bg-blue;color:white;&.clicked{@extend .bg-red;color:white;}}
   &.green{@extend .bg-green;color:white;}
   &.yellow{@extend .bg-yellow;color:white;}
   &.purple{@extend .bg-purple;color:white;}
   &.orange{@extend .bg-orange;color:white;}
-  &.red{@extend .bg-red;color:white;}
+  &.red{@extend .bg-red;color:white;&.clicked{@extend .bg-blue;color:white;}}
   
   position:relative;
   float:left;
@@ -55,14 +55,15 @@
   @include shadow(3px ,3px ,6px, #333);
   text-shadow: 0px 0px 1px #000;
   border: solid 1px transparent;
-  @include transition(box-shadow .1s linear);
+  @include transition(box-shadow .1s linear,background-color .2s linear);
   
   &.clickable_done{
     @include animation(click_animation,.4s);
   }
     
   &.clicked{ 
-    @include shadow(0px ,0px ,0px, #333);}
+    @include shadow(0px ,0px ,0px, #333);
+  }
 
   &.unclicked{
     @include shadow(3px ,3px ,6px, #333);}

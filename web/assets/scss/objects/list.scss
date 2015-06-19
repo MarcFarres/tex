@@ -71,11 +71,11 @@
   &.light_grey{ >tbody{  >tr{ &:nth-child(2n){
       background-color:white;
       color:#000;
-      &.clicked{@extend .bg-blue;}
+      &.clicked{@extend .bg-yellow_light;}
     }&:nth-child(2n+1){
       background-color:$clouds;
       color:#333;
-      &.clicked{@extend .bg-blue;}
+      &.clicked{@extend .bg-yellow_light;}
      }
     } // tr
   } // tbody

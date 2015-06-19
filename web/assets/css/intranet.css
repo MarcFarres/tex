@@ -569,7 +569,7 @@ a, a:visited {
 /* ==================================================
   Colores de fondo disponibles
 ----------------------------------------------------*/
-.bg-blue, .blue.action-button, .blue#resultat_dades > tbody > tr:nth-child(2n), .blue.data-list > tbody > tr:nth-child(2n), .light_grey#resultat_dades > tbody > tr.clicked:nth-child(2n), .light_grey.data-list > tbody > tr.clicked:nth-child(2n), .light_grey#resultat_dades > tbody > tr.clicked:nth-child(2n+1), .light_grey.data-list > tbody > tr.clicked:nth-child(2n+1) {
+.bg-blue, .blue.action-button, .red.clicked.action-button, .blue#resultat_dades > tbody > tr:nth-child(2n), .blue.data-list > tbody > tr:nth-child(2n) {
   background-color: #3498DB; }
 
 .bg-blue_light, .blue#resultat_dades > tbody > tr:nth-child(2n+1), .blue.data-list > tbody > tr:nth-child(2n+1) {
@@ -584,7 +584,7 @@ a, a:visited {
 .bg-yellow, .yellow.action-button, .yellow#resultat_dades > tbody > tr:nth-child(2n), .yellow.data-list > tbody > tr:nth-child(2n) {
   background-color: #f1c40f; }
 
-.bg-yellow_light, .yellow#resultat_dades > tbody > tr:nth-child(2n+1), .yellow.data-list > tbody > tr:nth-child(2n+1) {
+.bg-yellow_light, .yellow#resultat_dades > tbody > tr:nth-child(2n+1), .yellow.data-list > tbody > tr:nth-child(2n+1), .light_grey#resultat_dades > tbody > tr.clicked:nth-child(2n), .light_grey.data-list > tbody > tr.clicked:nth-child(2n), .light_grey#resultat_dades > tbody > tr.clicked:nth-child(2n+1), .light_grey.data-list > tbody > tr.clicked:nth-child(2n+1) {
   background-color: #f4d03f; }
 
 .bg-purple, .purple.action-button, .purple#resultat_dades > tbody > tr:nth-child(2n), .purple.data-list > tbody > tr:nth-child(2n) {
@@ -605,7 +605,7 @@ a, a:visited {
 .bg-grey_light {
   background-color: #b1bdbd; }
 
-.bg-red, .red.action-button, .red#resultat_dades, .red.data-list, #resultat_dades > tbody > tr > td.error, .data-list > tbody > tr > td.error {
+.bg-red, .blue.clicked.action-button, .red.action-button, .red#resultat_dades, .red.data-list, #resultat_dades > tbody > tr > td.error, .data-list > tbody > tr > td.error {
   background-color: #e74c3c; }
 
 /* =======================================================
@@ -648,7 +648,7 @@ a, a:visited {
   font-family: Helvetica;
   font-size: 16px;
   margin: 15px;
-  padding: 10px;
+  padding: 10px 15px 15px 15px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
@@ -661,12 +661,14 @@ a, a:visited {
   box-shadow: 3px 3px 6px #333;
   text-shadow: 0px 0px 1px #000;
   border: solid 1px transparent;
-  -webkit-transition: box-shadow 0.1s linear;
-  -moz-transition: box-shadow 0.1s linear;
-  -o-transition: box-shadow 0.1s linear;
-  transition: box-shadow 0.1s linear; }
+  -webkit-transition: box-shadow 0.1s linear, background-color 0.2s linear;
+  -moz-transition: box-shadow 0.1s linear, background-color 0.2s linear;
+  -o-transition: box-shadow 0.1s linear, background-color 0.2s linear;
+  transition: box-shadow 0.1s linear, background-color 0.2s linear; }
   .blue.action-button {
     color: white; }
+    .blue.clicked.action-button {
+      color: white; }
   .green.action-button {
     color: white; }
   .yellow.action-button {
@@ -677,6 +679,8 @@ a, a:visited {
     color: white; }
   .red.action-button {
     color: white; }
+    .red.clicked.action-button {
+      color: white; }
   .clickable_done.action-button {
     -webkit-animation: click_animation 0.4s;
     animation: click_animation 0.4s; }
@@ -1157,12 +1161,12 @@ a, a:visited {
   flex: 1;
   padding: 20px 10px 20px 10px; }
   .two-cols-contenedor > .left_side.actual_tests {
-    -webkit-box-flex: 5;
-    -webkit-flex: 5;
-    -moz-box-flex: 5;
-    -moz-flex: 5;
-    -ms-flex: 5;
-    flex: 5; }
+    -webkit-box-flex: 6;
+    -webkit-flex: 6;
+    -moz-box-flex: 6;
+    -moz-flex: 6;
+    -ms-flex: 6;
+    flex: 6; }
   .two-cols-contenedor > .left_side.resultats_resum {
     -webkit-box-flex: 5;
     -webkit-flex: 5;
@@ -1179,12 +1183,12 @@ a, a:visited {
   flex: 1;
   padding: 20px 10px 20px 10px; }
   .two-cols-contenedor > .right_side.actual_tests {
-    -webkit-box-flex: 5;
-    -webkit-flex: 5;
-    -moz-box-flex: 5;
-    -moz-flex: 5;
-    -ms-flex: 5;
-    flex: 5; }
+    -webkit-box-flex: 4;
+    -webkit-flex: 4;
+    -moz-box-flex: 4;
+    -moz-flex: 4;
+    -ms-flex: 4;
+    flex: 4; }
   .two-cols-contenedor > .right_side.resultats_resum {
     -webkit-box-flex: 5;
     -webkit-flex: 5;
@@ -1224,6 +1228,9 @@ a, a:visited {
 
 .pointable:hover {
   cursor: pointer; }
+
+#resultat_dades td > a {
+  color: #3498DB; }
 
 #tests_table_wrapper {
   margin: 50px;
@@ -1293,7 +1300,7 @@ a, a:visited {
                         /* objects/buttons 
 --------------------------------------------------------*/
   margin-top: auto;
-  height: 30px; }
+  height: 35px; }
   .action-button > a {
     height: 100%;
     color: inherit; }
@@ -1319,7 +1326,7 @@ a, a:visited {
                       /* objects/list 
 --------------------------------------------------------*/
   position: relative;
-  width: 70%;
+  width: 90%;
   margin: auto; }
   .data-list > tbody > tr > td > span {
     color: black; }

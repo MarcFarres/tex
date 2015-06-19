@@ -29,3 +29,11 @@
 		cursor:pointer;
 	}
 }
+
+
+// enllaços en una taula
+#resultat_dades{
+  td>a{
+	color:$blue_river;
+  }
+}
