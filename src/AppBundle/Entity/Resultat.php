@@ -80,6 +80,11 @@ class Resultat
     * @ORM\JoinColumn(name="test" , referencedColumnName="id")
     */ protected $test;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="TimeO",inversedBy="resultat")
+    * @ORM\JoinColumn(name="time" , referencedColumnName="id")
+    */ protected $time;
+
     
     /**
      * Constructor
@@ -519,5 +524,38 @@ evaluació de l'èxit del test
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * Remove mesures
+     *
+     * @param \AppBundle\Entity\Mesura $mesures
+     */
+    public function removeMesure(\AppBundle\Entity\Mesura $mesures)
+    {
+        $this->mesures->removeElement($mesures);
+    }
+
+  
+
+    /**
+     * Set time
+     *
+     * @return Resultat
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * Get time
+     *
+     */
+    public function getTime()
+    {
+        return $this->time;
     }
 }

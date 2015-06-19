@@ -11,6 +11,7 @@ use AppBundle\Entity\Pes;
 use AppBundle\Entity\Densitat;
 use AppBundle\Entity\Mesura;
 use AppBundle\Entity\Test;
+use AppBundle\Entity\TimeO;
 
 class OfManager
 {
@@ -147,8 +148,22 @@ class OfManager
   	$test = $OF->getTest();
   	// recuperem la sublinia de la maquina
     $sublinia = $maquina->getSublinia();
-
+    // generem un nou resultat
     $resultat = new Resultat(); 
+    // generem un nou objecte de temps
+    $today = date('d-m-Y');
+    // recuperem la TimeO d'avui, si existeix
+    $TimeO = $em->getRepository('AppBundle:TimeO')
+      ->findOneBy(array(
+        'data' => $today,
+    ));
+      // si no existeix en creem una i la guardem
+      if(!$TimeO){
+        $TimeO = new TimeO();
+        $em->persist($TimeO);
+      }
+    // li associem el TimeO
+    $resultat->setTime($TimeO);
     // li associem el test
     $resultat->setTest($test);
     // li associem la màquina
@@ -166,7 +181,8 @@ class OfManager
     $resultat->setStatus(1);
     // guardem la data d'inici del test
     $resultat->setData(new \DateTime('now'));
-    // guardem el nou "resultat" a la base de dades
+    // guardem el nou "resultat" i "TimeO" a la base de dades
+    
     $em->persist($resultat);
     $em->flush();   
 

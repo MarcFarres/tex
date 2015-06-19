@@ -284,6 +284,33 @@ $('#resultats_list_contenedor').on('click','.gotest',function(){
 });
 
 
+// Obrim els tests d'una data particular
+
+$('#datas_list_contenedor').on('click','.gotests',function(){
+ 
+  var parametros = {
+      "timeo" : $(this).attr('data-timeo'),
+    };
+    
+    var clicked_element = $(this).parent().parent().parent().find('.clicked') ;
+    unclick_element(clicked_element);
+    click_element($(this).parent().parent());
+
+    $.ajax({
+      data:  parametros,
+      url:   get_data_tests,
+      type:  'post',
+      beforeSend: function () {
+       // click_element($('.plegable_list'));
+      } , 
+      success:  function (response) {
+         
+        $('#tests_contenedor').html(response);
+   },
+  });
+
+});
+
 
 $('#resultats_list_contenedor').on('click','.borrar',function(){
  

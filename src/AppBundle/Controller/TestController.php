@@ -13,6 +13,7 @@ use AppBundle\Entity\Resultat;
 use AppBundle\Entity\Mesura;
 use AppBundle\Entity\Pes;
 use AppBundle\Entity\Densitat;
+use AppBundle\Entity\TimeO;
 
 // conexió al port serial
 use AppBundle\Utils\PhpSerial ;
@@ -75,6 +76,10 @@ class TestController extends Controller
 
     $this->repositoris['Familia'] = $doctrine
       ->getRepository('AppBundle:Familia');
+
+    $this->repositoris['TimeO'] = $doctrine
+      ->getRepository('AppBundle:TimeO');
+
   }
 
 /**
@@ -295,8 +300,8 @@ class TestController extends Controller
 public function newTestAction(Request $request){
   $this->controllerIni();
 
-  $OF_id = $request->request->get('OF_id');
-  $maquina_id = $request->request->get('maquina_id');
+  $OF_id = 33;//$request->request->get('OF_id');
+  $maquina_id = 2;//$request->request->get('maquina_id');
 
   $OF = $this->repositoris['OF']->findOneById($OF_id);
   $Maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
@@ -800,5 +805,55 @@ public function deleteOFAction($OF)
         'resultats' => $resultats,
       ));
   }
+  
+/**
+ 
+  Pàgina dels tests realitzats ordenats per data
 
+*/
+  public function resultatsResumAction()
+  {
+   $this->controllerIni();
+   // recuperem totes les dates a mostrar
+   $dates = $this->repositoris['TimeO']->findAll();
+
+  return $this->render(
+      'AppBundle:content:resultats_resum.html.twig',array(
+      'dates'=>$dates,
+      ));
+  }
+
+  
+
+/**
+ 
+  (AjaX) enviem la llista dels tests per a una data particular
+
+*/
+
+  public function getDataTestsAction(Request $request)
+  {
+     $this->controllerIni();
+    // recuperamos las variables POST
+    $timeo_id = $request->request->get('timeo');
+    // recuperem l'objecte TimeO
+    $TimeO = $this->repositoris['TimeO']->findOneById($timeo_id);
+    // recuperem els tests associats
+    $tests = $TimeO->getResultat();
+
+    $tests_list = array();
+    foreach($tests as $test)
+    {
+      if($test->getDone()){
+        $tests_list[] = $test;
+      }
+    }
+     
+
+    return $this->render(
+      'AppBundle:include:resultats_data.html.twig',array(
+        'tests_list'=>$tests_list,
+      ));
+
+  }
 }

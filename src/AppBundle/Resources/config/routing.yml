@@ -125,8 +125,7 @@ delete_mesura:
 nou_resultat:
     path: /tests/new
     defaults: { _controller: AppBundle:Test:newTest }
-    requirements:
-        _method:  POST
+
 
 tests_historial:
     path: /tests/historial
@@ -136,8 +135,18 @@ tests_historial:
 llegir_mesura:
     path: /llegir
     defaults: { _controller: AppBundle:Test:llegirMesura }
-   
+
 
 maquina_report:
     path: /tests/report/maquina/{OF}/{maquina}
     defaults: { _controller: AppBundle:Test:maquinaReport }
+
+
+resultats_resum_inici:
+    path: /tests/resultats/resum
+    defaults: { _controller: AppBundle:Test:resultatsResum }
+
+
+get_data_tests:
+    path: /tests/resultats/tests
+    defaults: { _controller: AppBundle:Test:getDataTests }

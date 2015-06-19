@@ -5,22 +5,13 @@
   var tipus_route = "{{ path('actual_tests_list') }}" ;
   var goToTest = "{{ path('render_result_ajax') }}" ;
   var novamesura = "{{ path('nova_mesura_ajax') }}" ;
+  var borrar_mesura = "{{ path('delete_mesura') }}" ;
   // cambiem el valor d'aquesta variable per a un comportament diferent
   var finalitzar_resultat = "{{ path('finalitzar_resultat_tests_oberts')}}" ;
 </script>
   
 
 {% endblock content_submenu %}
-
-
-{% block content_options %}
-  
-  <div class="one-col-contenedor">
-    
-</div>
-{% endblock content_options %}
-
-
 
 
 {% block pageContent %}

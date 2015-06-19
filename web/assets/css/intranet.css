@@ -1163,6 +1163,13 @@ a, a:visited {
     -moz-flex: 5;
     -ms-flex: 5;
     flex: 5; }
+  .two-cols-contenedor > .left_side.resultats_resum {
+    -webkit-box-flex: 5;
+    -webkit-flex: 5;
+    -moz-box-flex: 5;
+    -moz-flex: 5;
+    -ms-flex: 5;
+    flex: 5; }
 .two-cols-contenedor > .right_side {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
@@ -1172,6 +1179,13 @@ a, a:visited {
   flex: 1;
   padding: 20px 10px 20px 10px; }
   .two-cols-contenedor > .right_side.actual_tests {
+    -webkit-box-flex: 5;
+    -webkit-flex: 5;
+    -moz-box-flex: 5;
+    -moz-flex: 5;
+    -ms-flex: 5;
+    flex: 5; }
+  .two-cols-contenedor > .right_side.resultats_resum {
     -webkit-box-flex: 5;
     -webkit-flex: 5;
     -moz-box-flex: 5;
