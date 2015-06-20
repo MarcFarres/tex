@@ -446,57 +446,24 @@ public function testAjaxAction($resultat_id = false, Request $request){
 */  
 public function llegirMesuraAction(Request $request)    
 {
-    /*$isAjax = $request->isXmlHttpRequest();
-    if ($isAjax) { */ 
 
-    /*$respuesta = '';//$request->request->get('valor2');
-      
-      $process = new Process('python prueba.py');
-
-      $process->setIdleTimeout(10 * 60);
-
+    $respuesta = '';
+      $process = new Process('python satel.py');
+      $process->setTimeout(5 * 60);
       $process->run();
-
-    // executes after the command finishes
-    if (!$process->isSuccessful()) {
-      $respuesta .= $process->getErrorOutput();
+    
+    while ($process->isRunning()) {
+    // waiting for process to finish
     }
 
-    $respuesta .= $process->getOutput();
-
+    if (!$process->isSuccessful()) {
+      //$respuesta = $process->getErrorOutput();
+      $respuesta = 'finish_process';
+      $process->stop();
+      return new Response($respuesta,200);
+    }
+    $respuesta = $process->getOutput();
     return new Response($respuesta,200);
-    */
-
-    $serial = new PhpSerial;
-    $serial->deviceSet("COM1");
-
-// We can change the baud rate, parity, length, stop bits, flow control
-$serial->confBaudRate(2400);
-$serial->confParity("none");
-$serial->confCharacterLength(8);
-$serial->confStopBits(1);
-$serial->confFlowControl("none"); 
-
-// Then we need to open it
-$serial->deviceOpen();
-
-// To write into
-$serial->sendMessage("Hello !");
-
-// Or to read from
-$read = $serial->readPort();
-
-// If you want to change the configuration, the device must be closed
-$serial->deviceClose();
-
-// We can change the baud rate
-$serial->confBaudRate(2400);
-
-return new Response($read,200);
-
-    //}
-
-    //return new Response('Acceso incorrecto al controlador');
 }
 
 /**

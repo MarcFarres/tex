@@ -157,29 +157,25 @@ return false;
 // capturar les mesures de pes de la balança:
 
 $('#test_contenedor').on('click','#realitzar_mesura', function(){
+  llegir_mesura();
+});
 
-  var Id = $(this).attr('data-resultatId');
-  var container = $(this);
-
-  var parametros = {
-          "valor1" : 'hola',
-          "valor2" : 'buenas'
-        };
-
-$.ajax({
+function llegir_mesura(){
+  $.ajax({
   data:  parametros,
   url:   ajax_route,
   type:  'post',
   beforeSend: function () {
-    $('#valor').attr('Leyendo datos ... '); 
     } , 
   success:  function (response) {
-    alert(response);
-    $('#valor').attr('value',response);
+    if(response = 'finish_process'){
+      return 0;
+    }
+    $('#valor').attr('value',response); 
+    setTimeout(llegir_mesura(), 500);
   },
   });
-
-});
+}
 
 // obrim la llista de tests oberts d'una familia
 
