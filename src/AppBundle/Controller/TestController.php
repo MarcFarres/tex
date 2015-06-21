@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Process\Process;
 
+use AppBundle\Constant\Days;
+
 // Entities
 use AppBundle\Entity\Of;
 use AppBundle\Entity\Test;
@@ -783,10 +785,28 @@ public function deleteOFAction($OF)
    $this->controllerIni();
    // recuperem totes les dates a mostrar
    $dates = $this->repositoris['TimeO']->findAll();
+   $Days = new Days();
+   $months = array();
+   $months['juny'] = $Days->getDaysOfMonth('juny');
+   $months['juliol'] = $Days->getDaysOfMonth('juliol');
+   $months['agost'] = $Days->getDaysOfMonth('agost');
+   
+   // recorrem les dates on hi han tests
+   foreach($dates as $data)
+   {
+    // capturem la data del test
+    $la_data = explode('-',$data->getData());
+    $dia = $la_data[0];
+    $mes = $la_data[1]==6?'juny':'juliol';
+    $any = $la_data[2];
+    // comuniquem al calendari que en aquells data hi ha un test
+    $months[$mes][$dia] = $data->getId();
+   }
 
   return $this->render(
       'AppBundle:content:resultats_resum.html.twig',array(
       'dates'=>$dates,
+      'months'=>$months,
       ));
   }
 

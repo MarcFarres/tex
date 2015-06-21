@@ -8,7 +8,6 @@ $( document ).ready(function(){ });
   
   $('#tests_table').dataTable({
 
-
   });
 
    $('#tests_table_filter').children('label').addClass('fa fa-search');
@@ -255,7 +254,7 @@ $('.results_list').on('click', function(){
 // obrim un nou test desde el 'resultats list contenedor'
 
 $('#resultats_list_contenedor').on('click','.gotest',function(){
- 
+  alert('hola');
   var parametros = {
       "resultat" : $(this).attr('data-resultat'),
     };
@@ -282,7 +281,7 @@ $('#resultats_list_contenedor').on('click','.gotest',function(){
 
 // Obrim els tests d'una data particular
 
-$('#datas_list_contenedor').on('click','.gotests',function(){
+$('#calendari').on('click','.gotests',function(){
  
   var parametros = {
       "timeo" : $(this).attr('data-timeo'),
@@ -302,6 +301,7 @@ $('#datas_list_contenedor').on('click','.gotests',function(){
       success:  function (response) {
          
         $('#tests_contenedor').html(response);
+        $('#tests_table').dataTable({ });
    },
   });
 

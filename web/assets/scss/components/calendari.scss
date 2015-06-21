@@ -1,0 +1,66 @@
+#calendari
+{
+  
+  @extend %column_container;
+  @include justify_content(space-around);
+  padding-top:20px;
+  padding-bottom:20px;
+  margin-bottom:solid 1px black;
+
+  >.month
+  { 
+    width:280px;
+    height:280px;
+    background-color:darken($clouds,3);
+	>.month-title
+	{
+		@extend %column_container;
+	  background-color:lighten($clouds,5);
+  	  color:#333;
+  	  font-weight: bold;
+      height:40px;
+
+      >span
+      {
+        margin:auto;
+      } 
+	}
+
+	>.month-days
+	{
+		height:240px;
+		padding:10px;
+		@extend %column_container;
+		@include flex-wrap(wrap);
+
+		>.month-day
+		{
+           width:calc(100%/5);
+           @extend %column_container;
+
+           >span
+           {
+           	  margin:auto;
+           	  padding:5px;
+           	  &.no_test  
+			  {
+      
+ 			  }
+
+			  &.gotests
+			  {
+                background-color:$sun;
+	 		  }
+
+	 		  &.clicked
+	 		  {
+	 		  	background-color:blue;
+	 		  	color:white;
+	 		  }
+            }
+			
+			&:hover{cursor:pointer;}
+		}
+	}
+  }
+}

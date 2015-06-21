@@ -50,6 +50,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
   @import "../components/general_view";
   // la pantalla donde se despliegan los resultados
   @import "../components/resultats";
+ 
+  @import "../components/calendari";
 
 
 // contenedores 
@@ -211,4 +213,16 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
   position:relative;
   width:400px;
   margin:auto;
+}
+
+
+.data_tests_table
+{
+  >thead
+  {
+    >th
+    {
+      font-size:12px;
+    }
+  }
 }

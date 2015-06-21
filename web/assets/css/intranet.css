@@ -352,7 +352,7 @@ a, a:visited {
   -ms-flex-line-pack: stretch;
   align-content: stretch; }
 
-.columns-base-layout-parent, .intranet-base-parent, .intranet-form .fieldset > div, .frame-element > .icon, .frame-infoOf > .title, .frame-infoOf > .content > .text, .frame-infoOf > .content > .buttons, .main_title_container, .general-view_container, .general-view_container .general-view_linia > .linia-num, .general-view_container .general-view_linia > .linia-num > .num, .general-view_container .general-view_linia > .sublinia_container, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num > .num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina, .resultat_row, .two-cols-contenedor, .action-button > a, .action-button.ajax, #admin-tests_menu-sup, #admin-tests_menu-sup > .menu-sup_frame, .info-contenedor, .actions-contenedor {
+.columns-base-layout-parent, .intranet-base-parent, .intranet-form .fieldset > div, .frame-element > .icon, .frame-infoOf > .title, .frame-infoOf > .content > .text, .frame-infoOf > .content > .buttons, .main_title_container, .general-view_container, .general-view_container .general-view_linia > .linia-num, .general-view_container .general-view_linia > .linia-num > .num, .general-view_container .general-view_linia > .sublinia_container, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num > .num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina, .resultat_row, #calendari, #calendari > .month > .month-title, #calendari > .month > .month-days, #calendari > .month > .month-days > .month-day, .two-cols-contenedor, .action-button > a, .action-button.ajax, #admin-tests_menu-sup, #admin-tests_menu-sup > .menu-sup_frame, .info-contenedor, .actions-contenedor {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -1112,6 +1112,45 @@ a, a:visited {
       color: #3498DB;
       font-weight: bold; }
 
+#calendari {
+  -ms-flex-pack: distribute;
+  -webkit-justify-content: space-around;
+  -moz-justify-content: space-around;
+  justify-content: space-around;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: solid 1px black; }
+  #calendari > .month {
+    width: 280px;
+    height: 280px;
+    background-color: #e3e9eb; }
+    #calendari > .month > .month-title {
+      background-color: #fbfcfc;
+      color: #333;
+      font-weight: bold;
+      height: 40px; }
+      #calendari > .month > .month-title > span {
+        margin: auto; }
+    #calendari > .month > .month-days {
+      height: 240px;
+      padding: 10px;
+      -webkit-flex-wrap: wrap;
+      -moz-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
+      #calendari > .month > .month-days > .month-day {
+        width: calc(100%/5); }
+        #calendari > .month > .month-days > .month-day > span {
+          margin: auto;
+          padding: 5px; }
+          #calendari > .month > .month-days > .month-day > span.gotests {
+            background-color: #f1c40f; }
+          #calendari > .month > .month-days > .month-day > span.clicked {
+            background-color: blue;
+            color: white; }
+        #calendari > .month > .month-days > .month-day:hover {
+          cursor: pointer; }
+
 /*
    Extiende al base layout: "columns-base-layout"
 */
@@ -1453,5 +1492,8 @@ a, a:visited {
   position: relative;
   width: 400px;
   margin: auto; }
+
+.data_tests_table > thead > th {
+  font-size: 12px; }
 
 /*# sourceMappingURL=intranet.css.map */

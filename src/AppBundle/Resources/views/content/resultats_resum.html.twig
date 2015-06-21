@@ -20,68 +20,39 @@
 
 {% block pageContent %}
  
+ 
+{# calendari 
+  ========================================= #}
 
-<div class="two-cols-contenedor">
+<div id="calendari">
 
-  <div class="left_side resultats_resum" >
-
-      
-    <div id="datas_list_contenedor" class="maquina_list_tests">
-        <h2> Resultats </h2>
-
-       <table id="tests_table" class="stripe" cellspacing="0" width="100%">
-      <thead>
-        <tr>
-          <th>Data</th>
-          <th>nº de Tests</th>
-          <th>Accions</th>
-  
-        </tr>
-      </thead>
-
-      <tbody>
-
-        {% for data in dates %}
-
-        <tr class='unclicked clickedException'>
-          
-          <td>{{data.data}}</td>
-          <td>{{data.getResultat | length}}</td>
-          <td >
-            <span 
-              class='gotests veure fa fa-arrow-circle-right' 
-              data-timeo='{{data.id}}'>
-            </span>
-           </td>
-
-        </tr>
-
-      {% endfor %}
-
-    </tbody>
-  </table>
-      
+  {% for key,month in months %}
+    <div class="month">
+       <div class="month-title">
+          <span>{{key}}</span>
+       </div>
+       <div class="month-days">
+         {% for day,value in month %}
+           <div class="month-day">
+              <span 
+              class='{{ value == false?'no_tests':'gotests veure' }} unclicked'
+              data-timeo='{{value}}'>
+              {{day}}
+              </span>
+           </div>
+         {% endfor %}
+       </div> {# month days #}
     </div>
+    
+    
+  {% endfor %}
 
-    </div> {# list box #}
+</div>{# calendari #}
 
-
-
-  <div class="right_side resultats_resum">
-
-    <div class="one-col-contenedor">
-
-      <div id="tests_contenedor">
-      {# Bloque donde se muestran los tests y los resultados#}
-      
-        
-
-      </div> {# test contenedor #}
-    </div>{# one-col-contenedor #}
-  </div> {# right_side #}
-</div>
-
-
+ <div id="tests_contenedor">
+   
+ </div>     
+    
 
 {% endblock pageContent %}
 

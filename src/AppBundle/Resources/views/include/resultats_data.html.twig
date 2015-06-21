@@ -1,77 +1,63 @@
 
+  <div id="datas_list_contenedor" class="maquina_list_tests">
+        <h2> Resultats </h2>
 
-{% for resultat in tests_list %}
+       <table id="tests_table" class="stripe data_tests_table" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th> Hora </th>
+          <th> OF </th>
+          <th> Color </th>
+          <th> Linia </th>
+          <th> Familia </th>
+          <th> Maquina </th>
+          <th> X </th>
+          <th class='obtingut'> X </th>
+          <th> DESC% </th>
+          <th class='obtingut'> DESC% </th>
+          <th> DEV% </th>
+          <th class='obtingut'> DEV% </th>
+          
+        </tr>
+      </thead>
 
-	{% set mesures = resultat.mesures %}
-	{% set mesures_length = mesures | length %}
-	{% set test = resultat.test %}
-    {% set maquina = resultat.maquina %}
-    {% set OF = test.Of %}
+      <tbody>
 
-    <div class="resultats-table_contenedor">
+  {% for resultat in tests_list %}
 
-  <h2> {{ maquina.familia.nom }} Maquina {{maquina.numero}} el dia: {{ resultat.data | date('d-m-Y')  }} </h2>
+  {% set test = resultat.test %}
+  {% set maquina = resultat.maquina %}
+  {% set OF = test.Of %}
 
-<table id='resultat_dades' class='light_grey'>
-<thead>
+  <tr class='unclicked clickedException'>
 
-    <tr>
-      <th> OF </th>
-      <th> Color </th>
-      <th> Linia </th>
-      <th> Hora </th>
+    <td>{{ resultat.data | date('H:i:s')  }}</td>
+    <td><a href="{{ path('iniciar_test',{'OF':OF.id}) }}">{{ OF.numero }}</a> </td>
+    <td>{{ OF.color }}</td>
+    <td>{{ OF.getLinia().numero }}</td>
+    <td>{{  maquina.familia.nom  }}</td>
+    <td>{{maquina.numero}}</td>
+    <td>{{ resultat.mitjanaesp }}</td>
+    <td>{{ resultat.mitjana|number_format(2, '.', ',')}}
+    <td>{{ resultat.descmax }} %</td>
+    <td class='{{ resultat.descentratge > resultat.descmax ? 'error' : '' }}'>{{ resultat.descentratge|number_format(2, '.', ',') }} %</td>
+    <td>{{ resultat.devmax }} %</td>
+    <td class='{{ resultat.descentratge > resultat.descmax ? 'error' : '' }}'>{{ resultat.dev|number_format(2, '.', ',') }} %</td>
+    
     </tr>
-  </thead>
 
-  <tbody>
-    <tr>
-      <td><a href="{{ path('iniciar_test',{'OF':OF.id}) }}">{{ OF.numero }}</a> </td>
-      <td>{{ OF.color }}</td>
-      <td>{{ OF.getLinia().numero }}</td>
-      <td>{{ resultat.data | date('H:i:s')  }}</td>
-    </tr>
+
+      {% endfor %}
+
+    </tbody>
+  </table>
       
-  </tbody>
-</table>
-<div class="vertical-space_20"></div>
+    </div>
 
-<table id='resultat_dades' class='light_grey'>
-  
-  <thead>
 
-    <tr>
-      <th> </th>
-      <th> Valors nominals </th>
-      <th> Valor obtingut </th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <tr>
-      <td class='magnitude'>Mitjana</td>
-      <td>{{ resultat.mitjanaesp }} gr/m</td>
-      <td>{{ resultat.mitjana|number_format(2, '.', ',')}}  gr/m</td>
-    </tr>
-    <tr>
-      <td class='magnitude'>DESC%</td>
-      <td>{{ resultat.descmax }} %</td>
-      <td class='{{ resultat.descentratge > resultat.descmax ? 'error' : '' }}'>{{ resultat.descentratge|number_format(2, '.', ',') }} %</td>
-    </tr>
-    <tr>
-      <td class='magnitude'>CV%</td>
-      <td>{{ resultat.devmax }}</td>
-      <td class='{{ resultat.dev > resultat.devmax ? 'error' : '' }}'>{{ resultat.dev|number_format(2, ',', '.') }}</td>
-    </tr>  
-
-  </tbody>
-
-</table>
-</div>
-
- 
+   
 
 
 
-{% endfor %}
 
 
