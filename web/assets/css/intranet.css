@@ -1493,7 +1493,20 @@ a, a:visited {
   width: 400px;
   margin: auto; }
 
-.data_tests_table > thead > th {
-  font-size: 12px; }
+.data_tests_table > thead > #special_tr > th {
+  font-size: 11px;
+  padding: 5px; }
+  .data_tests_table > thead > #special_tr > th.obtingut {
+    color: blue;
+    font-weight: bold; }
+.data_tests_table > tbody > #special_tr_body > td {
+  font-size: 11px;
+  padding: 5px; }
+  .data_tests_table > tbody > #special_tr_body > td.error {
+    background-color: #e74c3c;
+    color: white;
+    font-weight: bold; }
+  .data_tests_table > tbody > #special_tr_body > td.ok {
+    background-color: #2ecc71; }
 
 /*# sourceMappingURL=intranet.css.map */

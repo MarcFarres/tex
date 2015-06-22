@@ -220,9 +220,40 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 {
   >thead
   {
-    >th
+    >#special_tr
     {
-      font-size:12px;
+      >th
+      {
+        font-size:11px; 
+        padding:5px;
+        &.obtingut
+        {
+          color:blue;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  >tbody
+  {
+    >#special_tr_body
+    {
+      >td
+      {
+        font-size:11px;
+        padding:5px;
+         
+        &.error
+        {
+          background-color:$alizarin;
+          color:white;
+          font-weight: bold;
+        }
+        &.ok
+        {
+          background-color:$emerald;
+        }
+      }
     }
   }
 }

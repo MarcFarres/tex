@@ -4,7 +4,7 @@
 
        <table id="tests_table" class="stripe data_tests_table" cellspacing="0" width="100%">
       <thead>
-        <tr>
+        <tr id='special_tr'>
           <th> Hora </th>
           <th> OF </th>
           <th> Color </th>
@@ -27,9 +27,9 @@
 
   {% set test = resultat.test %}
   {% set maquina = resultat.maquina %}
-  {% set OF = test.Of %}
+  {% set OF = test.Of %} 
 
-  <tr class='unclicked clickedException'>
+  <tr id='special_tr_body' class='unclicked clickedException'>
 
     <td>{{ resultat.data | date('H:i:s')  }}</td>
     <td><a href="{{ path('iniciar_test',{'OF':OF.id}) }}">{{ OF.numero }}</a> </td>
@@ -40,9 +40,9 @@
     <td>{{ resultat.mitjanaesp }}</td>
     <td>{{ resultat.mitjana|number_format(2, '.', ',')}}
     <td>{{ resultat.descmax }} %</td>
-    <td class='{{ resultat.descentratge > resultat.descmax ? 'error' : '' }}'>{{ resultat.descentratge|number_format(2, '.', ',') }} %</td>
+    <td class='{{ resultat.descentratge > resultat.descmax ? 'error' : 'ok' }}'>{{ resultat.descentratge|number_format(2, '.', ',') }} %</td>
     <td>{{ resultat.devmax }} %</td>
-    <td class='{{ resultat.descentratge > resultat.descmax ? 'error' : '' }}'>{{ resultat.dev|number_format(2, '.', ',') }} %</td>
+    <td class='{{ resultat.dev > resultat.devmax ? 'error' : 'ok' }}'>{{ resultat.dev|number_format(2, '.', ',') }} %</td>
     
     </tr>
 
