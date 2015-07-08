@@ -85,4 +85,17 @@ class Stadistics extends CommonMaths
      return $result;
   }
 
+  /* ==============================================
+    Retorna el 'descentratge' relatiu (signed) d'una
+    mesura respecte del valor que esperavem obtenir
+    ** funció especial per a les màquines contínues
+    '$reference'
+  ------------------------------------------------*/
+  public function inverseDescRel($value,$reference)
+  {
+     $result = ($value - $reference)/$reference ;
+
+     return $result;
+  }
+
 }

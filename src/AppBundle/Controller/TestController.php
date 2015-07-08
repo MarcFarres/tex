@@ -48,6 +48,8 @@ class TestController extends Controller
 
   protected $em;
 
+  protected $process;
+
 
   public function controllerIni()
   {
@@ -225,9 +227,24 @@ class TestController extends Controller
     $resultat = $this->repositoris['Resultat']->findOneById($resultat_id);
     $Test = $resultat->getTest();
     $OF = $Test->getOf();
+    $today = date('d-m-Y');
+
+    // recuperem la TimeO d'avui, si existeix
+       $TimeO = $this->em->getRepository('AppBundle:TimeO')
+         ->findOneBy(array(
+          'data' => $today,
+       ));
+       // si no existeix en creem una i la guardem
+       if(!$TimeO){
+        $TimeO = new TimeO();
+        $this->em->persist($TimeO);
+       }
+    
+    $resultat->setTime($TimeO);
 
     // finalitzem i guardem el resultat
     $this->get('of.manager')->saveResultat($resultat);
+
     // les variables utilitzades per el frontend
     $maquina = $resultat->getMaquina();
     $mesures = $resultat->getMesures();
@@ -243,13 +260,13 @@ class TestController extends Controller
 
 /**
  
- primer pas: crear una nova OF
+ Editar una OF
 
 */
-     public function newOfAction(Request $request)
+     public function newOfAction(OF $OF, Request $request)
     {
-
-      $OF = new Of();
+      
+      $this->controllerIni();
       $form = $this->createForm(new NewOFType(), $OF);
       // comprovem si el formulari ja ha sigut enviat
       // -----------------------------------------------------------
@@ -257,12 +274,15 @@ class TestController extends Controller
 
         if ($form->isValid()) { 
           // si el formulari es vàlid el guardem a la base de dades
-          $this->get('of.manager')->newOf($OF);
+          //$this->get('of.manager')->newOf($OF);
+          $this->em->persist($OF);
+          $this->em->flush();
           // nos redirigimos a la página donde se inicia el test
-          return $this->redirect($this->generateUrl(
-              'iniciar_test',array(
-              'OF' => $OF->getId()
-              )), 301 );
+          return $this->redirect($this
+            ->generateUrl('admin_tests'
+              ), 301
+          );
+
         }
 
         return $this->render(
@@ -301,6 +321,20 @@ class TestController extends Controller
 */
 public function newTestAction(Request $request){
   $this->controllerIni();
+  $today = date('d-m-Y');
+
+  // recuperem la TimeO d'avui, si existeix
+       $TimeO = $this->em->getRepository('AppBundle:TimeO')
+         ->findOneBy(array(
+          'data' => $today,
+       ));
+       // si no existeix en creem una i la guardem
+       if(!$TimeO){
+        $TimeO = new TimeO();
+        $this->em->persist($TimeO);
+       }
+      
+
 
   $OF_id = $request->request->get('OF_id');
   $maquina_id = $request->request->get('maquina_id');
@@ -309,6 +343,10 @@ public function newTestAction(Request $request){
   $Maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
 
   $resultat = $this->get('of.manager')->newResultat($OF,$Maquina);
+
+  // li associem el TimeO
+      $resultat->setTime($TimeO);
+      $this->em->persist($resultat);
 
   return $this->testAjaxAction($resultat->getId(),$request);
 }
@@ -430,11 +468,28 @@ public function testAjaxAction($resultat_id = false, Request $request){
 */
   public function reopenResultAction(Resultat $resultat){
     $this->controllerIni();
+    $today = date('d-m-Y');
+    
     if (!$resultat) {
       throw $this->createNotFoundException("El resultat no s'ha trobat");
     }
+
+    // recuperem la TimeO d'avui, si existeix
+       $TimeO = $this->em->getRepository('AppBundle:TimeO')
+         ->findOneBy(array(
+          'data' => $today,
+       ));
+       // si no existeix en creem una i la guardem
+       if(!$TimeO){
+        $TimeO = new TimeO();
+        $this->em->persist($TimeO);
+       }
+
     // reobrim el test
     $resultat->setDone(false);
+
+    $resultat->setTime($TimeO);
+
     $this->em->persist($resultat);
     $this->em->flush();
     // el renderitzem
@@ -448,23 +503,26 @@ public function testAjaxAction($resultat_id = false, Request $request){
 */  
 public function llegirMesuraAction(Request $request)    
 {
+    $this->controllerIni();
+
+    if(is_object($this->process)){$this->process->stop();}
 
     $respuesta = '';
-      $process = new Process('python satel.py');
-      $process->setTimeout(5 * 60);
-      $process->run();
+      $this->process = new Process('python satel.py');
+      $this->process->setTimeout(60);
+      $this->process->run();
     
-    while ($process->isRunning()) {
+    while ($this->process->isRunning()) {
     // waiting for process to finish
     }
 
-    if (!$process->isSuccessful()) {
+    if (!$this->process->isSuccessful()) {
       //$respuesta = $process->getErrorOutput();
       $respuesta = 'finish_process';
-      $process->stop();
+      $this->process->stop();
       return new Response($respuesta,200);
     }
-    $respuesta = $process->getOutput();
+    $respuesta = $this->process->getOutput();
     return new Response($respuesta,200);
 }
 
@@ -642,9 +700,7 @@ public function llegirMesuraAction(Request $request)
 */
   public function finalizeOfAction(OF $OF){
     $this->controllerIni();
-    $page_vars = array();
-    // mostrem les OF sense finalitzar
-    $OF_list = $this->get('of.manager')->getUnDoneOf();
+    
     // donem per tancada la OF
       if(!$OF->getDone()){
         $OF->setDone(true);
@@ -652,14 +708,17 @@ public function llegirMesuraAction(Request $request)
         $this->em->persist($OF);
         $this->em->flush();
       } 
-    // generem les variables del frontend
-    $page_vars['OF'] = $OF;
-    $page_vars['OF_list'] = $OF_list;
+    $OF = new Of();
+    $form = $this->createForm(new NewOFType(), $OF);
+    $form->handleRequest($request);
 
-    return $this->render(
-      'AppBundle:content:OF_report.html.twig',
-        $page_vars
-    );
+    if ($form->isValid()) { 
+    // si el formulari es vàlid guardem la OF a la base de dades
+      $this->get('of.manager')->newOf($OF);
+    }
+    return $this->render('AppBundle:content:admin_tests.html.twig',array(
+      'form'=>$form->createView(), 
+    ));
   }
 
 /**
@@ -802,11 +861,13 @@ public function deleteOFAction($OF)
     // comuniquem al calendari que en aquells data hi ha un test
     $months[$mes][$dia] = $data->getId();
    }
+  $families = $this->repositoris['Familia']->findAll();
 
   return $this->render(
       'AppBundle:content:resultats_resum.html.twig',array(
       'dates'=>$dates,
       'months'=>$months,
+      'families'=>$families,
       ));
   }
 
@@ -820,22 +881,96 @@ public function deleteOFAction($OF)
 
   public function getDataTestsAction(Request $request)
   {
-     $this->controllerIni();
-    // recuperamos las variables POST
-    $timeo_id = $request->request->get('timeo');
-    // recuperem l'objecte TimeO
-    $TimeO = $this->repositoris['TimeO']->findOneById($timeo_id);
-    // recuperem els tests associats
-    $tests = $TimeO->getResultat();
 
-    $tests_list = array();
-    foreach($tests as $test)
-    {
-      if($test->getDone()){
-        $tests_list[] = $test;
+     $this->controllerIni();
+     $tests_list = array();
+     $tests_list_cache = array();
+
+    $timeo_id = $request->request->get('timeo');
+    $tipus = $request->request->get('tipus');
+
+    
+
+    if($timeo_id){
+      // recuperem l'objecte TimeO
+      $TimeO = $this->repositoris['TimeO']->findOneById($timeo_id);
+      // recuperem els tests associats
+      $tests = $this->repositoris['Resultat']->findBy(array(
+        "time"=>$timeo_id,)
+      );
+      
+      $lasttest = '';
+
+      foreach($tests as $test)
+      {
+        //if($test->getDone()){
+          $tests_list_cache[] = $test;
+
+        //}
       }
+      
+
+      if($tipus){
+        if($tipus == 'all'){
+
+          $tests_list = $tests_list_cache;
+        }
+        else{
+
+          foreach($tests_list_cache as $test)
+          {
+            $maquina_test = $test->getMaquina();
+            $familia_test = $maquina_test->getFamilia();
+            $tipus_test = $familia_test->getTipus();
+
+            if($tipus_test == $tipus){
+              $tests_list[] = $test;
+            }
+        }// foreach
+      } // else
+    }// if tipus
+    else{
+      $tests_list = $tests_list_cache;
     }
+  } // if timeo
+    
+ 
+    if($tipus && !$timeo_id){
+      if($tipus == 'all'){
+        $tests_list = $this->repositoris['Resultat']->findBy(array(
+          'done'=>1));
+      } // if all
+      else{
+      
+      $families = $this->repositoris['Familia']->findBy(array(
+        'tipus'=>$tipus));
+
      
+
+      foreach($families as $familia){
+       
+ 
+          $maquines = $familia->getMaquines();
+
+          foreach($maquines as $maquina){
+            $maquina_id = $maquina->getId();
+            $maquina_tests = $this->repositoris['Resultat']->findBy(array(
+              'maquina' => $maquina_id,
+              'done'=>1,
+              ), array(
+              'data'=>'DESC',
+              )
+            );
+
+            foreach($maquina_tests as $maquina_test){
+               $tests_list[] = $maquina_test;
+            } // foreach3
+          } // foreach 2
+      
+      } // foreach 1
+    } // else all
+    } // if tipus 
+    //return new Response($TimeO->getId(),200);
 
     return $this->render(
       'AppBundle:include:resultats_data.html.twig',array(

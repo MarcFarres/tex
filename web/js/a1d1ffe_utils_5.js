@@ -217,7 +217,7 @@ $('#families_maquines').on('click','.action-button', function(){
   tipus_selected = tipus;
   
   var parametros = {
-    "tipus" : tipus_selected,
+    "tipus" : tipus,
     'timeo' : timeo_selected,
   };
 
@@ -228,8 +228,8 @@ $.ajax({
   beforeSend: function () {
     } , 
   success:  function (response) {
-    
-    $('#tests_contenedor').html(response);
+
+    $('#test_contendor').html(response);
     $('#tests_table').dataTable({});
   },
   });
@@ -333,7 +333,7 @@ timeo_selected = $(this).attr('data-timeo');
  }
   var parametros = {
       "timeo" : timeo_selected,
-      "tipus" : tipus_selected,
+      'tipus' : tipus_selected,
     };
 
     $.ajax({

@@ -1139,7 +1139,7 @@ a, a:visited {
       -ms-flex-wrap: wrap;
       flex-wrap: wrap; }
       #calendari > .month > .month-days > .month-day {
-        width: calc(100%/5); }
+        width: calc(100%/7); }
         #calendari > .month > .month-days > .month-day > span {
           margin: auto;
           padding: 5px; }
@@ -1498,10 +1498,16 @@ a, a:visited {
   padding: 5px; }
   .data_tests_table > thead > #special_tr > th.obtingut {
     color: blue;
-    font-weight: bold; }
+    font-weight: bold; 
+    font-size:15px;
+    }
 .data_tests_table > tbody > #special_tr_body > td {
   font-size: 11px;
   padding: 5px; }
+.data_tests_table > tbody > #special_tr_body > .resultat_mitjana {
+  font-weight: bold;
+  color:blue;
+  font-size:15px; }
   .data_tests_table > tbody > #special_tr_body > td.error {
     background-color: #e74c3c;
     color: white;

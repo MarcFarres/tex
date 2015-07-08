@@ -22,6 +22,8 @@
     {% set test = resultat.getTest() %}
     {% set of = test.getOf() %}
 
+       {%if of %}
+
         <tr class='unclicked clickedException'>
           
           <td><a href="{{ path('iniciar_test',{'OF':of.id}) }}">{{ of.numero }}</a></td>
@@ -42,7 +44,7 @@
 
            </td>
         </tr>
-
+     {% endif %}
 {% endfor %}
 
 {% endif %}

@@ -1,5 +1,7 @@
 {% extends 'AppBundle:content:admin_tests.html.twig' %}
 
+{% block title %} {{ OF.numero }} / {{ OF.color }} / {{ OF.descripcio }} {% endblock title %}
+
 {% set test = OF.getTest() %}
 
 

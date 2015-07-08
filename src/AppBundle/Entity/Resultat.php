@@ -41,7 +41,7 @@ class Resultat
     */ protected $dev_max;
 
     /**
-    * @ORM\Column(type="integer" , nullable = true)
+    * @ORM\Column(type="float" , nullable = true)
     */ protected $longitud;
 
     /**
@@ -85,6 +85,8 @@ class Resultat
     * @ORM\JoinColumn(name="time" , referencedColumnName="id")
     */ protected $time;
 
+
+
     
     /**
      * Constructor
@@ -94,6 +96,7 @@ class Resultat
         $this->mesures = new \Doctrine\Common\Collections\ArrayCollection();
         $this->done = false;
         $this->test_ok = false;
+        
     }
 
     /**
@@ -179,11 +182,19 @@ class Resultat
         
         $math = new Math();
         
-        // descentratge per unitat del valor esperat ()
-        $resultat = $math->descRel($this->getMitjana(),$this->getMitjanaEsp()) ;
+        $resultat = '';
+        $maquina = $this->getMaquina();
+        $familia = $maquina->getFamilia();
+        $tipus = $familia->getTipus();
+        // les màquines continuas es calculen diferent
+        if($tipus == 'Continuas'){
+            $resultat = $math->inverseDescRel($this->getMitjana(),$this->getMitjanaEsp()); 
+        }
+        else{$resultat = $math->descRel($this->getMitjana(),$this->getMitjanaEsp()) ;}
+        
         // en percentatge
         $resultat = $resultat*100;
-        // guardem el resultat
+        // guardem el resultat **en valor absolut
         $this->descentratge = abs($resultat);
 
         return $this;
@@ -418,6 +429,9 @@ evaluació de l'èxit del test
         $this->setDone(true);
       // data de finalització
         $this->setData(new \DateTime('now'));
+
+        $today = date('d-m-Y');
+       
 
       $desc_maxim = $this->getDescMax();
       // descentratge obtingut experimentalment

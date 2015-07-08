@@ -51,7 +51,7 @@ class Sublinia
     */ protected $desv;
 
     /**
-    *@ORM\Column(type="integer",nullable=true)
+    *@ORM\Column(type="float",nullable=true)
     */ protected $longitud;
 
     /**
@@ -254,7 +254,6 @@ class Sublinia
     /**
      * Set longitud
      *
-     * @param integer $longitud
      * @return Sublinia
      */
     public function setLongitud($longitud)
@@ -267,7 +266,6 @@ class Sublinia
     /**
      * Get longitud
      *
-     * @return integer 
      */
     public function getLongitud()
     {

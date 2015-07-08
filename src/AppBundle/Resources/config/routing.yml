@@ -49,7 +49,7 @@ afegir_maquina:
 
 
 nova_OF:
-    path: /tests/nova_OF
+    path: /tests/editar_OF/{OF}
     defaults: { _controller: AppBundle:Test:newOf }
 
 

@@ -1,5 +1,7 @@
 {% extends 'AppBundle:content:admin_tests.html.twig' %}
 
+{% block title %} RESULTATS {% endblock title %}
+
 {% block content_submenu %} 
 <script>
   var get_data_tests = "{{ path('get_data_tests') }}" ;
@@ -27,15 +29,27 @@
 <div id="calendari">
 
   {% for key,month in months %}
+
     <div class="month">
        <div class="month-title">
           <span>{{key}}</span>
        </div>
        <div class="month-days">
+         {% if key == 'juliol' %}
+           <div class='month-day'></div>
+           <div class='month-day'></div>
+         {% endif %}
+         {% if key == 'agost' %}
+           <div class='month-day'></div>
+           <div class='month-day'></div>
+           <div class='month-day'></div>
+           <div class='month-day'></div>
+           <div class='month-day'></div>
+         {% endif %}
          {% for day,value in month %}
            <div class="month-day">
               <span 
-              class='{{ value == false?'no_tests':'gotests veure' }} unclicked'
+              class='{{ value == false?'no_tests':'gotests veure' }} unclicked clickedException'
               data-timeo='{{value}}'>
               {{day}}
               </span>
@@ -48,6 +62,41 @@
   {% endfor %}
 
 </div>{# calendari #}
+
+{# FAMILIES DE MÀQUINES 
+=============================================#}
+
+<div class="maquina_list_tests">
+        <h2> families de màquines </h2>
+        <div class="actions-contenedor" id='families_maquines'>
+{% set ultim = '' %}
+  {% for familia in families %}
+    {% if ultim != familia.tipus %}
+
+            <div class="action-button blue unclicked"
+        data-tipus='{{familia.tipus}}'>
+
+              <span class='fa fa-share-square-o'>{{familia.tipus}}</span>
+      
+             {% set ultim = familia.tipus %}
+
+            </div>
+
+    {% endif %}
+  {% endfor %}
+    
+    <div class="action-button blue unclicked"
+        data-tipus='all'>
+
+              <span class='fa fa-share-square-o'>Veure Tots</span>
+
+            </div>
+
+      </div> {# actions contenedor #}
+
+ 
+
+    </div> {# maquina list tests #}
 
  <div id="tests_contenedor">
    

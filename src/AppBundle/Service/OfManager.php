@@ -199,13 +199,27 @@ class OfManager
 */
   public function newMesura($resultat,$pes)
   {
+    $densitat = '';
     $em = $this->entityManager;
   	$Densitat_repo = $em->getRepository('AppBundle:Densitat');
     $Mesures_repo = $em->getRepository('AppBundle:Mesura');
     
+    // les màquines continues es calculen diferent de la resta
+    // ----------------------------------------------------------
+    $maquina = $resultat->getMaquina();
+    $familia = $maquina->getFamilia();
+    $tipus = $familia->getTipus();
 
   	$longitud = $resultat->getLongitud();
-    $densitat = $pes->getValor()/$longitud;
+
+    if($tipus == 'Continuas'){
+      $densitat = $longitud/$pes->getValor();
+    }
+    else{
+      $densitat = $pes->getValor()/$longitud;
+    }
+    
+    // =========================================================
 
     // creem la nova mesura a guardar
     $Mesures_list = $Mesures_repo->findBy(array(

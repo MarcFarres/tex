@@ -54,6 +54,7 @@
 
 </div>
 
+{#
   {{ include( 'AppBundle:form:intranet_admin.html.twig', {
       "form":mesuraForm,
       "form_title":"Nova mesura",
@@ -61,15 +62,14 @@
 
 
 <input type="hidden" name='resultat_id' value='{{ resultat.id }}'>
-
+#}
 <div class='buttons'>
   <button 
-    {#type='button'
+    type='button'
     id='realitzar_mesura' 
-    
-    data-resultatId='{{ resultat.id }}'#}
+    data-resultatId='{{ resultat.id }}'
     class='intranet-submit'>
-      Mesurar
+      Mesurar  
     </button>
 </div>
 

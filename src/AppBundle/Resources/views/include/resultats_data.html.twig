@@ -5,18 +5,19 @@
        <table id="tests_table" class="stripe data_tests_table" cellspacing="0" width="100%">
       <thead>
         <tr id='special_tr'>
+          <th> Data </th>
           <th> Hora </th>
           <th> OF </th>
+          <th> Partida </th>
           <th> Color </th>
-          <th> Linia </th>
           <th> Familia </th>
           <th> Maquina </th>
           <th> X </th>
           <th class='obtingut'> X </th>
           <th> DESC% </th>
           <th class='obtingut'> DESC% </th>
-          <th> DEV% </th>
-          <th class='obtingut'> DEV% </th>
+          <th> CV% </th>
+          
           
         </tr>
       </thead>
@@ -24,29 +25,34 @@
       <tbody>
 
   {% for resultat in tests_list %}
-
-  {% set test = resultat.test %}
-  {% set maquina = resultat.maquina %}
+  
+     
+  {% set test = resultat.getTest() %}
+  {% set maquina = resultat.getMaquina() %}
   {% set OF = test.Of %} 
+  
+  {% if OF %}
 
   <tr id='special_tr_body' class='unclicked clickedException'>
-
+    <td>{{ resultat.data | date('d:m:Y') }}</td>
     <td>{{ resultat.data | date('H:i:s')  }}</td>
     <td><a href="{{ path('iniciar_test',{'OF':OF.id}) }}">{{ OF.numero }}</a> </td>
+
+    <td>{{OF.getNumPartida()}}</td>
     <td>{{ OF.color }}</td>
-    <td>{{ OF.getLinia().numero }}</td>
     <td>{{  maquina.familia.nom  }}</td>
     <td>{{maquina.numero}}</td>
+
     <td>{{ resultat.mitjanaesp }}</td>
-    <td>{{ resultat.mitjana|number_format(2, '.', ',')}}
+    <td class='resultat_mitjana'>{{ resultat.mitjana|number_format(3, '.', ',')}}
     <td>{{ resultat.descmax }} %</td>
     <td class='{{ resultat.descentratge > resultat.descmax ? 'error' : 'ok' }}'>{{ resultat.descentratge|number_format(2, '.', ',') }} %</td>
-    <td>{{ resultat.devmax }} %</td>
-    <td class='{{ resultat.dev > resultat.devmax ? 'error' : 'ok' }}'>{{ resultat.dev|number_format(2, '.', ',') }} %</td>
+    <td >{{ resultat.dev|number_format(2, '.', ',') }} %</td>
     
     </tr>
 
-
+     
+        {% endif %}
       {% endfor %}
 
     </tbody>
