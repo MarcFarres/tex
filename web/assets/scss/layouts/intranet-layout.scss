@@ -62,6 +62,7 @@
       @extend %column_container;
       @include shadow(0px,0px,5px,#000);
       z-index:11;
+      @include transition(height,.5s);
 
       >#menu_sup_left_section{
         position:relative;

@@ -171,7 +171,11 @@ $.ajax({
   success:  function (response) {
     
     $('#tests_contenedor').html(response);
-    $('#tests_table').dataTable({});
+    $('#tests_table').dataTable({
+      // los tests mas recientes primero
+      "order": [ 0, 'desc' ],
+    });
+    resultats_modifications();
   },
   });
 
@@ -309,5 +313,9 @@ $('#resultats_list_contenedor').on('click','.borrar',function(){
   });
 
 });
+
+
+
+
 
 }()); //run this anonymous function immediately

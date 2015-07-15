@@ -27,12 +27,13 @@ $('#calendari_slider_frame').datepicker({
   dateFormat: 'yy-mm-dd',
 }); 
 
-
 function getTestsOfDate(data){
   var parametros = {
       "timeo" : data,
       "tipus" : tipus_selected,
     };
+
+    timeo_selected = data;
 
     $.ajax({
       data:  parametros,
@@ -48,9 +49,13 @@ function getTestsOfDate(data){
         // los tests mas recientes primero
         "order": [ 0, 'desc' ],
         });
+
+        resultats_modifications();
    },
   });
 }
+
+
 
 
 }()); //run this anonymous function immediately

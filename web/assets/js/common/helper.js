@@ -3,9 +3,6 @@
 //================================================================
 
 var main_parent = $('#main_parent');
-
-
-
 var tipus_selected = 0;
 var timeo_selected = 0;
 
@@ -40,4 +37,21 @@ function click_element(element){
 function unclick_element(element){
   element.removeClass('clicked');
   element.addClass('unclicked');
+}
+
+function resultats_modifications(){
+	$('#tests_table_filter').addClass('fa fa-search').css({
+          'position':'fixed',
+          'top':'55px',
+          'right':'400px',
+          'z-index':'50',
+        });
+        $('#tests_table_length').addClass('fa fa-file-text').css({
+          'position':'fixed',
+          'top':'55px',
+          'left':'500px',
+          'z-index':'50',
+        });
+
+        $('.layout-content-menu').css('min-height','180px')
 }
