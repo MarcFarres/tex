@@ -298,54 +298,77 @@ $('#TO_tests-container').on('click','#finalitzar_test',function(){
 });
 
 
+// guardar una nova mesura de pes capturada
+
+$('#main_parent').on('submit','#novaMesura', function(){
+  
+  var params = $(this).serialize() ;
+
+  guardar_mesura(params);
+  return false;
+
+});
+
 // capturar les mesures de pes de la balança:
 // =========================================================
-
-var primera_mesura = true;
 
 $('#main_parent').on('click','#realitzar_mesura', function(){
   llegir_mesura();
 });
 
 function llegir_mesura(){
-  
+
   $.ajax({
   url:   ajax_route,
   type:  'post',
   beforeSend: function () {
-      if(primera_mesura){
-        //alert('esperi uns segons per a enviar mesures');
-        primera_mesura = false;
-      }
+   
     } , 
   success:  function(response){
-    
-    if(response == 'finish_process'){
-      return 0;
-    }
-    
+      if(response == 'finish_process'){
+        alert('La conexión ha fallado. Compruebe que la balanza está conectada adecuadamente y que envia datos.');
+      }
       var resultat_id = $('#realitzar_mesura').attr('data-resultatId');
       var valor = response;
-
       var params = {'resultat_id':resultat_id,'valor':valor};
+      guardar_mesura(params);
+    },
+  });
+}
 
-    $.ajax({ 
-      data:  params,
-      url:   novamesura,
-      type:  'post',
-      dataType: "html",
-      beforeSend: function () {
+
+function guardar_mesura(params){
+  
+$.ajax({ 
+  data:  params,
+  url:   novamesura,
+  type:  'post',
+  dataType: "html",
+  beforeSend: function () {
      
-      } , 
-      success:  function (response) {
-      $('#mesures_body').append(response);
-      setTimeout(llegir_mesura(), 100);
-      },
-    });
-    /*
-    $('#valor').attr('value',response); 
-    setTimeout(llegir_mesura(), 500);
-     */
+    } , 
+  success:  function (response) {
+    $('#mesures_body').append(response);
   },
   });
+
+setTimeout(function() {
+  var params2 = {
+  "test_id" : $('#finalitzar_test').attr('data-resultatId'),
+  "of_id" : $('#OF_list').val(),
+  };
+
+$.ajax({ 
+  data:  params2,
+  url:   finalitzar_test,
+  type:  'post',
+  dataType: "html",
+  beforeSend: function () {
+     
+    } , 
+  success:  function (response) {
+    $('#NT_resultat_container').html(response);
+    },
+    });
+  }, 200);
 }

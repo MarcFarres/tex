@@ -73,53 +73,6 @@ main_parent.on('click','.plegable_list.clicked',function(){
 /* ------------------------------[ AJAX ]  */
 // ================================================================
 
-// guardar una nova mesura de pes capturada
-
-$('#main_parent').on('submit','#novaMesura', function(){
-  
-  var params = $(this).serialize() ;
-
-$.ajax({ 
-  data:  params,
-  url:   novamesura,
-  type:  'post',
-  dataType: "html",
-  beforeSend: function () {
-     
-    } , 
-  success:  function (response) {
-    $('#mesures_body').append(response);
-  },
-  });
-
-setTimeout(function() {
-  var params2 = {
-  "test_id" : $('#finalitzar_test').attr('data-resultatId'),
-  "of_id" : $('#OF_list').val(),
-  };
-
-$.ajax({ 
-  data:  params2,
-  url:   finalitzar_test,
-  type:  'post',
-  dataType: "html",
-  beforeSend: function () {
-     
-    } , 
-  success:  function (response) {
-    $('#NT_resultat_container').html(response);
-  },
-  });
-}, 200);
-
-return false;
-
-});
-
-
-function guardar_mesura(params){
-
-}
 
 // finalitzem un resultat
 $('#test_contenedor').on('submit','#endResult', function(){

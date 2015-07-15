@@ -329,7 +329,7 @@ public function llegirMesuraAction(Request $request)
     while ($this->process->isRunning()) {
     // waiting for process to finish
     }
-
+    // en caso de error ...
     if (!$this->process->isSuccessful()) {
       //$respuesta = $process->getErrorOutput();
       $respuesta = 'finish_process';
