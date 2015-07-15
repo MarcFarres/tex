@@ -55,6 +55,7 @@
   { 
     >.layout-content-menu
     {
+      min-height:120px;
       border-bottom:solid 1px #ddd;
       overflow:hidden;
       padding:5px;
@@ -63,6 +64,7 @@
       z-index:11;
 
       >#menu_sup_left_section{
+        position:relative;
          @include flex();
          background-color:grey;
       }

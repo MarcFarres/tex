@@ -86,7 +86,7 @@
   border-top-right-radius:4px;
   border-top-left-radius:4px;
   margin:7px;
-  background-color:white;
+  background-color:$combo-blue_4;
   overflow: hidden;
 
   >.test-box_info-row
@@ -101,6 +101,7 @@
       color:white;
       >.data{float:left}
       >.hora{float:right}
+      &.fail{background-color:$alizarin;}
     }
     &.color
     {
@@ -126,6 +127,7 @@
   >.test-box_content
   {
     @extend %column_container;
+    
 
   	>.mesures-container
     {
@@ -172,7 +174,8 @@
         }
         >.result-row_value
         {
-           font-weight: bold;
+          font-weight: bold;
+          &.fail{color:$alizarin;}
         }
 
         &.fail
@@ -183,7 +186,7 @@
     }
   } // test-box_content
   
-  &.fail
+  /*&.fail
   {
     background-color:lighten(#c56c6a,7);
   }
@@ -191,7 +194,7 @@
   {
     &:nth-child(2n){background-color:$combo-blue_4;}
     &:nth-child(2n+1){background-color:$combo-blue_2;}
-  }
+  }*/
 
 
 }

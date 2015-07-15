@@ -352,7 +352,7 @@ a, a:visited {
   -ms-flex-line-pack: stretch;
   align-content: stretch; }
 
-.intranet-form .fieldset > div, .frame-element > .icon, .frame-infoOf > .title, .frame-infoOf > .content > .text, .frame-infoOf > .content > .buttons, .main_title_container, .general-view_container, .general-view_container .general-view_linia > .linia-num, .general-view_container .general-view_linia > .linia-num > .num, .general-view_container .general-view_linia > .sublinia_container, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num > .num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina, #calendari_container, .resultat_row, #calendari > .months_container, #calendari > .months_container > .month > .month-title, #calendari > .months_container > .month > .month-days, #calendari > .months_container > .month > .month-days > .month-day, #admin-tests_menu-sup, #admin-tests_menu-sup > .menu-sup_frame, .intranet-base-parent .layout-menu > #intranet_menu_lat, .intranet-base-parent .layout-content > .layout-content-menu, .two-cols-contenedor, .action-button > a, .action-button.ajax, #TO_container, #TO_container > #TO_tests-container, .test-box > .test-box_content, #nou-test_container, #nou-test_container > #NT_test_container #of_selector_container, #nou-test_container > #NT_resultat_container, .last-week_frame, .last-week_container > #last-week_days > .last-week_day, #consulta-info, .info-contenedor, .actions-contenedor {
+.intranet-form .fieldset > div, .frame-element > .icon, .frame-infoOf > .title, .frame-infoOf > .content > .text, .frame-infoOf > .content > .buttons, .main_title_container, .general-view_container, .general-view_container .general-view_linia > .linia-num, .general-view_container .general-view_linia > .linia-num > .num, .general-view_container .general-view_linia > .sublinia_container, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-num > .num, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines, .general-view_container .general-view_linia > .sublinia_container > .sublinia > .sublinia-maquines > .maquina, .resultat_row, #calendari > .months_container, #calendari > .months_container > .month > .month-title, #calendari > .months_container > .month > .month-days, #calendari > .months_container > .month > .month-days > .month-day, #admin-tests_menu-sup, #admin-tests_menu-sup > .menu-sup_frame, .intranet-base-parent .layout-menu > #intranet_menu_lat, .intranet-base-parent .layout-content > .layout-content-menu, .two-cols-contenedor, .action-button > a, .action-button.ajax, #TO_container, #TO_container > #TO_tests-container, .test-box > .test-box_content, #nou-test_container, #nou-test_container > #NT_test_container #of_selector_container, #nou-test_container > #NT_resultat_container, .last-week_frame, .last-week_container > #last-week_days > .last-week_day, #consulta-info, .info-contenedor, .actions-contenedor {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-flex;
@@ -1078,13 +1078,11 @@ a, a:visited {
               margin: auto; }
 
 #calendari_container {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -moz-box-flex: 1;
-  -moz-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  min-height: 100px; }
+  position: fixed;
+  top: 0;
+  right: 50px;
+  width: 300px;
+  z-index: 20; }
   #calendari_container > #calendari_slider_frame {
     -webkit-box-flex: 1;
     -webkit-flex: 1;
@@ -1258,6 +1256,7 @@ a, a:visited {
       .intranet-base-parent .layout-menu > #intranet_menu_lat > .list_element > .list_link {
         color: #ecf0f1; }
   .intranet-base-parent .layout-content > .layout-content-menu {
+    min-height: 120px;
     border-bottom: solid 1px #ddd;
     overflow: hidden;
     padding: 5px;
@@ -1268,6 +1267,7 @@ a, a:visited {
     box-shadow: 0px 0px 5px #000;
     z-index: 11; }
     .intranet-base-parent .layout-content > .layout-content-menu > #menu_sup_left_section {
+      position: relative;
       -webkit-box-flex: 1;
       -webkit-flex: 1;
       -moz-box-flex: 1;
@@ -1562,8 +1562,17 @@ a, a:visited {
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
   margin: 7px;
-  background-color: white;
-  overflow: hidden; }
+  background-color: #a3d5d1;
+  overflow: hidden;
+  /*&.fail
+  {
+    background-color:lighten(#c56c6a,7);
+  }
+  &.ok
+  {
+    &:nth-child(2n){background-color:$combo-blue_4;}
+    &:nth-child(2n+1){background-color:$combo-blue_2;}
+  }*/ }
   .test-box > .test-box_info-row {
     height: 20px;
     padding: 2px;
@@ -1575,6 +1584,8 @@ a, a:visited {
         float: left; }
       .test-box > .test-box_info-row.time > .hora {
         float: right; }
+      .test-box > .test-box_info-row.time.fail {
+        background-color: #e74c3c; }
     .test-box > .test-box_info-row.color {
       font-family: Helvetica;
       background-color: white;
@@ -1634,14 +1645,10 @@ a, a:visited {
         margin: 0; }
       .test-box > .test-box_content > .results-container > .result-row > .result-row_value {
         font-weight: bold; }
+        .test-box > .test-box_content > .results-container > .result-row > .result-row_value.fail {
+          color: #e74c3c; }
       .test-box > .test-box_content > .results-container > .result-row.fail {
         color: black; }
-  .test-box.fail {
-    background-color: #cf8584; }
-  .test-box.ok:nth-child(2n) {
-    background-color: #a3d5d1; }
-  .test-box.ok:nth-child(2n+1) {
-    background-color: #44b4c4; }
 
 #nou-test_container {
   -webkit-box-flex: 1;

@@ -15,7 +15,11 @@
 
         {% block stylesheets %}
         
-            {% stylesheets 'assets/css/dataTable.css' filter='cssrewrite' %}
+            {% stylesheets 
+              'assets/css/dataTable.css' 
+              'assets/css/jquery-ui.min.css'
+
+            filter='cssrewrite' %}
 
                 <link rel="stylesheet" href="{{ asset_url }}">
 
@@ -74,7 +78,7 @@
             
             {% javascripts 
                 'assets/js/common/jquery-dev.js'
-                'assets/js/common/jquery-ui.js'
+                'assets/js/common/jquery-ui.min.js'
                 'assets/js/common/modernizr.js'
                 'assets/js/common/dataTable.js'
                 'assets/js/common/helper.js'

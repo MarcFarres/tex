@@ -1,11 +1,11 @@
-  {% if test.status == 4 %}
+  {% if test.status != 1 %}
   {% set testOk = test.testok ? "ok": "fail" %}
 
   <div class='test-box {{ testOk }}'>
 
-  	<div class="test-box_info-row time">
+  	<div class="test-box_info-row time {{ testOk }}">
   		<span class='data'>{{ test.data | date('d-m-Y') }}</span>
-  		<span class='hora'>{{ test.data | date('h:i:s') }}</span>
+  		<span class='hora'>{{ test.data | date('H:i:s') }}</span>
   	</div>
   	<div class="test-box_info-row {{ testOk }} color" title='
   	     {{ of.color | length > 25 ? 
@@ -64,11 +64,11 @@
         <div class="result-row mitjana">
           <span class='result-row_title'>X Obtingut</span >
             <hr />
-        	<span class='result-row_value' >
+        	<span class='result-row_value {{ testOk }}' >
         		{{ test.mitjana | number_format(4, ',', '.') }}
         	</span>
         </div>
-        <div class="result-row {{ testOk }}">
+        <div class="result-row">
           <span class='result-row_title'>nominal = </span >
           <span class='result-row_value' >
             {{ test.mitjanaesp }}
@@ -79,11 +79,11 @@
         <div class="result-row desc">
           <span class='result-row_title exp'>DESC%</span >
         	<hr />
-          <span class='result-row_value' >
+          <span class='result-row_value {{ testOk }}' >
         		{{ test.descentratge | number_format(4, ',', '.') }}
         	</span>
         </div>
-        <div class="result-row {{ testOk }}">
+        <div class="result-row">
           <span class='result-row_title'>Nominal= </span >
           <span class='result-row_value' >
             {{ test.descmax }}

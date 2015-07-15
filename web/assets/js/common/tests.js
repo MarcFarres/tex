@@ -298,3 +298,54 @@ $('#TO_tests-container').on('click','#finalitzar_test',function(){
 });
 
 
+// capturar les mesures de pes de la balança:
+// =========================================================
+
+var primera_mesura = true;
+
+$('#main_parent').on('click','#realitzar_mesura', function(){
+  llegir_mesura();
+});
+
+function llegir_mesura(){
+  
+  $.ajax({
+  url:   ajax_route,
+  type:  'post',
+  beforeSend: function () {
+      if(primera_mesura){
+        //alert('esperi uns segons per a enviar mesures');
+        primera_mesura = false;
+      }
+    } , 
+  success:  function(response){
+    
+    if(response == 'finish_process'){
+      return 0;
+    }
+    
+      var resultat_id = $('#realitzar_mesura').attr('data-resultatId');
+      var valor = response;
+
+      var params = {'resultat_id':resultat_id,'valor':valor};
+
+    $.ajax({ 
+      data:  params,
+      url:   novamesura,
+      type:  'post',
+      dataType: "html",
+      beforeSend: function () {
+     
+      } , 
+      success:  function (response) {
+      $('#mesures_body').append(response);
+      setTimeout(llegir_mesura(), 100);
+      },
+    });
+    /*
+    $('#valor').attr('value',response); 
+    setTimeout(llegir_mesura(), 500);
+     */
+  },
+  });
+}

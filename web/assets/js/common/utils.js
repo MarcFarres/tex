@@ -148,53 +148,7 @@ return false;
 
 });
 
-// capturar les mesures de pes de la balança:
 
-$('#test_contenedor').on('click','#realitzar_mesura', function(){
-  llegir_mesura();
-});
-
-function llegir_mesura(){
-  $.ajax({
-  url:   ajax_route,
-  type:  'post',
-  beforeSend: function () {
-      if(primera_mesura){
-        //alert('esperi uns segons per a enviar mesures');
-        primera_mesura = false;
-      }
-    } , 
-  success:  function (response) {
-    
-    if(response == 'finish_process'){
-      return 0;
-    }
-    
-      var resultat_id = $('#realitzar_mesura').attr('data-resultatId');
-      var valor = response;
-
-      var params = {'resultat_id':resultat_id,'valor':valor};
-
-    $.ajax({ 
-      data:  params,
-      url:   novamesura,
-      type:  'post',
-      dataType: "html",
-      beforeSend: function () {
-     
-      } , 
-      success:  function (response) {
-      $('#mesures_body').append(response);
-      setTimeout(llegir_mesura(), 100);
-      },
-    });
-    /*
-    $('#valor').attr('value',response); 
-    setTimeout(llegir_mesura(), 500);
-     */
-  },
-  });
-}
 
 // obrim la llista de tests oberts d'una familia
 
@@ -330,43 +284,6 @@ $('#resultats_list_contenedor').on('click','.gotest',function(){
 });
 
 
-// Obrim els tests d'una data particular
-
-$('#calendari').on('click','.gotests',function(){
- 
-timeo_selected = $(this).attr('data-timeo');
-
- if($(this).hasClass('clicked')){
-  $(this).removeClass('clicked');
-  timeo_selected = 0;
- }
- else{
-  var clicked_element = $('.gotests.clicked') ;
-    unclick_element(clicked_element);
-    click_element($(this));
- }
-  var parametros = {
-      "timeo" : timeo_selected,
-      "tipus" : tipus_selected,
-    };
-
-    $.ajax({
-      data:  parametros,
-      url:   get_data_tests,
-      type:  'post',
-      beforeSend: function () {
-       // click_element($('.plegable_list'));
-      } , 
-      success:  function (response) {
-         
-        $('#tests_contenedor').html(response);
-        $('#tests_table').dataTable({ });
-   },
-  });
-
-});
-
-
 // -----------------------------
 $('#resultats_list_contenedor').on('click','.borrar',function(){
  
@@ -392,13 +309,5 @@ $('#resultats_list_contenedor').on('click','.borrar',function(){
   });
 
 });
-
-
-// [ Calendari ]=========================================
-
-
-/*var calendar_width = 210*months;
-
-$*/
 
 }()); //run this anonymous function immediately

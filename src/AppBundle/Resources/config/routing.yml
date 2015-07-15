@@ -53,6 +53,9 @@ tests_historial:
     path: /OF/historial
     defaults: { _controller: AppBundle:Test:showHistorial }
 
+OF_activate:
+    path: /OF/OF_actives/{OF}
+    defaults: { _controller : AppBundle:Of:activateOf }
 # -----------------------------------------------------
 
 # Ajax

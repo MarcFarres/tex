@@ -1,8 +1,10 @@
 #calendari_container
 {
-  @extend %column_container;
-  @include flex(1);
-  min-height:100px;
+  position:fixed;
+  top:0;
+  right:50px;
+  width:300px;
+  z-index:20;
   
   >#calendari_slider_frame
   {

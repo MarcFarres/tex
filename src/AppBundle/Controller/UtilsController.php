@@ -53,8 +53,8 @@ class UtilsController extends BaseController
 */
   public function ofSelectorAction($OF_list_id){
     $this->controllerIni();
-    $OF_list = $this->repositoris['OF']->findAll();
-    //$OF_list = $this->get('of.manager')->getUnDoneOf();
+    //$OF_list = $this->repositoris['OF']->findAll();
+    $OF_list = $this->get('of.manager')->getUnDoneOf();
 
     return $this->render(
       'AppBundle:utils:of_selector.html.twig',array(

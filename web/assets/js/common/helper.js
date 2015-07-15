@@ -4,7 +4,7 @@
 
 var main_parent = $('#main_parent');
 
-var primera_mesura = true;
+
 
 var tipus_selected = 0;
 var timeo_selected = 0;

@@ -95,6 +95,29 @@ class OfController extends BaseController
           'AppBundle:content:edit_OF.html.twig',array(
           'form' => $form->createView() ));
     }
+
+/**
+ 
+ ^activate of
+ Activar una OF
+ -> OF_activate (/OF/editar_OF/{OF})
+ <-
+
+*/
+     public function activateOfAction(OF $OF)
+    {
+      $this->controllerIni();
+      $OF->setDone(0);
+      $this->em->persist($OF);
+      $this->em->flush();
+
+      $newOF = new Of();
+      $form = $this->createForm(new NewOFType(), $newOF);
+     
+      return $this->render('AppBundle:content:active_of.html.twig',array(
+      'form'=>$form->createView(), 
+      ));
+    }
 /**
  
  ^finalize

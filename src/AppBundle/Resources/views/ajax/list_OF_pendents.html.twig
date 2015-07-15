@@ -35,10 +35,11 @@
             <td>{{OF.color}}</td>
             <td>{{OF.descripcio}}</td>
             <td>
+              {#
               <a class='veure table_icon' href="{{ path('OF_view',{'OF':OF.id}) }}">
               <span class='fa fa-eye'> 
                 
-              </span></a>
+              </span></a> #}
 
               <a class='borrar table_icon' href="{{ path('delete_of',{'OF':OF.id}) }}">
               <span class='fa fa-close'> 
