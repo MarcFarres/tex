@@ -8,7 +8,7 @@
 <div class="one_col_contenedor">
 
   <div class="subsection_title">
-    <h2> Ordres de fabricació obertes</h2>
+    <h2> Ordres de fabricació actives</h2>
   </div>
 
     <table id="tests_table" class="stripe" cellspacing="0" width="100%">
@@ -35,19 +35,24 @@
             <td>{{OF.color}}</td>
             <td>{{OF.descripcio}}</td>
             <td>
-              <a class='veure table_icon' href="{{ path('iniciar_test',{'OF':OF.id}) }}">
+              <a class='veure table_icon' href="{{ path('OF_view',{'OF':OF.id}) }}">
               <span class='fa fa-eye'> 
                 
               </span></a>
 
-              <a class='borrar table_icon' href="{{ path('delete_test',{'OF':OF.id}) }}">
+              <a class='borrar table_icon' href="{{ path('delete_of',{'OF':OF.id}) }}">
               <span class='fa fa-close'> 
                 
               </span></a>
 
 
-              <a class='veure table_icon' href="{{ path('nova_OF',{'OF':OF.id}) }}">
+              <a class='veure table_icon' href="{{ path('editar_OF',{'OF':OF.id}) }}">
               <span class='fa fa-pencil'> 
+                
+              </span></a>
+
+              <a class='veure table_icon' href="{{ path('finalitzar_OF',{'OF':OF.id}) }}">
+              <span class='fa fa-check'> 
                 
               </span></a>
 

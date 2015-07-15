@@ -2,92 +2,108 @@ visio_general:
     path:     /
     defaults: { _controller: AppBundle:General:index }
 
-
-admin_tests:
-    path: /tests
-    defaults: { _controller: AppBundle:Test:index }
-
-
-actual_tests:
-    path:     /tests/actuals
-    defaults: { _controller: AppBundle:Test:actualTests }
-
-
-actual_tests_list:
-    path:     /tests/actuals/list
-    defaults: { _controller: AppBundle:Test:actualTestsList }
-
-
 nova_linia:
     path: /nova_linia
     defaults: { _controller: AppBundle:General:newLinia }
-
 
 nova_sublinia:
     path: /nova_sublinia/{id}
     defaults: { _controller: AppBundle:General:newSublinia, id : false }
 
-
 editar_sublinia:
     path: /editar_sublinia/{Sublinia}
     defaults: { _controller: AppBundle:General:editSublinia }
-
 
 nova_familia:
     path: /nova_familia
     defaults: { _controller: AppBundle:General:newFamilia }
 
-
 nova_maquina:
     path: /nova_maquina/{maquina_id}
     defaults: { _controller: AppBundle:General:newMaquina , maquina_id : false}
-
 
 afegir_maquina:
     path: /afegir_maquina/{id}
     defaults: { _controller: AppBundle:General:addMaquina }
 
+# OF Controller
+# =========================================================
 
-nova_OF:
-    path: /tests/editar_OF/{OF}
-    defaults: { _controller: AppBundle:Test:newOf }
+active_OF:
+    path: /active_OF
+    defaults: { _controller: AppBundle:Of:index }
 
+editar_OF:
+    path: /OF/editar_OF/{OF}
+    defaults: { _controller: AppBundle:Of:editOf }
+
+delete_of:
+    path: /OF/borrar/{OF}
+    defaults: { _controller: AppBundle:Of:deleteOF }
 
 finalitzar_OF:
-    path: /tests/finalize_OF/{OF}
-    defaults: { _controller : AppBundle:Test:finalizeOf}
-
+    path: /OF/finalize_OF/{OF}
+    defaults: { _controller : AppBundle:Of:finalizeOf}
 
 OF_view:
-    path: /tests/OF_overview/{OF_id}
-    defaults: { _controller : AppBundle:Test:viewOf }
+    path: /OF/OF_overview/{OF}
+    defaults: { _controller : AppBundle:Of:viewOf }
 
+tests_historial:
+    path: /OF/historial
+    defaults: { _controller: AppBundle:Test:showHistorial }
 
-iniciar_test:
-    path: /tests/test_inici/{OF}
-    defaults: { _controller: AppBundle:Test:iniTest }
+# -----------------------------------------------------
 
+# Ajax
+# =====================================================
 
-delete_test:
-    path: /tests/borrar/{OF}
-    defaults: { _controller: AppBundle:Test:deleteOF }
-
+get_maquines:
+    path: /ajax/maquines_list
+    defaults: { _controller: AppBundle:Test:getMaquines }
 
 resultats_list_ajax:
-    path: /tests/resultatsListAjax/
+    path: /ajax/resultatsList/
     defaults: { _controller: AppBundle:Test:listResultats }
 
+nova_mesura_ajax:
+    path: /ajax/novaMesura
+    defaults: { _controller: AppBundle:Test:novaMesura}
+
+delete_result:
+    path: /ajax/test/delete
+    defaults: { _controller: AppBundle:Test:deleteResult }
+
+maquines_of_type:
+    path: /ajax/maquines_of_type
+    defaults: { _controller: AppBundle:Test:getMaquinesOfTipus}
+
+tests_of_type:
+    path: /ajax/tests_of_type
+    defaults: { _controller: AppBundle:Test:getTestsOfTipus }
+# test per a una maquina sense OF assignada
+nou_test:
+    path: /ajax/nou_test
+    defaults: { _controller: AppBundle:Test:nouTest }
+# tests d'una màquina per a un dia concret
+maquina_tests:
+    path: /ajax/maquina_tests
+    defaults: { _controller: AppBundle:Test:maquinaTests }
+# finalizamos un test y asignamos of al mismo
+# tests d'una màquina per a un dia concret
+end_test:
+    path: /ajax/end_test
+    defaults: { _controller: AppBundle:Test:endTest }
+
+# -----------------------------------------------------
 
 
-reopen_result:
-    path: /tests/reopen/{resultat}
-    defaults: { _controller: AppBundle:Test:reopenResult , resultat_id : false}
-
+# Test Controller
+# =========================================================
 
 render_result:
     path: /tests/test/{resultat_id}
     defaults: { _controller: AppBundle:Test:test , resultat_id : false}
-
 
 render_result_ajax:
     path: /tests/renderResult
@@ -95,12 +111,9 @@ render_result_ajax:
     requirements:
         _method:  POST
 
-
-nova_mesura_ajax:
-    path: /tests/novaMesura
-    defaults: { _controller: AppBundle:Test:novaMesura}
-
-
+reopen_result:
+    path: /tests/reopen/{resultat}
+    defaults: { _controller: AppBundle:Test:reopenResult , resultat_id : false}
 
 finalitzar_resultat:
     path: /tests/finalitzar_resultat
@@ -112,30 +125,17 @@ finalitzar_resultat_tests_oberts:
     path: /tests/finalitzar_resultat/tests_oberts
     defaults: {_controller: AppBundle:Test:saveAndView}
 
-delete_result:
-    path: /tests/result/delete
-    defaults: { _controller: AppBundle:Test:deleteResult }
-
-
 delete_mesura:
     path: /tests/mesura/delete
     defaults: { _controller: AppBundle:Test:deleteMesura }
-
 
 nou_resultat:
     path: /tests/new
     defaults: { _controller: AppBundle:Test:newTest }
 
-
-tests_historial:
-    path: /tests/historial
-    defaults: { _controller: AppBundle:Test:showHistorial }
-
-
 llegir_mesura:
     path: /llegir
     defaults: { _controller: AppBundle:Test:llegirMesura }
-
 
 maquina_report:
     path: /tests/report/maquina/{OF}/{maquina}
@@ -150,3 +150,9 @@ resultats_resum_inici:
 get_data_tests:
     path: /tests/resultats/tests
     defaults: { _controller: AppBundle:Test:getDataTests }
+
+
+tests_visio_general:
+    path: /tests/visio_general
+    defaults: { _controller: AppBundle:Test:visioGeneral }
+

@@ -2,10 +2,9 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Process\Process;
+use AppBundle\Controller\BaseController;
 
-use AppBundle\Constant\Days;
+use Symfony\Component\Process\Process;
 
 // Entities
 use AppBundle\Entity\Of;
@@ -13,9 +12,9 @@ use AppBundle\Entity\Test;
 use AppBundle\Entity\Linia;
 use AppBundle\Entity\Resultat;
 use AppBundle\Entity\Mesura;
+use AppBundle\Entity\Maquina;
 use AppBundle\Entity\Pes;
 use AppBundle\Entity\Densitat;
-use AppBundle\Entity\TimeO;
 
 // conexió al port serial
 use AppBundle\Utils\PhpSerial ;
@@ -29,6 +28,7 @@ use AppBundle\Form\Type\NewTestType ;
 use AppBundle\Form\Type\ResultParamsType ;
 use AppBundle\Form\Type\ResultType ;
 use AppBundle\Form\Type\NewMesuraType ;
+use AppBundle\Form\Type\assignarOfType ;
 
 // utils
 use Symfony\Component\HttpFoundation\Request;
@@ -36,92 +36,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 // constants
 use AppBundle\Constant\Status ;
+use AppBundle\Constant\Days;
 
 
-
-class TestController extends Controller
+class TestController extends BaseController
 {
   
-  protected $repositoris;
-
   protected $page_vars;
 
-  protected $em;
-
   protected $process;
-
-
-  public function controllerIni()
-  {
-    $doctrine = $this->getDoctrine();
-    $this->repositoris = array();
-    $this->page_vars = array();
-    $this->em = $doctrine->getManager();
-
-    // Obtenim els repositoris de les entities que utilitzarem:
-
-    $this->repositoris['OF'] = $doctrine
-        ->getRepository('AppBundle:Of');
-
-    $this->repositoris['Test'] = $doctrine
-      ->getRepository('AppBundle:Test');
-
-    $this->repositoris['Resultat'] = $doctrine
-      ->getRepository('AppBundle:Resultat');
-
-    $this->repositoris['Mesura'] = $doctrine
-      ->getRepository('AppBundle:Mesura');
-
-    $this->repositoris['Maquina'] = $doctrine
-      ->getRepository('AppBundle:Maquina');
-
-    $this->repositoris['Pes'] = $doctrine
-      ->getRepository('AppBundle:Pes');
-
-    $this->repositoris['Familia'] = $doctrine
-      ->getRepository('AppBundle:Familia');
-
-    $this->repositoris['TimeO'] = $doctrine
-      ->getRepository('AppBundle:TimeO');
-
-  }
-
-/**
-
- pàgina inicial del administrador de tests
-
-*/
-  public function indexAction(Request $request)
-  {
-    $OF = new Of();
-    $form = $this->createForm(new NewOFType(), $OF);
-    $form->handleRequest($request);
-
-    if ($form->isValid()) { 
-    // si el formulari es vàlid guardem la OF a la base de dades
-      $this->get('of.manager')->newOf($OF);
-    }
-    return $this->render('AppBundle:content:admin_tests.html.twig',array(
-      'form'=>$form->createView(), 
-    ));
-  }
-
-/**
-
- visió dels tests oberts ( per a entrar mesures )
-
-*/
-  public function actualTestsAction()
-  {
-    $this->controllerIni();
-    // recuperem les families de maquines
-    $families = $this->repositoris['Familia']->findAll();
-
-    return $this->render('AppBundle:content:actual-tests-overview.html.twig',array(
-      'families'=>$families,
-    ));
-
-  }
 
   /**
 
@@ -146,51 +69,112 @@ class TestController extends Controller
   }
 
 /**
-
- (Ajax) La llista dels tests oberts
+ 
+ ^get_maquines
+ La llista de les màquines d'un determinat tipus
+ > Ajax
 
 */
-  public function actualTestsListAction(Request $request)
-  {
-    $this->controllerIni();
+  public function getMaquinesAction(Request $request){
+    // tipus de maquina
     $tipus = $request->request->get('tipus');
-    //recuperem els tipus de maquines
-    $families = $this->repositoris['Familia']->findBy(array(
-        'tipus' => $tipus,
-      ));
-    //resuperem els tests a mostrar
-    $tests = array();
-    foreach($families as $familia){
-      // les maquines de la familia
-      $maquines = $familia->getMaquines();
-      foreach($maquines as $maquina){
-        // els tests de cada maquina
-        $maquina_id = $maquina->getId();
-        $maquina_tests = $this->repositoris['Resultat']->findBy(array(
-          'maquina' => $maquina_id,
-          // només recuperem els que estan oberts
-          'done'=>false),
-          array(
-          'data'=>'DESC'
-        ));
-
-        foreach($maquina_tests as $maquina_test){
-          //cadascun dels tests
-          $tests[] = $maquina_test;
-        }
-      }
-      
-    }
-
-    return $this->render('AppBundle:ajax:actual_tests_list.html.twig',array(
-      'resultats'=>$tests
-    ));
-
+    // recuperem la llista de màquines
+    $list_of_maquines = $this->get('of.manager')->get_maquines($tipus);
+    
+    return $this->render(
+      'AppBundle:ajax:maquines_list.html.twig',array(
+      'list_of_maquines'=>$list_of_maquines));
   }
-
 /**
  
- (AJAX) formulari de nova mesura. Guardem la nova mesura en un resultat
+  ^resultats_list
+  enviem la llista dels resultats per a una màquina dins un test
+  >resultats_list_ajax (/ajax/maquines_list)
+
+*/
+  public function listResultatsAction(Request $request){   
+    $this->controllerIni();
+    // recuperamos las variables POST
+    $OF_id = $request->request->get('id');
+    $maquina_id = $request->request->get('maquina_id');
+    // recuperamos los objetos
+    $maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
+    $OF = $this->repositoris['OF']->findOneById($OF_id);
+    // recuperem tots els resultats de la màquina dins el test actual
+    $resultats = $this->get('test.manager')->getAllResultats($OF,$maquina_id);
+
+    return $this->render(
+      'AppBundle:ajax:resultats_list.html.twig',array(
+        'OF' => $OF,
+        'maquina' => $maquina,
+        'resultats' => $resultats,));
+  }
+/**
+ 
+ ^reopen
+ Reobrim un resultat 
+ >reopen_result (/tests/reopen/{resultat})
+
+*/
+  public function reopenResultAction(Resultat $resultat){
+    $this->controllerIni();
+    // reobrim el test
+    $resultat->setDone(false);
+    $this->em->persist($resultat);
+    $this->em->flush();
+    // el renderitzem
+    return $this->redirectToRoute('render_result',array('resultat_id'=>$resultat->getId()));
+  } 
+/**
+ 
+ ^render_result
+ Renderitzem un resultat (test vision)
+ >render_result (/tests/test/{resultat_id})
+
+*/
+  public function testAction(Resultat $resultat ,Request $request){
+    $this->controllerIni();
+    // el resultat a renderitzar
+    $Test = $resultat->getTest();
+    $OF = $Test->getOf();
+    $Maquina = $resultat->getMaquina();
+    $mesures = $resultat->getMesures();
+    $linia = $OF->getLinia();
+    // obtenim tots els resultats associats a la maquina i al test
+    $resultats = $this->get('test.manager')->getAllResultats($OF,$Maquina->getId());
+    // obtenim les OF sense finalitzar
+    $OF_list = $this->get('of.manager')->getUnDoneOf();
+    // generem les variables del frontend
+    $this->page_vars['resultat'] = $resultat;$this->page_vars['OF'] = $OF;$this->page_vars['maquina'] = $Maquina;$this->page_vars['resultats'] = $resultats;$this->page_vars['OF_list'] = $OF_list;$this->page_vars['linia'] = $linia;$this->page_vars['mesures'] = $mesures;
+    // la nova mesura de pes
+    $Pes = new Pes(); 
+    $mesuraForm = $this->createForm(new NewMesuraType(), $Pes); 
+    $mesuraForm->handleRequest($request);
+    // si hem introduït una nova mesura de pes ...
+    if ($mesuraForm->isValid()) { 
+      $this->get('of.manager')->newMesura($resultat,$Pes);
+    } // ** end of: formulari d'una nova mesura introduïda **
+    // enviem el formulari al frontend
+    $this->page_vars['mesuraForm'] = $mesuraForm->createView();
+    $resultParamsForm = $this->createForm(new ResultParamsType(), $resultat);
+    $resultParamsForm->handleRequest($request);
+    if ($resultParamsForm->isValid()) {    
+/**
+ guardem el resultat. Resultat Done
+*/  $this->get('of.manager')->saveResultat($resultat);
+    }
+    // enviem el formulari al frontend
+    $this->page_vars['resultParamsForm'] = $resultParamsForm->createView();  
+
+  return $this->render(
+    'AppBundle:content:test_overview.html.twig',
+    $this->page_vars); 
+}
+/**
+ 
+ ^afegir_mesura
+ formulari de nova mesura. Guardem la nova mesura en un resultat
+ >nova_mesura_ajax (/ajax/novaMesura)
 
 */
   public function novaMesuraAction(Request $request)
@@ -201,50 +185,30 @@ class TestController extends Controller
     $valor = $request->request->get('valor');
     // el resultat a renderitzar
     $resultat = $this->repositoris['Resultat']->findOneById($resultat_id);
-    
-    $Pes = new Pes();
-    $Pes->setValor($valor);
-    $Pes->setUnitat('gr');
-    
-    $Mesura = $this->get('of.manager')->newMesura($resultat,$Pes);
+    // guardem la nova mesura
+    $Mesura = $this->get('test.manager')->newMesura($resultat,$valor);
 
     return $this->render('AppBundle:include:mesura_row.html.twig',array(
         'mesura' => $Mesura, 
         'resultat' => $resultat,));
   }
-
-
 /**
  
- (AJAX) Finalitzar un resultat
+ ^finalitzar_test
+ Finalitzar un resultat
+ >finalitzar_resultat (/tests/finalitzar_resultat)
 
 */
-  public function endResultatAction(Request $request)
-  {
+  public function endResultatAction(Request $request){
     $this->controllerIni();
-
+    // recuperem les variables ajax
     $resultat_id = $request->request->get('resultat_id');
+    // el resultat a finalitzar
     $resultat = $this->repositoris['Resultat']->findOneById($resultat_id);
     $Test = $resultat->getTest();
     $OF = $Test->getOf();
-    $today = date('d-m-Y');
-
-    // recuperem la TimeO d'avui, si existeix
-       $TimeO = $this->em->getRepository('AppBundle:TimeO')
-         ->findOneBy(array(
-          'data' => $today,
-       ));
-       // si no existeix en creem una i la guardem
-       if(!$TimeO){
-        $TimeO = new TimeO();
-        $this->em->persist($TimeO);
-       }
-    
-    $resultat->setTime($TimeO);
-
     // finalitzem i guardem el resultat
-    $this->get('of.manager')->saveResultat($resultat);
-
+    $this->get('test.manager')->saveResultat($resultat);
     // les variables utilitzades per el frontend
     $maquina = $resultat->getMaquina();
     $mesures = $resultat->getMesures();
@@ -256,162 +220,56 @@ class TestController extends Controller
       "maquina" => $maquina,
     )); 
   }
-
-
 /**
  
- Editar una OF
+ ^delete
+ Borrar un resultat
+ ->delete_result (/ajax/test/delete)
 
 */
-     public function newOfAction(OF $OF, Request $request)
-    {
-      
-      $this->controllerIni();
-      $form = $this->createForm(new NewOFType(), $OF);
-      // comprovem si el formulari ja ha sigut enviat
-      // -----------------------------------------------------------
-      $form->handleRequest($request);
-
-        if ($form->isValid()) { 
-          // si el formulari es vàlid el guardem a la base de dades
-          //$this->get('of.manager')->newOf($OF);
-          $this->em->persist($OF);
-          $this->em->flush();
-          // nos redirigimos a la página donde se inicia el test
-          return $this->redirect($this
-            ->generateUrl('admin_tests'
-              ), 301
-          );
-
-        }
-
-        return $this->render(
-        	'AppBundle:content:new_OF.html.twig',array(
-          'form' => $form->createView(), 
-        ));
-    }
-
-/**
- 
- vista genral d'una OF
-
-*/
-  public function iniTestAction(Of $OF ,Request $request)
-  {   
+  public function deleteResultAction(Request $request){  
     $this->controllerIni();
-    // recuperamos la linia testeada
-    $linia = $OF->getLinia(); 
+    // recuperamos las variables POST
+    $OF_id = $request->request->get('id');
+    $maquina_id = $request->request->get('maquina_id');
+    $resultat_id = $request->request->get('resultat_id');
+    // recuperamos los objetos
+    $resultat = $this->repositoris['Resultat']->findOneById($resultat_id);
+    // les mesures del resultat
+    $this->get('test.manager')->delete($resultat);
+    // recuperamos los objetos
+    $maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
+    $OF = $this->repositoris['OF']->findOneById($OF_id);
+    $test = $OF->getTest();
+    // recuperem tots els resultats de la màquina dins el test actual
+    $resultats = $this->get('test.manager')->getAllResultats($OF,$maquina_id);
 
     return $this->render(
-      'AppBundle:content:OF_overview.html.twig',
-    array(
-      // variables del frontend
-      'OF' => $OF,
-      'linia' => $linia,
-    ));
+      'AppBundle:ajax:resultats_list.html.twig',array(
+        'OF' => $OF,
+        'maquina' => $maquina,
+        'resultats' => $resultats,));
   }
-
-
-
-
-  /**
+/**
  
+ ^new
  Creem un nou resultat (new test vision)
+ >nou_resultat (/tests/new)
 
 */
 public function newTestAction(Request $request){
   $this->controllerIni();
-  $today = date('d-m-Y');
-
-  // recuperem la TimeO d'avui, si existeix
-       $TimeO = $this->em->getRepository('AppBundle:TimeO')
-         ->findOneBy(array(
-          'data' => $today,
-       ));
-       // si no existeix en creem una i la guardem
-       if(!$TimeO){
-        $TimeO = new TimeO();
-        $this->em->persist($TimeO);
-       }
-      
-
-
+  // recuperem les variables ajax
   $OF_id = $request->request->get('OF_id');
   $maquina_id = $request->request->get('maquina_id');
-
+  // recuperem la OF i la maquina
   $OF = $this->repositoris['OF']->findOneById($OF_id);
   $Maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
-
-  $resultat = $this->get('of.manager')->newResultat($OF,$Maquina);
-
-  // li associem el TimeO
-      $resultat->setTime($TimeO);
-      $this->em->persist($resultat);
+  // creem el nou test
+  $resultat = $this->get('test.manager')->newResultat($OF,$Maquina);
 
   return $this->testAjaxAction($resultat->getId(),$request);
 }
-
-
-/**
- 
- Renderitzem un resultat (test vision)
-
-*
-* Enviem un resultat_id i en generem la página des d'on 
-* es realitza el test ( test view )
-*
-*/
-  public function testAction($resultat_id ,Request $request){
-    $this->controllerIni();
-    // el resultat a renderitzar
-    $resultat = $this->repositoris['Resultat']->findOneById($resultat_id);
-    $Test = $resultat->getTest();
-    $OF = $Test->getOf();
-    $Maquina = $resultat->getMaquina();
-    $mesures = $resultat->getMesures();
-    $linia = $OF->getLinia();
-    // obtenim tots els resultats associats a la maquina i al test
-    $resultats = $this->get('of.manager')->getAllResultats($Test->getId(),$Maquina->getId());
-    // obtenim les OF sense finalitzar
-    $OF_list = $this->get('of.manager')->getUnDoneOf();
-    // generem les variables del frontend
-    $this->page_vars['resultat'] = $resultat;
-    $this->page_vars['OF'] = $OF;
-    $this->page_vars['maquina'] = $Maquina;
-    $this->page_vars['resultats'] = $resultats;
-    $this->page_vars['OF_list'] = $OF_list;
-    $this->page_vars['linia'] = $linia;
-    $this->page_vars['mesures'] = $mesures;
-
-    // la nova mesura de pes
-    $Pes = new Pes(); 
-
-    $mesuraForm = $this->createForm(new NewMesuraType(), $Pes); 
-    $mesuraForm->handleRequest($request);
-    // si hem introduït una nova mesura de pes ...
-    if ($mesuraForm->isValid()) { 
-      $this->get('of.manager')->newMesura($resultat,$Pes);
-    } // ** end of: formulari d'una nova mesura introduïda **
-    // enviem el formulari al frontend
-    $this->page_vars['mesuraForm'] = $mesuraForm->createView();
-
-    $resultParamsForm = $this->createForm(new ResultParamsType(), $resultat);
-    $resultParamsForm->handleRequest($request);
-
-    if ($resultParamsForm->isValid()) {    
-/**
- guardem el resultat. Resultat Done
-*/  $this->get('of.manager')->saveResultat($resultat);
-    }
-    // enviem el formulari al frontend
-    $this->page_vars['resultParamsForm'] = $resultParamsForm->createView();  
-
-  return $this->render(
-    'AppBundle:content:test_overview.html.twig',
-    $this->page_vars
-  ); 
-}
-
 /**
 
   test AJAX : carreguem un resultat (render_result_ajax)
@@ -424,16 +282,12 @@ public function testAjaxAction($resultat_id = false, Request $request){
       // llamada ajax
       $resultat_id = $request->request->get('resultat');
     }
-    
-
-    $resultat = $this->repositoris['Resultat']->findOneById($resultat_id);
-    
+    $resultat = $this->repositoris['Resultat']->findOneById($resultat_id); 
     $Test = $resultat->getTest();
     $OF = $Test->getOf();
     $maquina = $resultat->getMaquina();
     $mesures = $resultat->getMesures();
   
-
     $page_to_render = '';
     $page_vars = array();
     $page_vars['resultat'] = $resultat;
@@ -454,48 +308,8 @@ public function testAjaxAction($resultat_id = false, Request $request){
       $page_vars['resultParamsForm'] = $resultParamsForm->createView(); 
       $page_vars['mesuraForm'] = $mesuraForm->createView();
     }
-  
   return $this->render($page_to_render, $page_vars); 
-
 }
-
-
-
-/**
- 
- Reobrim un resultat 
-
-*/
-  public function reopenResultAction(Resultat $resultat){
-    $this->controllerIni();
-    $today = date('d-m-Y');
-    
-    if (!$resultat) {
-      throw $this->createNotFoundException("El resultat no s'ha trobat");
-    }
-
-    // recuperem la TimeO d'avui, si existeix
-       $TimeO = $this->em->getRepository('AppBundle:TimeO')
-         ->findOneBy(array(
-          'data' => $today,
-       ));
-       // si no existeix en creem una i la guardem
-       if(!$TimeO){
-        $TimeO = new TimeO();
-        $this->em->persist($TimeO);
-       }
-
-    // reobrim el test
-    $resultat->setDone(false);
-
-    $resultat->setTime($TimeO);
-
-    $this->em->persist($resultat);
-    $this->em->flush();
-    // el renderitzem
-    return $this->redirectToRoute('render_result',array('resultat_id'=>$resultat->getId()));
-  }
-
 /**
  
  Llegir una mesura
@@ -528,51 +342,7 @@ public function llegirMesuraAction(Request $request)
 
 /**
  
- Borrar un resultat
-
-*/
-  public function deleteResultAction(Request $request){
-    
-    $this->controllerIni();
-    // recuperamos las variables POST
-    $resultat_id = $request->request->get('resultat_id');
-    // recuperamos los objetos
-    $resultat = $this->repositoris['Resultat']->findOneById($resultat_id);
-    // les mesures del resultat
-    
-    $mesures = $resultat->getMesures();
-    
-   
-
-    foreach($mesures as $mesura)
-    {
-      $this->em->remove($mesura);
-    }
-
-    $this->em->remove($resultat);
-    $this->em->flush();
-
-    // recuperamos las variables POST
-    $OF_id = $request->request->get('id');
-    $maquina_id = $request->request->get('maquina_id');
-    // recuperamos los objetos
-    $maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
-    $OF = $this->repositoris['OF']->findOneById($OF_id);
-    $test = $OF->getTest();
-    // recuperem tots els resultats de la màquina dins el test actual
-    $resultats = $this->get('of.manager')->getAllResultats($test->getId(),$maquina_id);
-
-    return $this->render(
-      'AppBundle:include:resultats_list.html.twig',array(
-        'OF' => $OF,
-        'maquina' => $maquina,
-        'resultats' => $resultats,
-      ));
-  }
-
-
-/**
- 
+ ^delete mesura
  Borrar una mesura
 
 */
@@ -587,6 +357,8 @@ public function llegirMesuraAction(Request $request)
     // les mesures del resultat
     $this->em->remove($mesura);
     $this->em->flush();
+
+    return new Response('mesura borrada',200);
     
     /**
     falta generalitzar
@@ -622,7 +394,6 @@ public function llegirMesuraAction(Request $request)
   return $this->render($page_to_render, $page_vars);
   }
 
-
 /**
  
  Mostrar els tests realitzats (Historial)
@@ -638,110 +409,20 @@ public function llegirMesuraAction(Request $request)
             "OF_list" => $OF_list,
         ));
     }
-
 /**
 
  Mostrar una màquina en funció de l'estat dels seus tests en una OF
 
 */
-    public function getTestMaquinaAction($maquina_id,$OfId){
-      $this->controllerIni();
-      // recuperem la OF
-      $OF = $this->repositoris['OF']->findOneById($OfId);
-      // recuperem la maquina
-      $Maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
-      // recuperem el test
-      $Test = $OF->getTest();
-      // recuperem l'estat de la prova per a la màquina dins el test
-      $resultats = $this->get('of.manager')->getAllResultats($Test->getId(),$maquina_id);
-      $status = false;
-
-      if(!$resultats || !count($resultats)){
-        // No se ha iniciado ningún test
-        $status = 'no_test';
-      }
-      else{
-        $resultat_done = true;
-        $resultat_ok = true;
-
-        foreach($resultats as $resultat){
-           $finalized = $resultat->getDone();
-           $approved = $resultat->getTestOk();
-           if(!$finalized){$resultat_done = false;} 
-           if(!$approved){$resultat_ok = false;} 
-        }
-        if(!$resultat_done){
-          // se ha iniciado algún test que no se ha concluido
-          $status = 'not_finished';
-        }
-        elseif($resultat_done && !$resultat_ok){
-          // se ha finalizado un test pero con algún error
-          $status = 'errors';
-        }
-        elseif($resultat_done && $resultat_ok){
-          // se han finalizado los tests sin ningún error
-          $status = 'test_ok';
-        }
-      }
+    public function getTestMaquinaAction(Maquina $maquina,Of $OF){
       
-      return $this->render(
-        'AppBundle:include:maquina.html.twig',
-        array(
+          $status = 'test_ok';
+        
+      return $this->render('AppBundle:include:maquina.html.twig',array(
           'Of' => $OF,
-          'maquina' => $Maquina, 
-          'status' => $status,
-      ));
+          'maquina' => $maquina, 
+          'status' => $status,));
     }
-
-/**
- 
- Finalitzar una OF
-
-*/
-  public function finalizeOfAction(OF $OF){
-    $this->controllerIni();
-    
-    // donem per tancada la OF
-      if(!$OF->getDone()){
-        $OF->setDone(true);
-        // guardem la OF
-        $this->em->persist($OF);
-        $this->em->flush();
-      } 
-    $OF = new Of();
-    $form = $this->createForm(new NewOFType(), $OF);
-    $form->handleRequest($request);
-
-    if ($form->isValid()) { 
-    // si el formulari es vàlid guardem la OF a la base de dades
-      $this->get('of.manager')->newOf($OF);
-    }
-    return $this->render('AppBundle:content:admin_tests.html.twig',array(
-      'form'=>$form->createView(), 
-    ));
-  }
-
-/**
- 
- Visualitzar una OF finalitzada
-
-*/
-  public function viewOfAction($OF_id){
-    $page_vars = array();
-    
-    
-
-    $page_vars['prueba'] = 'hola' ;
-
-    return $this
-        ->render(
-          'AppBundle:content:OF_report.html.twig',
-           $page_vars
-           );
-
-  }
-
-
 /**
  
  Visualitzar un report
@@ -757,7 +438,6 @@ public function llegirMesuraAction(Request $request)
            );
   }
 
-
   /**
  
  Report d'una maquina
@@ -769,213 +449,305 @@ public function llegirMesuraAction(Request $request)
 
   }
 
-
 /**
-
- Carrega la llista de OFs sense finalitzar
-
-*/
-public function list_OF_pendentsAction() 
-  {
-    // recuperem les OF sense finalitzar
-    $OF_list = $this->get('of.manager')->getUnDoneOf();
-
-    return $this->render(
-      'AppBundle:ajax:list_OF_pendents.html.twig',array(
-      "OF_list" => $OF_list,
-    ));
-}
-
-
-/**
-
- Borra una OF no finalitzada
-
-*/
-public function deleteOFAction($OF) 
-  {
-    // borrem la OF sense finalitzar
-    $this->get('of.manager')->removeOf($OF);
-
-    // recuperem les OF sense finalitzar
-    $OF_list = $this->get('of.manager')->getUnDoneOf();
-
-    return $this->redirect($this
-            ->generateUrl('admin_tests',array(
-              'OF' => $OF
-              )), 301
-          );
-}
-
-
-/**
- 
-  (AjaX) enviem la llista dels resultats per a una màquina dins un test
-
-*/
-  public function listResultatsAction(Request $request)
-  {   
-    $this->controllerIni();
-    // recuperamos las variables POST
-    $OF_id = $request->request->get('id');
-    $maquina_id = $request->request->get('maquina_id');
-    // recuperamos los objetos
-    $maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
-    $OF = $this->repositoris['OF']->findOneById($OF_id);
-    $test = $OF->getTest();
-    // recuperem tots els resultats de la màquina dins el test actual
-    $resultats = $this->get('of.manager')->getAllResultats($test->getId(),$maquina_id);
-
-    return $this->render(
-      'AppBundle:include:resultats_list.html.twig',array(
-        'OF' => $OF,
-        'maquina' => $maquina,
-        'resultats' => $resultats,
-      ));
-  }
   
-/**
- 
+  ^historial
   Pàgina dels tests realitzats ordenats per data
+  ->resultats_resum_inici (/tests/resultats/resum)
 
-*/
-  public function resultatsResumAction()
-  {
+*/ 
+  public function resultatsResumAction(){
    $this->controllerIni();
-   // recuperem totes les dates a mostrar
-   $dates = $this->repositoris['TimeO']->findAll();
-   $Days = new Days();
-   $months = array();
-   $months['juny'] = $Days->getDaysOfMonth('juny');
-   $months['juliol'] = $Days->getDaysOfMonth('juliol');
-   $months['agost'] = $Days->getDaysOfMonth('agost');
+   // temporal
+   // ==========================================
    
-   // recorrem les dates on hi han tests
-   foreach($dates as $data)
+   $tests = $this->repositoris['Resultat']->findAll();
+   foreach($tests as $test)
    {
-    // capturem la data del test
-    $la_data = explode('-',$data->getData());
-    $dia = $la_data[0];
-    $mes = $la_data[1]==6?'juny':'juliol';
-    $any = $la_data[2];
-    // comuniquem al calendari que en aquells data hi ha un test
-    $months[$mes][$dia] = $data->getId();
+     $data = $test->getData();
+
+     $test->setDataInici($data->format('Y-m-d'));
+     $test->setHora($data->format('H:i:s'));
+
+     $this->em->persist($test);
    }
+   $this->em->flush();
+
   $families = $this->repositoris['Familia']->findAll();
 
   return $this->render(
       'AppBundle:content:resultats_resum.html.twig',array(
-      'dates'=>$dates,
-      'months'=>$months,
       'families'=>$families,
       ));
   }
-
+/**
   
+  ^date
+  Tests per a data i tipus de màquina
+  -> get_data_tests  (/tests/resultats/tests)
+  <- 'include:resultats_data'
+
+*/
+  public function getDataTestsAction(Request $request){
+    $this->controllerIni();
+    // recuperem la data
+    $timeo = $request->request->get('timeo');
+    // recuprem el tipus de màquina
+    $tipus = $request->request->get('tipus');
+    // preparem els arrays 
+    $tests_list = array();
+    $tests_list_cache = array();
+    $maquines_cache = array();
+
+    if($timeo)
+    {
+    // si hem seleccionat 'data' i 'tipus' de màquina alhora
+      if($tipus){
+        // tots els tipus
+        if($tipus == 'all'){
+          // agafem tots els tests de la data seleccionada
+          $tests_list = $this->repositoris['Resultat']->findBy(array(
+            "data_inici"=>$timeo,
+          ));
+        }
+        else
+        {
+          // tests per a una data i un tipus de màquina
+          $tests_list = $this->get('test.manager')->getTestsDateType($timeo,$tipus);
+        }// else all 
+      } // if tipus
+      // només hem seleccionat una data
+      else
+      {
+        // tots els d'una data
+        $tests_list = $this->repositoris['Resultat']->findBy(array(
+          "data_inici"=>$timeo
+        ));
+      
+      } // else tipus
+    } // if timeo
+   
+  if($tipus && !$timeo)
+  {
+    if($tipus == 'all')
+    {
+      // tots els tests disponibles
+      $tests_list = $this->repositoris['Resultat']->findBy( array(), 
+          array('id'=>'ASC'));
+    } // if all
+    else
+    {
+      $tests_list = $this->get('test.manager')->getTestsType($tipus);
+    } // else all
+  } // if tipus 
+    //return new Response($TimeO->getId(),200);
+  
+    return $this->render(
+      'AppBundle:include:resultats_data.html.twig',array(
+      'tests_list'=>$tests_list,));
+  }
 
 /**
  
-  (AjaX) enviem la llista dels tests per a una data particular
+  vista general dels tests. Menú amb les famílies de màquines
 
 */
-
-  public function getDataTestsAction(Request $request)
-  {
-
-     $this->controllerIni();
-     $tests_list = array();
-     $tests_list_cache = array();
-
-    $timeo_id = $request->request->get('timeo');
-    $tipus = $request->request->get('tipus');
-
-    
-
-    if($timeo_id){
-      // recuperem l'objecte TimeO
-      $TimeO = $this->repositoris['TimeO']->findOneById($timeo_id);
-      // recuperem els tests associats
-      $tests = $this->repositoris['Resultat']->findBy(array(
-        "time"=>$timeo_id,)
-      );
-      
-      $lasttest = '';
-
-      foreach($tests as $test)
-      {
-        //if($test->getDone()){
-          $tests_list_cache[] = $test;
-
-        //}
-      }
-      
-
-      if($tipus){
-        if($tipus == 'all'){
-
-          $tests_list = $tests_list_cache;
-        }
-        else{
-
-          foreach($tests_list_cache as $test)
-          {
-            $maquina_test = $test->getMaquina();
-            $familia_test = $maquina_test->getFamilia();
-            $tipus_test = $familia_test->getTipus();
-
-            if($tipus_test == $tipus){
-              $tests_list[] = $test;
-            }
-        }// foreach
-      } // else
-    }// if tipus
-    else{
-      $tests_list = $tests_list_cache;
-    }
-  } // if timeo
-    
- 
-    if($tipus && !$timeo_id){
-      if($tipus == 'all'){
-        $tests_list = $this->repositoris['Resultat']->findBy(array(
-          'done'=>1));
-      } // if all
-      else{
-      
-      $families = $this->repositoris['Familia']->findBy(array(
-        'tipus'=>$tipus));
-
-     
-
-      foreach($families as $familia){
-       
- 
-          $maquines = $familia->getMaquines();
-
-          foreach($maquines as $maquina){
-            $maquina_id = $maquina->getId();
-            $maquina_tests = $this->repositoris['Resultat']->findBy(array(
-              'maquina' => $maquina_id,
-              'done'=>1,
-              ), array(
-              'data'=>'DESC',
-              )
-            );
-
-            foreach($maquina_tests as $maquina_test){
-               $tests_list[] = $maquina_test;
-            } // foreach3
-          } // foreach 2
-      
-      } // foreach 1
-    } // else all
-    } // if tipus 
-    //return new Response($TimeO->getId(),200);
+  public function visioGeneralAction(){
+    $this->controllerIni();
+    $families = $this->repositoris['Familia']->findAll();
 
     return $this->render(
-      'AppBundle:include:resultats_data.html.twig',array(
-        'tests_list'=>$tests_list,
-      ));
-
+      'AppBundle:content-layout:tests_overview.html.twig',array(
+        'families' => $families,
+        ));
   }
+/**
+ 
+  ^
+  retornem les maquines d'un tipus determinat en forma de llista desordenada
+  >maquines_of_type  (/ajax/maquines_of_type)
+
+*/
+  public function getMaquinesOfTipusAction(Request $request){
+    $maquines_list = array();
+    // recuperem la variable ajax
+    $tipus = $request->request->get('tipus');
+    // recuperem les màquines
+    $maquines = $this->get('test.manager')->getMaquinesOfType($tipus);
+    
+    foreach($maquines as $maquina) {
+      $linia = $maquina->getLinia();
+      if($linia)
+        $maquines_list[$linia->getNumero()][] = $maquina;
+
+    }
+    return $this->render(  
+        'AppBundle:ajax:maquines-of-type_list.html.twig',array(
+        'maquines_list' => $maquines_list,
+      ));
+  }
+
+/**
+ 
+  ^
+  retornem els tests del dia d'avui d'un tipus de màquina
+  -> tests_of_type  (/ajax/tests_of_type)
+  <- 'ajax:tests-of-type_list.html.twig'
+
+*/
+  public function getTestsOfTipusAction(Request $request){
+    $this->controllerIni();
+    $tests = array();
+    // recuperem la variable ajax
+    $tipus = $request->request->get('tipus') != null?$request->request->get('tipus'):false;
+    $data = $request->request->get('data') != null?$request->request->get('data'):false;
+    $OF_id = $request->request->get('of')!= null?$request->request->get('of'):false;
+    
+    $info_array = array(
+      'familia'=>$tipus,
+      'data'=>$data,
+      'maquina'=>false,
+      );
+
+    // si hem rebut una of resuperem els tests independentment de la data
+    if(isset($OF_id) && $OF_id!='false' && $OF_id)
+    {
+      // recuperem els tests d'un tipus i una OF
+    // =====================================================
+      $OF = $this->repositoris['OF']->findOneById($OF_id);
+      if($OF){
+        $tests = $this->get('test.manager')->getTestsTypeOf($OF,$tipus);
+        // info array
+        $info_array['OF'] = $OF->getNumero();
+      }else{ $tests = false;}
+      
+      return $this->render( 
+        'AppBundle:ajax:tests-of-type_list.html.twig',array(
+        'tests' => $tests,
+        'data'=>$data,
+        'tipus'=>$tipus,
+        'info_array'=>$info_array,
+      ));
+    }
+    // si no hem enviat cap data ... la data d'avui
+    if(!$data){$data = date('Y-m-d');}
+    // si no hem rebut la variable del tipus de maquines ...
+    if(!$tipus){
+      // falta el tipus !
+    // =====================================================
+      $tests = false;
+      // info array
+      $info_array['OF'] ='totes';
+
+      return $this->render( 
+        'AppBundle:ajax:tests-of-type_list.html.twig',array(
+        'tests' => $tests,
+        'info_array'=>$info_array,
+      ));
+    }
+    // recuperem els tests d'un tipus i una data
+    // =====================================================
+    $tests = $this->get('test.manager')->getTestsDateType($data,$tipus);
+    // info array
+    $info_array['OF'] ='totes';
+
+    return $this->render( 
+      'AppBundle:ajax:tests-of-type_list.html.twig',array(
+      'tests' => $tests,
+      'info_array'=>$info_array,
+    ));
+  }
+
+  /**
+ 
+  ^nou_test
+   generem un nou test per a una màquina
+  -> nou_test  (/ajax/nou_test)
+  <- 'ajax:tests-of-type_list.html.twig'
+
+*/
+  public function nouTestAction(Request $request){
+  $this->controllerIni();
+  $maquina_id = $request->request->get('maquina_id');
+  $maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
+  $test = $this->get('test.manager')->newMaquinaResultat($maquina);
+  
+  $mesures = $test->getMesures();
+  
+   $Pes = new Pes(); 
+  $mesuraForm = $this->createForm(new NewMesuraType(), $Pes); 
+  
+  $OF_list = $this->repositoris['OF']->findAll();
+
+  $maquina = $test->getMaquina();
+  $last_of = $maquina->getLastOf();
+
+  return $this->render('AppBundle:ajax:test.html.twig',array(
+    'test'=>$test,
+    'mesures'=>$mesures,
+    'mesuraForm' => $mesuraForm->createView(),
+    'last_of'=>$last_of,
+    'of_list'=>$OF_list,
+    ));
+  }
+ /**
+ 
+  ^end_test
+   finalitzen un test per a una màquina, assignem la OF
+  -> end_test  (/ajax/end_test)
+  <- ajax:test_result.html.twig
+
+*/
+  public function endTestAction(Request $request){
+  $this->controllerIni();
+  // les variables ajax
+  $test_id = $request->request->get('test_id');
+  $Of_id = $request->request->get('of_id');
+  
+  $testO = $this->repositoris['Resultat']->findOneById($test_id);
+  $Of = $this->repositoris['OF']->findOneById($Of_id);
+
+  $test = $this->get('test.manager')->endTest($Of,$testO);
+
+  return $this->render(
+    'AppBundle:ajax:test_result.html.twig',array(
+    'test'=>$test,
+    'OF'=>$Of,
+    ));
+  }
+ /**
+ 
+  ^maquina_tests
+   mostrem els tests per a una màquina i una data ( opcionalment per a una OF )
+  -> maquina_tests  (/ajax/maquina_tests)
+  <- 
+*/
+
+  public function maquinaTestsAction(Request $request){
+  $this->controllerIni();
+  $maquina_id = $request->request->get('maquina_id');
+  $data = $request->request->get('data');
+
+
+  $maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
+  // netegem els tests no acabats
+  $this->get('test.manager')->cleanResultats();
+  // resuperem els tests
+  $tests = $this->get('test.manager')->getTestsDateMaquina($data,$maquina);
+  // info array
+  $info_array = array(
+      'familia'=>$maquina->getFamilia()->getTipus(),
+      'data'=>$data,
+      'maquina'=>$maquina->getNumero(),
+      'OF'=>'totes',
+      );
+  
+
+  return $this->render('AppBundle:ajax:tests-of-type_list.html.twig',array(
+    'tests'=>$tests,
+    'info_array'=>$info_array,
+    ));
+  }
+
+
 }

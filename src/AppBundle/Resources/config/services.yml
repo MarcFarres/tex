@@ -6,3 +6,7 @@ services:
   of.manager:
     class: AppBundle\Service\OfManager
     arguments: ["@doctrine.orm.entity_manager"]
+
+  test.manager:
+    class: AppBundle\Service\TestManager
+    arguments: ["@doctrine.orm.entity_manager"]

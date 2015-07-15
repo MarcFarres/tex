@@ -12,6 +12,12 @@
   var ajax_route = "{{ path('llegir_mesura') }}" ;
   // cambiem el valor d'aquesta variable per a un comportament diferent
   var finalitzar_resultat = "{{ path('finalitzar_resultat_tests_oberts')}}" ;
+  
+  var maquina_route = "{{ path('resultats_list_ajax') }}" ;
+  var goToTest = "{{ path('render_result_ajax') }}" ;
+  var borrar_resultat = "{{ path('delete_result') }}" ;
+  
+  var nou_resultat = "{{ path('nou_resultat') }}" ;
 </script>
   
 
@@ -71,32 +77,6 @@
 </div>
 
 
-{% endblock %}
+{% endblock content_menu %}
 
 
-{% block pageContent %}
-
-  <div id='admin-tests_list-container'>
-
-    {# carga 'No-route' de la lista de Of's abiertas #}
-    {{ render(controller('AppBundle:Of:listOfPendents'))}}
-
-  </div>
-
-  <div class="one-col-contenedor">
-
-
-    <div id="admin-tests_form-container">
-    
-      {{include('AppBundle:form:intranet_admin.html.twig',{
-        "form":form,
-        "form_title":"Crear Ordre de Fabricació",
-      },with_context = false)}}
-
-    </div>{# admin-tests_form-container #}
-
-    
-  </div>{#one col contenedor #}
-
-{# pageContent #}
-{% endblock %}

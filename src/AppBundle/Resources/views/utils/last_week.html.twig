@@ -1,0 +1,18 @@
+<div class="last-week_frame">
+  <div class="last-week_arrow left">
+    <span class='fa fa-arrow-left'></span>
+  </div>
+
+  <div class="last-week_container">
+
+  	<div id="last-week_days">
+	{% for key,day in days %}
+    <div class="last-week_day" data-time='{{ day }}'>
+    	<span>{{ day | date('d')  }}</span>
+    </div>
+	{% endfor %}
+	  </div>
+
+  </div>
+  <div class="last-week_arrow right"><span class='fa fa-arrow-right'></span></div>
+</div>

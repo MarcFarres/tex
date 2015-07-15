@@ -30,6 +30,10 @@ class Of
     **/ protected $color;
 
     /**
+    *@ORM\Column(type="string" , length=150)
+    **/ protected $formName;
+
+    /**
     *@ORM\Column(type="boolean" , nullable=true)
     **/ protected $done;
 
@@ -51,6 +55,8 @@ class Of
     /**
     * @ORM\Column(type="datetime")
     */ private $data;
+
+
 
     /**
      * Constructor
@@ -265,5 +271,26 @@ class Of
     public function getDone()
     {
         return $this->done;
+    }
+
+
+    public function getFormName()
+    {
+        return sprintf('%s - %s', $this->numero, $this->color);
+
+    }
+
+
+    /**
+     * Set formName
+     *
+     * @param string $formName
+     * @return Of
+     */
+    public function setFormName($formName)
+    {
+        $this->formName = $formName;
+
+        return $this;
     }
 }

@@ -1,6 +1,6 @@
 {% extends 'AppBundle:content:admin_tests.html.twig' %}
 
-
+{% block title %} Arxiu OF {% endblock %}
 
 {% block pageContent %}
 
@@ -37,7 +37,7 @@
             <td></td>
             <td></td>
             
-            <td><a href="{{ path('iniciar_test',{'OF':OF.id}) }}">Go</a></td>
+            <td><a href="{{ path('OF_view',{'OF':OF.id}) }}">Go</a></td>
           </tr>
 
 {% endfor %}

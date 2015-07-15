@@ -1,0 +1,22 @@
+// menu superior del contenido
+#admin-tests_menu-sup
+{
+  @extend %column_container;
+  @include justify-content(flex-start);
+
+  position:relative;
+  height:110px; 
+
+  background-color:$admin-menuSup-color;
+
+  >.menu-sup_frame
+  {
+    // los frames que contiene están definidos en:
+    // 'objects/frames.scss'
+
+    @extend %column_container; 
+    height:85px;
+    padding:0 20px;
+    margin:auto 0; 
+  }
+} 

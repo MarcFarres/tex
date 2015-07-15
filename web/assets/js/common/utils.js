@@ -2,17 +2,10 @@
 (function(){
 
 // el contenedor mas general considerado
-var main_parent = $('#main_parent');
 
-var primera_mesura = true;
-
-var tipus_selected = 0;
-var timeo_selected = 0;
 
 $( document ).ready(function(){ }); 
-  $('#tests_table').dataTable({
-
-  });
+  $('#tests_table').dataTable({});
 
    $('#tests_table_filter').children('label').addClass('fa fa-search');
 
@@ -82,7 +75,7 @@ main_parent.on('click','.plegable_list.clicked',function(){
 
 // guardar una nova mesura de pes capturada
 
-$('#test_contenedor').on('submit','#novaMesura', function(){
+$('#main_parent').on('submit','#novaMesura', function(){
   
   var params = $(this).serialize() ;
 
@@ -99,42 +92,36 @@ $.ajax({
   },
   });
 
-
-return false;
-
-});
-
-function guardar_mesura(params){
-
-}
-
-
-// finalitzem un resultat
-
-$('#test_contenedor').on('submit','#endResult', function(){
-  
-  var params = $(this).serialize() ;
+setTimeout(function() {
+  var params2 = {
+  "test_id" : $('#finalitzar_test').attr('data-resultatId'),
+  "of_id" : $('#OF_list').val(),
+  };
 
 $.ajax({ 
-  data:  params,
-  url:   finalitzar_resultat,
+  data:  params2,
+  url:   finalitzar_test,
   type:  'post',
   dataType: "html",
   beforeSend: function () {
      
     } , 
   success:  function (response) {
-    $('#test_contenedor').html(response);
+    $('#NT_resultat_container').html(response);
   },
   });
-
+}, 200);
 
 return false;
 
 });
 
-// finalitzem un resultat
 
+function guardar_mesura(params){
+
+}
+
+// finalitzem un resultat
 $('#test_contenedor').on('submit','#endResult', function(){
   
   var params = $(this).serialize() ;
@@ -236,6 +223,8 @@ $.ajax({
 
 });
 
+
+
 // generar un nou test
 
 $('#resultats_list_contenedor').on('click','#new_result', function(){
@@ -250,7 +239,32 @@ $('#resultats_list_contenedor').on('click','#new_result', function(){
     type:  'post',
     beforeSend: function () {} , 
     success:  function (response) {
-      $('#test_contenedor').html(response);
+      $('#TO_tests-container').html(response);
+    },
+  });
+
+});
+
+
+// obtenim un nou test per a una maquina 
+// sense OF assignada
+
+$('#main_parent').on('click','#nou_test', function(){
+
+  var maquina_id = $(this).attr('data-maquina');
+  var parametros = {
+    "maquina_id" : maquina_id,
+  };
+
+  $.ajax({
+    data:  parametros,
+    url:   nou_test,
+    type:  'post',
+    beforeSend: function (){
+
+    } , 
+    success:  function (response) {
+      $('#TO_tests-container').html(response);
     },
   });
 
@@ -327,7 +341,7 @@ timeo_selected = $(this).attr('data-timeo');
   timeo_selected = 0;
  }
  else{
-  var clicked_element = $(this).parent().parent().parent().find('.clicked') ;
+  var clicked_element = $('.gotests.clicked') ;
     unclick_element(clicked_element);
     click_element($(this));
  }
@@ -353,6 +367,7 @@ timeo_selected = $(this).attr('data-timeo');
 });
 
 
+// -----------------------------
 $('#resultats_list_contenedor').on('click','.borrar',function(){
  
   var parametros = {
@@ -379,65 +394,11 @@ $('#resultats_list_contenedor').on('click','.borrar',function(){
 });
 
 
-
-$('#test_contenedor').on('click','.borrar',function(){
- 
-  var parametros = {
-      "mesura_id" : $(this).attr('data-mesura'),
-      "resultat_id" : $(this).attr('data-resultat')
-    };
+// [ Calendari ]=========================================
 
 
-    $.ajax({
-      data:  parametros,
-      url:   borrar_mesura,
-      type:  'post',
-      beforeSend: function () {
-        
-      } , 
-      success:  function (response) {
-        out_element($('#results_table'));
-        
-        $('#test_contenedor').html(response);
-   },
-  });
+/*var calendar_width = 210*months;
 
-});
-
-/* ------------------------------[ helper functions: ]  */
-// ================================================================
-
-
-// support a les interfaces css 'clicked / unclicked' i 'in / out'
-
-main_parent.on('click','.unclicked',function(){if(!$(this).hasClass('clickedException'))click_element($(this));});
-main_parent.on('click','.clicked',function(){if(!$(this).hasClass('clickedException'))unclick_element($(this));});
-main_parent.on('click','.clickable',function(){$(this).removeClass('.clickable_done').addClass('clickable_done')})
-
-
-$('.action-button').on('click',function(){
-
-   $('.action-button.clicked').removeClass('clicked').addClass('unclicked');
-})
-function in_element(element){
-  element.removeClass('out');
-  element.addClass('in');
-}
-
-function out_element(element){   
-  element.removeClass('in');  
-  element.addClass('out');
-}
-
-function click_element(element){
-  element.removeClass('unclicked');
-  element.addClass('clicked');
-}
-
-function unclick_element(element){
-  element.removeClass('clicked');
-  element.addClass('unclicked');
-}
-
+$*/
 
 }()); //run this anonymous function immediately

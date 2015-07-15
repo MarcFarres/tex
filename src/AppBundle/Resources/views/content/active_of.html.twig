@@ -1,0 +1,30 @@
+{% extends 'AppBundle:layout:admin_of.html.twig' %}
+
+
+
+{% block pageContentOld %}
+
+  <div id='admin-tests_list-container'>
+
+    {# carga 'No-route' de la lista de Of's abiertas #}
+    {{ render(controller('AppBundle:Of:listOfPendents'))}}
+
+  </div>
+
+  <div class="one-col-contenedor">
+
+
+    <div id="admin-tests_form-container">
+    
+      {{include('AppBundle:form:intranet_admin.html.twig',{
+        "form":form,
+        "form_title":"Crear Ordre de Fabricació",
+      },with_context = false)}}
+
+    </div>{# admin-tests_form-container #}
+
+    
+  </div>{#one col contenedor #}
+
+{# pageContent #}
+{% endblock pageContentOld %}

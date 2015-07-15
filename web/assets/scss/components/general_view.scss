@@ -16,6 +16,7 @@
 
 .general-view_container
 {
+  @include flex();
   @extend %column_container;
   margin-top:50px;
   font-family: Helvetica;

@@ -22,14 +22,15 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
     // los botones del framework
     @import "../config/buttons";
  
-
+ 
 // efectos
-  //@import "../functions/effects";
+  //@import "../functions/effects"; 
   @import "../animations/common_animations";  
  
 // Objetos   
   // base del layout 
-    @import "../layouts/columns-base-layout"; 
+  // @import "../layouts/columns-base-layout"; 
+    @import "../layouts/rows-base-layout"; 
   // base del layout  
     @import "../objects/intranet-forms";
     
@@ -52,7 +53,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
   @import "../components/resultats";
  
   @import "../components/calendari";
-
+  @import "../components/menus";
 
 // contenedores 
     
@@ -75,10 +76,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
   @import "../textures/frames";
 
+
+  @import "tests_overview";
+
 // Las diferentes páginas que componen la web
     //la home
-
-
 
 
 .frame-element
@@ -86,34 +88,12 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
   background-color:lighten($clouds,3);
 }
 
-
 .clear{
   clear:both;
 }
 
 
-// menu superior del contenido
-#admin-tests_menu-sup
-{
-  @extend %column_container;
-  @include justify-content(space-around);
 
-  position:relative;
-  height:110px; 
-
-  background-color:$admin-menuSup-color;
-
-  >.menu-sup_frame
-  {
-    // los frames que contiene están definidos en:
-    // 'objects/frames.scss'
-
-    @extend %column_container; 
-    height:85px;
-    padding:0 20px;
-    margin:auto; 
-  }
-} 
 
 // contenedor de información
 .info-contenedor
@@ -253,7 +233,16 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
         {
           background-color:$emerald;
         }
+
+        &.resultat_mitjana
+        {
+          color:blue;
+          font-size:15px;
+          font-weight: bold;
+        }
       }
     }
   }
 }
+
+

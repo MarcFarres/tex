@@ -1,4 +1,4 @@
-{% extends 'AppBundle:content:admin_tests.html.twig' %}
+{% extends 'AppBundle:layout:admin_of.html.twig' %} 
 
 {% block title %} {{ OF.numero }} / {{ OF.color }} / {{ OF.descripcio }} {% endblock title %}
 
@@ -6,6 +6,10 @@
 
 
 {% block content_submenu %} 
+
+{{ parent() }}
+
+
 
 <div class="one-col-contenedor info-contenedor">
 
@@ -76,6 +80,12 @@
 
 {% block content_options %}
 
+<script>
+
+var finalitzar_resultat = "{{ path('finalitzar_resultat')}}" ;  
+
+</script> 
+
 <div class="one-col-contenedor">
   <div class="actions-contenedor">
   {% if not OF.done %}
@@ -108,18 +118,7 @@
 
 {% block pageContent %}
    
-
-<script>
-  var maquina_route = "{{ path('resultats_list_ajax') }}" ;
-  var ajax_route = "{{ path('llegir_mesura') }}" ;
-  var goToTest = "{{ path('render_result_ajax') }}" ;
-  var novamesura = "{{ path('nova_mesura_ajax') }}" ;
-  var borrar_resultat = "{{ path('delete_result') }}" ;
-  var borrar_mesura = "{{ path('delete_mesura') }}" ;
-  var finalitzar_resultat = "{{ path('finalitzar_resultat')}}" ;
-  var nou_resultat = "{{ path('nou_resultat') }}" ;
-
-</script>  
+ 
 
 <div class="two-cols-contenedor">
 

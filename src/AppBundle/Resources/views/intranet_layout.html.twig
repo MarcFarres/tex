@@ -1,0 +1,75 @@
+{% extends '::base_layout_intranet.html.twig' %}
+
+
+{% block stylesheets %}
+
+{{ parent() }}
+
+	{% stylesheets 
+	 'assets/css/intranet.css' 
+	 'assets/css/fontawessome.css'
+	  filter='cssrewrite'
+	 %}
+		
+	<link rel="stylesheet" href="{{ asset_url }}" />
+
+{% endstylesheets %}
+
+{% endblock stylesheets %}
+
+
+{% block menu_lat %}
+
+
+
+	<ul id='intranet_menu_lat'>
+		
+		    <li class="list_element">
+
+				<span class="fa fa-flag list_icon"></span>	
+			  <a 
+			    href="{{ path('tests_visio_general') }}"
+  				class='list_link'
+  			  > Tests </a>
+
+		    </li>
+            
+
+            <li class="list_element">
+
+		  	<span class="fa fa-wrench list_icon"></span>	
+
+		  	<a 
+		  	  href="{{ path('active_OF') }}"
+		  	  class='list_link'
+		  	> OF's </a>
+
+		  </li>
+
+
+		    <li class="list_element">
+
+		      <span class="fa fa-info-circle list_icon"></span>
+
+
+			  <a 
+			    href="{{ path('visio_general') }}"
+			    class='list_link'
+			    > Visió general </a>	
+
+		    </li>
+
+	    
+		<li class="list_element">
+
+			<span class="fa  fa-bar-chart list_icon"></span>
+
+			<a 
+			  href="#"
+			  class='list_link'
+			> Estadístiques </a>
+		</li>
+		
+	</ul>
+
+{% endblock menu_lat %}

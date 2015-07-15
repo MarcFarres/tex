@@ -1,0 +1,23 @@
+
+
+
+{% for linia,maquines in maquines_list %}
+
+<h2>Linia {{ linia }}</h2>
+
+<ul>
+
+  {% for maquina in maquines %}
+
+    <li class='maquina-of-type unclicked' data-id='{{ maquina.id }}'>
+	  <span class='model'>{{ maquina.getFamilia().model }}</span> 
+	  <span class='numero'>{{ maquina.numero }}</span> 
+    </li>
+  
+
+  {% endfor %}
+
+</ul>
+
+{% endfor %}
+

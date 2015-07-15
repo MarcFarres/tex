@@ -1,0 +1,47 @@
+
+
+{% set testOk = test.testok ? "ok": "fail" %}
+
+<div class="test_resultat_title">
+	Resultats
+</div>
+
+<div class="test_resultat_row">
+	<div class="test_resultat_row_title">Mitjana: <span> X </span> </div>
+	<div class="nominal">
+		<span>Valor nominal: </span>
+		<span class='valor'>{{ test.mitjanaesp }}</span>
+	</div>
+	<div class="obtingut {{ testOk }}">
+		<span>Valor obtingut: </span>
+		<span class='valor_obtingut'>{{ test.mitjana | number_format(4, ',', '.') }}</span>
+	</div>
+	
+</div>
+
+<div class="test_resultat_row">
+	<div class="test_resultat_row_title"><span> DESC% </span> </div>
+	<div class="nominal">
+		<span>Valor nominal</span>
+		<span class='valor'>{{ test.descmax }}</span>
+	</div>
+	<div class="obtingut {{ testOk }}">
+		<span>Valor obtingut</span>
+		<span class='valor_obtingut'>{{ test.descentratge | number_format(4, ',', '.')}}</span>
+	</div>
+	
+</div>
+
+
+<div class="test_resultat_row">
+	<div class="test_resultat_row_title"><span> DV% </span> </div>
+	<div class="nominal">
+		<span>Valor nominal</span>
+		<span class='valor'>{{ test.devmax }}</span>
+	</div>
+	<div class="obtingut">
+		<span>Valor obtingut</span>
+		<span class='valor_obtingut'>{{ test.dev | number_format(4, ',', '.')}}</span>
+	</div>
+	
+</div>

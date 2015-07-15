@@ -15,14 +15,12 @@
 
         {% block stylesheets %}
         
-        
             {% stylesheets 'assets/css/dataTable.css' filter='cssrewrite' %}
 
                 <link rel="stylesheet" href="{{ asset_url }}">
 
             {% endstylesheets %}
             
-
         {% endblock stylesheets %}
 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -40,10 +38,14 @@
         </div>
           
 
-        <div class="layout-content">
+        <div class="layout-content"  id='main_parent'>
 
           <div class="layout-content-menu">
+
+
             {% block content_menu %} {% endblock content_menu %}
+
+              
           </div>
 
           <div class="layout-content-submenu">
@@ -53,13 +55,16 @@
             {% block content_options %} {% endblock content_options %}
           </div>
            
-          <div class='layout-content-final' id='main_parent'> 
+          <div class='layout-content-final'> 
             {% block pageContent %} {% endblock pageContent %}
+          </div>
+
+          <div class='layout-content-final-old'> 
+            {% block pageContentOld %} {% endblock pageContentOld %}
           </div>
 
         </div>
           
-
       </div>
 
     </body>
@@ -72,7 +77,9 @@
                 'assets/js/common/jquery-ui.js'
                 'assets/js/common/modernizr.js'
                 'assets/js/common/dataTable.js'
+                'assets/js/common/helper.js'
                 'assets/js/common/utils.js'
+                
             %}
                 <script src="{{ asset_url }}"></script>
             {% endjavascripts %}

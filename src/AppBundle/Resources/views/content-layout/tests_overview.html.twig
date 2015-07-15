@@ -1,0 +1,84 @@
+{% extends 'AppBundle:layout:admin_tests.html.twig' %}
+
+
+{% block content_menu %}
+{{ parent() }}
+
+  {{ render(controller(
+      'AppBundle:Utils:lastWeek'
+    )) }}
+    
+
+  {{ render(controller(
+    'AppBundle:Utils:ofSelector',
+    {'OF_list_id':'OF_list_menu',
+    }
+  )) }}
+
+
+  <div id="consulta-info">
+      
+     <div class="consulta-info_row">
+       <span class='label'>Familia: </span>
+       <span id='consulta-info_familia'></span>
+     </div>
+
+     <div class="consulta-info_row">
+       <span class='label'>Maquina: </span>
+       <span id='consulta-info_maquina'></span>
+     </div>
+
+     <div class="consulta-info_row">
+       <span class='label'>Data: </span>
+       <span id='consulta-info_data'></span>
+     </div>
+
+     <div class="consulta-info_row">
+       <span class='label'>OF: </span>
+       <span id='consulta-info_OF'></span>
+     </div>
+
+     
+
+  </div>
+
+
+{% endblock content_menu %}
+
+{% block pageContent %}
+
+
+<div id="TO_container">
+	
+  <div id="TO_tipus-menu-container">
+  	    
+       <div class="TO_familia-row unclicked" data-tipus='Cardas'>
+       	  Cardas
+       </div>
+       <div class="TO_familia-row unclicked" data-tipus='Manuar'>
+       	  Manuar
+       </div>
+       <div class="TO_familia-row unclicked" data-tipus='Metxera'>
+       	  Metxera
+       </div>
+       <div class="TO_familia-row unclicked" data-tipus='Continuas'>
+       	  Continuas
+       </div>
+
+  </div>
+
+  <div id="TO_maquines-menu-container">
+
+    
+
+  </div>
+
+  <div id="TO_tests-container">
+
+    
+
+  </div>
+
+</div>
+
+{% endblock pageContent %}

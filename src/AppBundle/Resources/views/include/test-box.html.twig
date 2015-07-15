@@ -1,0 +1,107 @@
+  {% if test.status == 4 %}
+  {% set testOk = test.testok ? "ok": "fail" %}
+
+  <div class='test-box {{ testOk }}'>
+
+  	<div class="test-box_info-row time">
+  		<span class='data'>{{ test.data | date('d-m-Y') }}</span>
+  		<span class='hora'>{{ test.data | date('h:i:s') }}</span>
+  	</div>
+  	<div class="test-box_info-row {{ testOk }} color" title='
+  	     {{ of.color | length > 25 ? 
+  	       of.color: "" }}'>
+  		{{ of.color | length > 25 ?  of.color | slice(0,25) ~ ' ... ' : of.color}}
+  	</div>
+    <div class="test-box_info-row {{ testOk }} of">
+  		{{ of.numero }} - {{ maquina.getFamilia().tipus }} {{ maquina.numero }}
+  	</div>
+
+  	<div class="test-box_content">
+  		
+      <div class="mesures-container">
+  	  <table class="data-list light_grey">
+        <thead>
+          <tr>
+            <th>Densitat</th>
+          </tr>
+        </thead>
+     
+        <tbody>
+         
+{% set mesures = test.getMesures() %} 
+{% if mesures %}    
+{% for mesura in mesures %}
+
+          <tr>
+
+            <td>
+            	{{ mesura.densitat.valor }} 
+            </td> 
+
+          </tr>
+
+{% endfor %}
+{% else %}
+          <tr>
+            <td>
+            	No hay medidas
+            </td> 
+            <td>
+            	No hay medidas
+            </td> 
+          </tr> 
+{% endif %}
+          
+        </tbody>
+
+
+      </table>
+      </div> {# mesures container #}
+
+      <div class="results-container">
+    	
+        
+        <div class="result-row mitjana">
+          <span class='result-row_title'>X Obtingut</span >
+            <hr />
+        	<span class='result-row_value' >
+        		{{ test.mitjana | number_format(4, ',', '.') }}
+        	</span>
+        </div>
+        <div class="result-row {{ testOk }}">
+          <span class='result-row_title'>nominal = </span >
+          <span class='result-row_value' >
+            {{ test.mitjanaesp }}
+          </span>
+        </div>
+
+        
+        <div class="result-row desc">
+          <span class='result-row_title exp'>DESC%</span >
+        	<hr />
+          <span class='result-row_value' >
+        		{{ test.descentratge | number_format(4, ',', '.') }}
+        	</span>
+        </div>
+        <div class="result-row {{ testOk }}">
+          <span class='result-row_title'>Nominal= </span >
+          <span class='result-row_value' >
+            {{ test.descmax }}
+          </span>
+        </div>
+
+        <div class="result-row {{ testOk }}">
+          <span class='result-row_title'>DEV% </span >
+        	<span class='result-row_value' >
+        		{{ test.dev |number_format(3, ',', '.')}}
+        	</span>
+        </div>
+        
+
+      </div> {# results container #}
+
+  	</div>
+
+  </div>
+
+  {% endif %}

@@ -46,7 +46,7 @@ class NewOFType extends AbstractType
                   'property'=>'numero',
                   'attr' => array('class' => 'intranet-input'),
             ))
-            ->add('Crear', 'submit', 
+            ->add('Guardar', 'submit', 
                 array(
                     'attr' => array('class' => 'intranet-submit'),
             ));

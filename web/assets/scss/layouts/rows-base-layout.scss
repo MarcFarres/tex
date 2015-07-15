@@ -1,9 +1,10 @@
-/* estructura horizontal con:
+/* estructura vertical con:
 
-     - menu lateral */
-     $columns-layout-menu:3;/*
-     - contenido central */
-     $columns-layout-content:9;/*
+     - menu superior*/
+     $rows-layout-menu:1;
+     /*- contenido central */
+     $rows-layout-content:11;/*
+
         . espacio para un menú superior(pestañas)*/
         $columns-layout-contentMenu:2;/*
         . espacio para el contenido final de la página*/
@@ -12,28 +13,27 @@
 
  */
 
-.columns-base-layout-parent{
-// es un contenedor flexible de columnas
+.rows-base-layout-parent{
+// es un contenedor flexible de filas
 // se adapta a la altura total de la página
 // el menú no tiene scroll solo la parte del contenido
 //===================================================
-@extend %column_container; 
+@extend %row_container; 
 // --------------------------------------------------
   position:relative;
   min-height:100% !important;
   height:100%;
 
-
   >.layout-menu
   {
-    @include flex($columns-layout-menu);
+    height:40px; 
   }
 
   // El contenido de la página
   >.layout-content
   { 
     @extend %row_container;
-    @include flex($columns-layout-content);
+    @include flex($rows-layout-content);
     height:100%;
 
     >.layout-content-menu
@@ -45,7 +45,6 @@
     >.layout-content-final
     {
        @include flex($columns-layout-contentFinal);
-    
     } // content final
 
   } // content

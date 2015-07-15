@@ -3,7 +3,8 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Process\Process;
+
+use AppBundle\Controller\BaseController;
 
 // Entities
 use AppBundle\Entity\Of;
@@ -13,20 +14,7 @@ use AppBundle\Entity\Resultat;
 use AppBundle\Entity\Mesura;
 use AppBundle\Entity\Pes;
 use AppBundle\Entity\Densitat;
-use AppBundle\Entity\TimeO;
 
-// conexió al port serial
-use AppBundle\Utils\PhpSerial ;
-
-// Model
-//use AppBundle\Model\ResultatTest as Resultat;
-
-// formularis
-use AppBundle\Form\Type\NewOFType ;
-use AppBundle\Form\Type\NewTestType ;
-use AppBundle\Form\Type\ResultParamsType ;
-use AppBundle\Form\Type\ResultType ;
-use AppBundle\Form\Type\NewMesuraType ;
 
 // utils
 use Symfony\Component\HttpFoundation\Request;
@@ -34,53 +22,60 @@ use Symfony\Component\HttpFoundation\Response;
 
 // constants
 use AppBundle\Constant\Status ;
+use AppBundle\Constant\Days;
 
 
-
-class UtilsController extends Controller
+class UtilsController extends BaseController
 {
-  
-  protected $repositoris;
-
-  protected $page_vars;
-
-  protected $em;
-
-
-  public function controllerIni()
+/**
+  calendario de una semana
+*/
+  public function lastWeekAction()
   {
-    $doctrine = $this->getDoctrine();
-    $this->repositoris = array();
-    $this->page_vars = array();
-    $this->em = $doctrine->getManager();
+    $today = date('Y-m-d');
+    $days = array();
+    $days[] = $today;
+    $days[] = date( "Y-m-d", strtotime( "-1 day", strtotime( $today ) ) );
+    $days[] = date( "Y-m-d", strtotime( "-2 day", strtotime( $today ) ) );
+    $days[] = date( "Y-m-d", strtotime( "-3 day", strtotime( $today ) ) );
+    $days[] = date( "Y-m-d", strtotime( "-4 day", strtotime( $today ) ) );
+    $days[] = date( "Y-m-d", strtotime( "-5 day", strtotime( $today ) ) );
+    $days[] = date( "Y-m-d", strtotime( "-6 day", strtotime( $today ) ) );
+    $days[] = date( "Y-m-d", strtotime( "-7 day", strtotime( $today ) ) );
 
-    // Obtenim els repositoris de les entities que utilitzarem:
-
-    $this->repositoris['OF'] = $doctrine
-        ->getRepository('AppBundle:Of');
-
-    $this->repositoris['Test'] = $doctrine
-      ->getRepository('AppBundle:Test');
-
-    $this->repositoris['Resultat'] = $doctrine
-      ->getRepository('AppBundle:Resultat');
-
-    $this->repositoris['Mesura'] = $doctrine
-      ->getRepository('AppBundle:Mesura');
-
-    $this->repositoris['Maquina'] = $doctrine
-      ->getRepository('AppBundle:Maquina');
-
-    $this->repositoris['Pes'] = $doctrine
-      ->getRepository('AppBundle:Pes');
-
-    $this->repositoris['Familia'] = $doctrine
-      ->getRepository('AppBundle:Familia');
-
-    $this->repositoris['TimeO'] = $doctrine
-      ->getRepository('AppBundle:TimeO');
-
+    return $this->render(
+      'AppBundle:utils:last_week.html.twig',array(
+      'days'=>$days));
   }
+  
+/**
+  pestaña para seleccionar OF's
+*/
+  public function ofSelectorAction($OF_list_id){
+    $this->controllerIni();
+    $OF_list = $this->repositoris['OF']->findAll();
+    //$OF_list = $this->get('of.manager')->getUnDoneOf();
 
+    return $this->render(
+      'AppBundle:utils:of_selector.html.twig',array(
+      'of_list'=>$OF_list,
+      'OF_list_id'=>$OF_list_id));
+  }
+/**
+  calendario completo
+*/
+public function calendarAction(){
+   $Days = new Days();
+   $months = array();
+   $months['juny'] = $Days->getDaysOfMonth('juny');
+   $months['juliol'] = $Days->getDaysOfMonth('juliol');
+   $months['agost'] = $Days->getDaysOfMonth('agost');
+   $months['setembre'] = $Days->getDaysOfMonth('setembre');
+
+    return $this->render(
+      'AppBundle:utils:calendari.html.twig',array(
+      'months'=>$months,
+      ));
+  }
 
 }

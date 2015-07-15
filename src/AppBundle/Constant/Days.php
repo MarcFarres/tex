@@ -17,22 +17,28 @@ final class Days
     	$junyDays = array();
     	for($i=1;$i<=30;$i++)
     	{
-          $junyDays[$i] = false;
+          $junyDays[$i] = $i<10?"2015-06-0".$i:"2015-06-".$i;
     	}
     	$juliolDays = array();
     	for($i=1;$i<=31;$i++)
     	{
-          $juliolDays[$i] = false;
+          $juliolDays[$i] = $i<10?"2015-07-0".$i:"2015-07-".$i;
     	}
     	$agostDays = array();
     	for($i=1;$i<=31;$i++)
     	{
-          $agostDays[$i] = false;
+          $agostDays[$i] = $i<10?"2015-08-0".$i:"2015-08-".$i;
     	}
+      $setembreDays = array();
+      for($i=1;$i<=30;$i++) 
+      {
+          $setembreDays[$i] = $i<10?"2015-09-0".$i:"2015-09-".$i;
+      }
 
     	$this->months['juny'] = $junyDays;
     	$this->months['juliol'] = $juliolDays;
     	$this->months['agost'] = $agostDays;
+      $this->months['setembre'] = $setembreDays;
     }
 
     public function getDaysOfMonth($month)

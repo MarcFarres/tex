@@ -1,0 +1,55 @@
+<div class="resultats-table_contenedor">
+
+  <h2> Mesures </h2>
+<table class="data-list light_grey cubic">
+  <thead>
+      <tr>
+        <th>nº</th>
+        <th>Pes</th>
+        <th>Densitat</th>
+      </tr>
+    </thead>
+    <tbody id='mesures_body'>
+      
+{% for mesura in mesures %}
+
+
+  {{ include('AppBundle:include:mesura_row.html.twig', {
+      "mesura":mesura,
+      "resultat":resultat,
+    }, with_context = false ) }}
+
+
+{% endfor %}
+
+  </tbody>
+
+</table>
+
+<div class='test_buttons'>
+  <button 
+    type='button'
+    id='realitzar_mesura' 
+    data-resultatId='{{ resultat.id }}'
+    class='test_button'>
+      Mesurar  
+    </button>
+    <div class="clear"></div>
+</div>
+
+</div>
+
+
+<div id="mesura_manual_container">
+  {{ include( 'AppBundle:form:intranet_admin.html.twig', {
+      "form":mesuraForm,
+      "form_title":"Mesura manual",
+  }, with_context = false ) }}
+
+
+<input type="hidden" name='resultat_id' value='{{ resultat.id }}'>
+
+</div>
+
+
+

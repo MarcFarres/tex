@@ -1,0 +1,52 @@
+<div id="calendari_slider_frame">
+
+
+
+<div id="calendari">
+  <div class="calendari_rows">
+  
+    <div class="calendari-left fa fa-arrow-left"></div>
+    <div class="calendari-right fa fa-arrow-right"></div>
+    <div class="clear"></div>
+  
+
+  </div>
+  <div class="months_container" id='calendari_months_container'>
+
+  {% for key,month in months %}
+
+    <div class="month">
+       <div class="month-title">
+          <span>{{key}}</span>
+       </div>
+       <div class="month-days">
+         {% if key == 'juliol' %}
+           <div class='month-day'></div>
+           <div class='month-day'></div>
+         {% endif %}
+         {% if key == 'agost' %}
+           <div class='month-day'></div>
+           <div class='month-day'></div>
+           <div class='month-day'></div>
+           <div class='month-day'></div>
+           <div class='month-day'></div>
+         {% endif %}
+         {% if key == 'setembre' %}
+           <div class='month-day'></div>
+         {% endif %}
+         {% for day,value in month %}
+           <div class="month-day">
+              <span 
+              class='gotests veure unclicked clickedException'
+              data-timeo='{{value}}'>
+              {{day}}
+              </span>
+           </div>
+         {% endfor %}
+       </div> {# month days #}
+    </div>
+    
+    {% endfor %}
+    </div>{# months container #}
+
+  </div>{# calendari #}

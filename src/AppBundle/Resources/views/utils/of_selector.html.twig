@@ -1,0 +1,9 @@
+{# Les Of disponibles #}
+
+  	<select name="of" id="{{ OF_list_id }}" class='TO_of_selector'>
+  		  <option value="false">Totes les OF</option>
+  		{% for of in of_list %}
+  		  <option value="{{ of.id }}">{{ of.formName }}
+  		  </option>
+  		{% endfor %}
+  	</select>

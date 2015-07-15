@@ -1,0 +1,57 @@
+<div id="nou-test_container">
+
+  <div id="NT_test_container">	
+{#------------------------------------------------#}  
+
+  
+    <div id="of_selector_container">
+      <select name="of" id="OF_list" class='TO_of_selector'>
+        <option value="false">Selecciona una OF</option>
+      {% for of in of_list %}
+        <option 
+          value="{{ of.id }}"
+        {{ of.id == last_of ? "selected" : ""}}
+          >
+          {{ of.formName }}
+        </option>
+      {% endfor %}
+      </select>
+    </div>
+
+{# la taula de les mesures #}
+<div id="NT_mesures_container">
+
+  {{ include( 
+  'AppBundle:include:mesures_table.html.twig', {
+  "mesuraForm":mesuraForm,
+  "mesures":mesures,
+  "resultat":test,
+  }, 
+  with_context = false 
+  ) 
+  }}
+
+<button 
+    type='button'
+    id='finalitzar_test' 
+    data-resultatId='{{ test.id }}'
+    class='test_button fa fa-check'>
+      Veure Resultats
+    </button>
+
+    <div class="clear"></div>
+</div>
+
+  
+{#------------------------------------------------#}
+  </div>
+
+  <div id="NT_resultat_container">
+{#------------------------------------------------#}
+
+
+
+{#------------------------------------------------#}
+  </div>
+
+</div>

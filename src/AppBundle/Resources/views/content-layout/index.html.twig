@@ -1,4 +1,4 @@
-{% extends "AppBundle:layout:intranet_layout.html.twig" %}
+{% extends "AppBundle::intranet_layout.html.twig" %}
 
 {% block content_menu %} 
 
@@ -9,7 +9,7 @@
 {% endblock content_menu %}
 
 
-{% block pageContent %}
+{% block pageContentOld %}
 
   {{ include(
     'AppBundle:include:general_view.html.twig',
@@ -20,7 +20,7 @@
   )  
   }}
 
-{% endblock %}
+{% endblock pageContentOld %}
 
 
 {#

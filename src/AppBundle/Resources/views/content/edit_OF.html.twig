@@ -1,7 +1,7 @@
-{% extends 'AppBundle:content:admin_tests.html.twig' %}
+{% extends 'AppBundle:layout:admin_tests.html.twig' %}
 
 
-
+ 
 {% block pageContent %}
    
   <div class="two-cols-contenedor">
@@ -10,7 +10,7 @@
 
   {{include('AppBundle:form:intranet_admin.html.twig',{
       "form":form,
-      "form_title":"Crear Ordre de Fabricació",
+      "form_title":"Editar Ordre de Fabricació",
  	},with_context = false)}} 
 
     </div>

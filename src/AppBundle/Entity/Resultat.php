@@ -81,12 +81,12 @@ class Resultat
     */ protected $test;
 
     /**
-    * @ORM\ManyToOne(targetEntity="TimeO",inversedBy="resultat")
-    * @ORM\JoinColumn(name="time" , referencedColumnName="id")
-    */ protected $time;
+    * @ORM\Column(name="data_inici",type="string")
+    */ protected $data_inici;
 
-
-
+    /**
+    * @ORM\Column(name="hora",type="string")
+    */ private $hora;
     
     /**
      * Constructor
@@ -459,8 +459,6 @@ evaluació de l'èxit del test
     /**
      * Add mesures
      *
-     * @param \AppBundle\Entity\Mesura $mesures
-     * @return Resultat
      */
     public function addMesure(\AppBundle\Entity\Mesura $mesures)
     {
@@ -488,17 +486,13 @@ evaluació de l'èxit del test
 
     /**
      * Get mesures
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
+    */
     public function getMesures()
     {
         return $this->mesures;
     }
 
     /**
-     * Set status
-     * @return Resultat
      */
     public function setStatus($status)
     {
@@ -510,7 +504,6 @@ evaluació de l'èxit del test
     /**
      * Get status
      *
-     * @return \intenger 
      */
     public function getStatus()
     {
@@ -520,8 +513,6 @@ evaluació de l'èxit del test
     /**
      * Set data
      *
-     * @param \DateTime $data
-     * @return Resultat
      */
     public function setData($data)
     {
@@ -532,8 +523,6 @@ evaluació de l'èxit del test
 
     /**
      * Get data
-     *
-     * @return \DateTime 
      */
     public function getData()
     {
@@ -542,8 +531,6 @@ evaluació de l'èxit del test
 
     /**
      * Remove mesures
-     *
-     * @param \AppBundle\Entity\Mesura $mesures
      */
     public function removeMesure(\AppBundle\Entity\Mesura $mesures)
     {
@@ -554,8 +541,6 @@ evaluació de l'èxit del test
 
     /**
      * Set time
-     *
-     * @return Resultat
      */
     public function setTime($time)
     {
@@ -571,5 +556,42 @@ evaluació de l'èxit del test
     public function getTime()
     {
         return $this->time;
+    }
+
+    /**
+     * Set data_inici
+     */
+    public function setDataInici($dataInici)
+    {
+        $this->data_inici = $dataInici;
+
+        return $this;
+    }
+
+    /**
+     * Get data_inici
+     */
+    public function getDataInici()
+    {
+        return $this->data_inici;
+    }
+
+    /**
+     * Set hora
+     *
+     */
+    public function setHora($hora)
+    {
+        $this->hora = $hora;
+
+        return $this;
+    }
+
+    /**
+     * Get hora
+     */
+    public function getHora()
+    {
+        return $this->hora;
     }
 }

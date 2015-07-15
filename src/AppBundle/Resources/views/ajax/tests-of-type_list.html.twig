@@ -1,0 +1,48 @@
+
+
+{% if tests and tests|length %}
+	
+  {% for test in tests %}
+  
+  {% set testOf = test.getTest() %}
+    {% if testOf %}
+      {% set of = testOf.getOf() %}
+      {% set maquina = test.getMaquina() %}
+
+  {{ include(
+  'AppBundle:include:test-box.html.twig',
+  {
+  'test':test,
+  'of':of,
+  'maquina':maquina,
+  },
+  with_context = false 
+  ) 
+  }}
+
+    {% endif %}
+  {% endfor %}
+  
+ 
+
+{% else %}
+
+  <p>No se han encontrado tests</p>
+  
+
+
+{% endif %}
+
+ <div class="hidden" id='info_familia'>
+    {{ info_array.familia }}
+  </div>
+  <div class="hidden" id='info_maquina'>
+    {{ info_array.maquina }}
+  </div>
+  <div class="hidden" id='info_data'>
+    {{ info_array.data }}
+  </div>
+  <div class="hidden" id='info_OF'>
+    {{ info_array.OF }}
+  </div>
+

@@ -39,7 +39,7 @@ class GeneralController extends Controller
 
 
         return $this->render(
-          'AppBundle:content:index.html.twig',
+          'AppBundle:content-layout:index.html.twig',
           array(
             'linias' => $linias,
           )

@@ -1,0 +1,102 @@
+{% extends 'AppBundle::intranet_layout.html.twig' %}
+
+{% block title %} Tests {% endblock %}
+
+
+{% block content_submenu %} 
+
+<script>
+  var goToTest = "{{ path('render_result_ajax') }}" ;
+  var novamesura = "{{ path('nova_mesura_ajax') }}" ;
+  var borrar_mesura = "{{ path('delete_mesura') }}" ;
+  var ajax_route = "{{ path('llegir_mesura') }}" ;
+  // cambiem el valor d'aquesta variable per a un comportament diferent
+  var finalitzar_resultat = "{{ path('finalitzar_resultat_tests_oberts')}}" ;
+
+  var maquines_list = "{{ path('maquines_of_type')}}" ;
+  var tests_of_type_list = "{{ path('tests_of_type')}}" ;
+  var nou_test = "{{ path('nou_test') }}";
+  var maquina_tests = "{{ path('maquina_tests') }}";
+  var finalitzar_test = "{{ path('end_test') }}";
+</script>
+  
+
+{% endblock content_submenu %}
+
+{% block content_menu %}
+
+  <header id="admin-tests_menu-sup">
+     <nav class="menu-sup_frame">
+      
+      <div 
+        class="frame-element out" 
+        id='nou_test'
+        data-maquina=""
+        >
+
+        <div class="icon">
+
+          <span class='fa fa-file-o'></span>
+        </div>
+
+        <div class="title">
+          Nou Test 
+        </div>
+
+      </div>
+
+
+      <a 
+        class="frame-element" 
+        href="{{ path('tests_visio_general') }}">
+
+        <div class="icon">
+
+          <span class='fa fa-check-square-o'></span>
+        </div>
+
+        <div class="title">
+          Tests
+        </div>
+
+      </a>
+
+      <a 
+        class="frame-element" 
+        href="{{ path('resultats_resum_inici') }}">
+
+        <div class="icon">
+          <span class='fa fa-database'></span>
+        </div>
+
+        <div class="title">
+          Historial
+        </div>
+
+      </a>
+      
+     </nav>
+
+   </header>
+
+{% endblock %}
+
+
+{% block pageContent %}
+
+
+
+{# pageContent #}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+            
+    {% javascripts 
+      'assets/js/common/tests.js'
+      'assets/js/common/calendari.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock javascripts %}

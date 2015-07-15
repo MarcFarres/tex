@@ -1,89 +1,46 @@
-{% extends 'AppBundle:content:admin_tests.html.twig' %}
+{% extends 'AppBundle:layout:admin_tests.html.twig' %}
 
 {% block title %} RESULTATS {% endblock title %}
 
 {% block content_submenu %} 
 <script>
   var get_data_tests = "{{ path('get_data_tests') }}" ;
-  var tipus_route = "{{ path('actual_tests_list') }}" ;
   var goToTest = "{{ path('render_result_ajax') }}" ;
   var novamesura = "{{ path('nova_mesura_ajax') }}" ;
   var borrar_mesura = "{{ path('delete_mesura') }}" ;
   // cambiem el valor d'aquesta variable per a un comportament diferent
   var finalitzar_resultat = "{{ path('finalitzar_resultat_tests_oberts')}}" ;
+
 </script>
   
 
 {% endblock content_submenu %}
   
 
- 
-
 
 {% block pageContent %}
  
- 
-{# calendari 
-  ========================================= #}
-
-<div id="calendari">
-
-  {% for key,month in months %}
-
-    <div class="month">
-       <div class="month-title">
-          <span>{{key}}</span>
-       </div>
-       <div class="month-days">
-         {% if key == 'juliol' %}
-           <div class='month-day'></div>
-           <div class='month-day'></div>
-         {% endif %}
-         {% if key == 'agost' %}
-           <div class='month-day'></div>
-           <div class='month-day'></div>
-           <div class='month-day'></div>
-           <div class='month-day'></div>
-           <div class='month-day'></div>
-         {% endif %}
-         {% for day,value in month %}
-           <div class="month-day">
-              <span 
-              class='{{ value == false?'no_tests':'gotests veure' }} unclicked clickedException'
-              data-timeo='{{value}}'>
-              {{day}}
-              </span>
-           </div>
-         {% endfor %}
-       </div> {# month days #}
-    </div>
-    
-    
-  {% endfor %}
-
-</div>{# calendari #}
 
 {# FAMILIES DE MÀQUINES 
 =============================================#}
 
-<div class="maquina_list_tests">
-        <h2> families de màquines </h2>
-        <div class="actions-contenedor" id='families_maquines'>
+<div id='families_maquines' class="maquina_list_tests calendari_options">
+
 {% set ultim = '' %}
   {% for familia in families %}
     {% if ultim != familia.tipus %}
 
-            <div class="action-button blue unclicked"
+    <div class="action-button blue unclicked"
         data-tipus='{{familia.tipus}}'>
 
-              <span class='fa fa-share-square-o'>{{familia.tipus}}</span>
+      <span class='fa fa-share-square-o'>{{familia.tipus}}</span>
       
-             {% set ultim = familia.tipus %}
+      {% set ultim = familia.tipus %}
 
-            </div>
+    </div>
 
-    {% endif %}
-  {% endfor %}
+  {% endif %}
+{% endfor %}
     
     <div class="action-button blue unclicked"
         data-tipus='all'>
@@ -92,16 +49,27 @@
 
             </div>
 
-      </div> {# actions contenedor #}
+      {# </div>  actions contenedor #}
+  </div> {# maquina list tests #}
 
- 
+<div id="calendari_container">
 
-    </div> {# maquina list tests #}
+{# calendari 
+  ========================================= #}
+{{ render(controller('AppBundle:Utils:calendar')) }}
 
- <div id="tests_contenedor">
+
+</div>
+  
+<div id="calendari_tests_container">
+
+  <div id="tests_contenedor">
    
- </div>     
-    
+  </div>   
+
+</div> {# calendari_tests_container #}    
+
+</div> {# calendari_container #}
 
 {% endblock pageContent %}
 

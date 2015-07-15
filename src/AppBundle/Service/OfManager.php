@@ -30,7 +30,7 @@ class OfManager
 *
 *
 */
-  public function newOf(OF $OF){
+  public function newOf(Of $OF){
     // la data de creació de la OF
     $OF->setData(new \DateTime('today') );   
     // creem un nou test
@@ -96,13 +96,38 @@ class OfManager
 
 /**
 
- resuperar las OF ya finalizadas
+ recupera les maquines d'un tipus i les ordena per linies
 
-*
-*
 */
-  public function getDoneOf()
-  {
+  public function get_maquines($tipus){
+    // la llista de màquines ordenades per linies
+    $list_of_maquines = array();
+    //recuperem les families del tipus demandat
+    $families = $this->entityManager->getRepository('Familia')->findBy(array(
+      'tipus' => $tipus ));
+    foreach($families as $familia){
+      // les maquines de la familia
+      $maquines = $familia->getMaquines();
+      foreach($maquines as $maquina){
+        // la linia
+        $linia = $maquina->getLinia();
+        // el númer de la linia
+        $numero = $linia->getNumero();
+
+        $list_of_maquines[$numero] = array(
+          'id'=>$maquina->getId(),
+          'numero'=>$maquina->getNumero(),
+          );
+      }
+    }
+    return $list_of_maquines;
+  }
+/**
+
+ recuperar las OF ya finalizadas
+
+*/
+  public function getDoneOf(){
     $OF_list = $this->entityManager->getRepository('AppBundle:Of')
       ->findBy(array(
         'done' => true,
@@ -113,26 +138,6 @@ class OfManager
       return $OF_list;
   }
 
-
-/**
-
-  Recuperar todos los 'resultats' de una maquina en una OF
-
-*
-*
-*/
-  public function getAllResultats($test_id,$maquina_id)
-  {
-
-    $resultats = $this->entityManager->getRepository('AppBundle:Resultat')
-      ->findBy(array(
-        'maquina' => $maquina_id,
-        'test' => $test_id,
-    ));
-
-    return $resultats;
-
-  }
 
 /**
 
@@ -189,89 +194,4 @@ class OfManager
     return $resultat;
   }
 
-/**
-  
-  crear una nova mesura en un 'resultat' donada una mesura de 'pes'
-
-*
-* introduïm una nova mesura de pes en el nostre resultat
-*
-*/
-  public function newMesura($resultat,$pes)
-  {
-    $densitat = '';
-    $em = $this->entityManager;
-  	$Densitat_repo = $em->getRepository('AppBundle:Densitat');
-    $Mesures_repo = $em->getRepository('AppBundle:Mesura');
-    
-    // les màquines continues es calculen diferent de la resta
-    // ----------------------------------------------------------
-    $maquina = $resultat->getMaquina();
-    $familia = $maquina->getFamilia();
-    $tipus = $familia->getTipus();
-
-  	$longitud = $resultat->getLongitud();
-
-    if($tipus == 'Continuas'){
-      $densitat = $longitud/$pes->getValor();
-    }
-    else{
-      $densitat = $pes->getValor()/$longitud;
-    }
-    
-    // =========================================================
-
-    // creem la nova mesura a guardar
-    $Mesures_list = $Mesures_repo->findBy(array(
-      'resultat' => $resultat->getId(),
-    ));
-          
-    $num = count($Mesures_list) + 1;
-    // creem una nova mesura
-    $Mesura = new Mesura($num);
-    // li associem el resultat amb el que estem treballant
-    $Mesura->setResultat($resultat);
-    // calculem la mesura de densitat
-
-    $Densitat = new Densitat();
-    // generem la mesura de densitat
-    $Densitat->setValor($densitat);
-    // associem les dues mesures (pes i densitat) al objecte 'Mesura'
-    $Mesura->setDensitat($Densitat);
-    $Mesura->setPes($pes);
-
-    // ho guardem tot a la base de dades
-    $em->persist($Mesura);
-    $em->persist($Densitat);
-    $em->persist($pes);
-
-    $em->flush();
-
-    return $Mesura;
-  }
-
-
-/**
-
-  guardar un resultat a la base de dades un cop finalitzat
-
-*
-*
-*/
-  public function saveResultat($resultat)
-  {
-  	// càlcul dels resultats finals del test
-     $resultat
-       ->setMitjana()
-       ->setDescentratge()
-       ->setDev();
-
-     // comprovem l'èxit del test
-     $resultat->evaluate();
-     // generem el report
-     // ( ... )
-
-     $this->entityManager->persist($resultat);
-     $this->entityManager->flush();
-  }
 }

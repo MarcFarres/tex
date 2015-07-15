@@ -1,10 +1,9 @@
 
-  <div id="datas_list_contenedor" class="maquina_list_tests">
-        <h2> Resultats </h2>
-
-       <table id="tests_table" class="stripe data_tests_table" cellspacing="0" width="100%">
+  
+  <table id="tests_table" class="stripe data_tests_table" cellspacing="0" width="100%">
       <thead>
         <tr id='special_tr'>
+          <th> Id </th>
           <th> Data </th>
           <th> Hora </th>
           <th> OF </th>
@@ -26,7 +25,6 @@
 
   {% for resultat in tests_list %}
   
-     
   {% set test = resultat.getTest() %}
   {% set maquina = resultat.getMaquina() %}
   {% set OF = test.Of %} 
@@ -34,13 +32,14 @@
   {% if OF %}
 
   <tr id='special_tr_body' class='unclicked clickedException'>
+    <td>{{ resultat.id }}</td>
     <td>{{ resultat.data | date('d:m:Y') }}</td>
     <td>{{ resultat.data | date('H:i:s')  }}</td>
-    <td><a href="{{ path('iniciar_test',{'OF':OF.id}) }}">{{ OF.numero }}</a> </td>
+    <td>{{ OF.numero }}</td>
 
     <td>{{OF.getNumPartida()}}</td>
     <td>{{ OF.color }}</td>
-    <td>{{  maquina.familia.nom  }}</td>
+    <td>{{ maquina.familia.nom  }}</td>
     <td>{{maquina.numero}}</td>
 
     <td>{{ resultat.mitjanaesp }}</td>
@@ -58,7 +57,7 @@
     </tbody>
   </table>
       
-    </div>
+  
 
 
    

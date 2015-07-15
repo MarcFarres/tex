@@ -13,22 +13,40 @@ use Symfony\Component\HttpFoundation\Request;
 class BaseController extends Controller
 {
 
+  protected $repositoris;
+  protected $em;
+
 /**
-  Visió global de les màquines
+ Constructor 
 */
-    public function CreatorFormAction()
-    {
-      
-    	$linia_repo = $this->getDoctrine()->getRepository('AppBundle:Linia');
-        
-        $linias = $linia_repo->findAll();
+    public function controllerIni(){ 
 
-        return $this->render(
-          'AppBundle:content:index.html.twig',
-          array(
-            'linias' => $linias
-          )
-        );
-    }
+    $doctrine = $this->getDoctrine();
+    $this->repositoris = array();
+    $this->page_vars = array();
+    $this->em = $doctrine->getManager();
 
+    // Obtenim els repositoris de les entities que utilitzarem:
+
+    $this->repositoris['OF'] = $doctrine
+        ->getRepository('AppBundle:Of');
+
+    $this->repositoris['Test'] = $doctrine
+      ->getRepository('AppBundle:Test');
+
+    $this->repositoris['Resultat'] = $doctrine
+      ->getRepository('AppBundle:Resultat');
+
+    $this->repositoris['Mesura'] = $doctrine
+      ->getRepository('AppBundle:Mesura');
+
+    $this->repositoris['Maquina'] = $doctrine
+      ->getRepository('AppBundle:Maquina');
+
+    $this->repositoris['Pes'] = $doctrine
+      ->getRepository('AppBundle:Pes');
+
+    $this->repositoris['Familia'] = $doctrine
+      ->getRepository('AppBundle:Familia');
+  }
 }

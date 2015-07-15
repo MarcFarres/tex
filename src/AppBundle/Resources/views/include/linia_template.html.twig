@@ -36,7 +36,7 @@
 {# renderizamos cada màquina con el código de color adecuado #}
   {{ render(controller(
     'AppBundle:Test:getTestMaquina',
-    { 'maquina_id': maquina.id ,'OfId' : OF.id }
+    { 'maquina': maquina.id ,'OF' : OF.id }
     )) 
   }}
             

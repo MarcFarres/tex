@@ -12,14 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Maquina
 {
 	/**
-	*
 	* @ORM\Column(type="integer")
     * @ORM\Id
 	* @ORM\GeneratedValue(strategy="AUTO")
 	*/ protected $id;
 
     /**
-	*
 	*@ORM\Column(type="integer")
 	**/ protected $numero;
 
@@ -46,7 +44,11 @@ class Maquina
     * @ORM\JoinColumn(name="linia_id",referencedColumnName="id")
     **/ protected $linia;
 
-    
+
+    /**
+    *@ORM\Column(type="integer", options={"default" = 1})
+    **/ protected $lastOf;
+
     /**
      * Constructor
      */
@@ -188,5 +190,28 @@ class Maquina
     public function getLinia()
     {
         return $this->linia;
+    }
+
+    /**
+     * Set lastOf
+     *
+     * @param integer $lastOf
+     * @return Maquina
+     */
+    public function setLastOf($lastOf)
+    {
+        $this->lastOf = $lastOf;
+
+        return $this;
+    }
+
+    /**
+     * Get lastOf
+     *
+     * @return integer 
+     */
+    public function getLastOf()
+    {
+        return $this->lastOf;
     }
 }
