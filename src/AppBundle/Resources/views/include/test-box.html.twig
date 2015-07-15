@@ -3,7 +3,10 @@
 
   <div class='test-box {{ testOk }}'>
 
-  	<div class="test-box_info-row time {{ testOk }}">
+  	<div class="test-box_info-row time {{ testOk }}"
+      data-resultat='{{ test.id }}'
+      data-maquina='{{ maquina.id }}'
+      data-of='{{ of.id }}'>
   		<span class='data'>{{ test.data | date('d-m-Y') }}</span>
   		<span class='hora'>{{ test.data | date('H:i:s') }}</span>
   	</div>

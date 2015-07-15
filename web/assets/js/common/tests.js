@@ -316,6 +316,7 @@ $('#main_parent').on('click','#realitzar_mesura', function(){
   llegir_mesura();
 });
 
+
 function llegir_mesura(){
 
   $.ajax({
@@ -372,3 +373,29 @@ $.ajax({
     });
   }, 200);
 }
+
+ 
+
+$('#main_parent').on('dblclick',".test-box_info-row",function(){
+ 
+  var parametros = {
+      "resultat_id" : $(this).attr('data-resultat'),
+      "maquina_id" : $(this).attr('data-maquina'),
+      "id" : $(this).attr('data-of')
+    };
+
+    var row = $(this).parent();
+
+
+    $.ajax({
+      data:  parametros,
+      url:   borrar_resultat,
+      type:  'post',
+      beforeSend: function () {
+      } , 
+      success:  function (response) {
+        row.remove();
+   },
+  });
+
+});

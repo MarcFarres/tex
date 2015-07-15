@@ -237,18 +237,8 @@ class TestController extends BaseController
     $resultat = $this->repositoris['Resultat']->findOneById($resultat_id);
     // les mesures del resultat
     $this->get('test.manager')->delete($resultat);
-    // recuperamos los objetos
-    $maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
-    $OF = $this->repositoris['OF']->findOneById($OF_id);
-    $test = $OF->getTest();
-    // recuperem tots els resultats de la màquina dins el test actual
-    $resultats = $this->get('test.manager')->getAllResultats($OF,$maquina_id);
 
-    return $this->render(
-      'AppBundle:ajax:resultats_list.html.twig',array(
-        'OF' => $OF,
-        'maquina' => $maquina,
-        'resultats' => $resultats,));
+    return new Response('resultat borrat',200);
   }
 /**
  
