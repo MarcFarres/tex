@@ -88,6 +88,10 @@ tests_of_type:
 nou_test:
     path: /ajax/nou_test
     defaults: { _controller: AppBundle:Test:nouTest }
+# editar un test ja realitzat
+edit_test:
+    path: /ajax/edit_test
+    defaults: { _controller: AppBundle:Test:editTest }
 # tests d'una màquina per a un dia concret
 maquina_tests:
     path: /ajax/maquina_tests

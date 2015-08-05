@@ -313,7 +313,7 @@ public function llegirMesuraAction(Request $request)
 
     $respuesta = '';
       $this->process = new Process('python satel.py');
-      $this->process->setTimeout(60);
+      $this->process->setTimeout(50000);
       $this->process->run();
     
     while ($this->process->isRunning()) {
@@ -322,7 +322,7 @@ public function llegirMesuraAction(Request $request)
     // en caso de error ...
     if (!$this->process->isSuccessful()) {
       //$respuesta = $process->getErrorOutput();
-      $respuesta = 'finish_process';
+      $respuesta = 0;
       $this->process->stop();
       return new Response($respuesta,200);
     }
@@ -648,12 +648,12 @@ public function llegirMesuraAction(Request $request)
     ));
   }
 
-  /**
+/**
  
   ^nou_test
    generem un nou test per a una màquina
   -> nou_test  (/ajax/nou_test)
-  <- 'ajax:tests-of-type_list.html.twig'
+  <- 'ajax:test.html.twig'
 
 */
   public function nouTestAction(Request $request){
@@ -680,6 +680,47 @@ public function llegirMesuraAction(Request $request)
     'of_list'=>$OF_list,
     ));
   }
+
+  /**
+ 
+  ^edit_test
+   reobrim un test per a editar-lo o continuar-lo
+  -> edit_test  (/ajax/edit_test)
+  <- 'ajax:test.html.twig'
+
+*/
+  public function editTestAction(Request $request){
+  $this->controllerIni();
+  $maquina_id = $request->request->get('maquina_id');
+  $test_id = $request->request->get('test_id');
+
+  $maquina = $this->repositoris['Maquina']->findOneById($maquina_id);
+  $test = $this->repositoris['Resultat']->findOneById($test_id);
+  // el reactivem
+  $test->setDone(false);
+  $this->em->persist($test);
+  $this->em->flush();
+  // capturem les mesures
+  $mesures = $test->getMesures();
+  
+   $Pes = new Pes(); 
+  $mesuraForm = $this->createForm(new NewMesuraType(), $Pes); 
+  
+  $OF_list = $this->repositoris['OF']->findAll();
+
+  $maquina = $test->getMaquina();
+  $last_of = $maquina->getLastOf();
+
+  return $this->render('AppBundle:ajax:test.html.twig',array(
+    'test'=>$test,
+    'mesures'=>$mesures,
+    'mesuraForm' => $mesuraForm->createView(),
+    'last_of'=>$last_of,
+    'of_list'=>$OF_list,
+    ));
+  }
+
+
  /**
  
   ^end_test

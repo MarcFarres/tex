@@ -1,4 +1,3 @@
-
 (function(){
 
 // el contenedor mas general considerado
@@ -157,29 +156,7 @@ $('#resultats_list_contenedor').on('click','#new_result', function(){
 });
 
 
-// obtenim un nou test per a una maquina 
-// sense OF assignada
 
-$('#main_parent').on('click','#nou_test', function(){
-
-  var maquina_id = $(this).attr('data-maquina');
-  var parametros = {
-    "maquina_id" : maquina_id,
-  };
-
-  $.ajax({
-    data:  parametros,
-    url:   nou_test,
-    type:  'post',
-    beforeSend: function (){
-
-    } , 
-    success:  function (response) {
-      $('#TO_tests-container').html(response);
-    },
-  });
-
-});
 
 
 // carregar els tests d'una màquina
@@ -195,7 +172,7 @@ $('.results_list').on('click', function(){
     $(this).parent().parent().addClass('maquina_actual');
 
 
-    $.ajax({
+    $.ajax({ 
       data:  parametros,
       url:   maquina_route,
       type:  'post',

@@ -31,8 +31,11 @@ class Stadistics extends CommonMaths
       $count++;
     
     }// end foreach
-
-    $result = $sum/$count ;
+    if($count!=0){
+      $result = $sum/$count ;
+    }else{
+      $result = 0 ;
+    }
 
     return $result;
 
@@ -65,7 +68,12 @@ class Stadistics extends CommonMaths
   	}// end foreach
     
     // apliquem la fórmula de la desviació standard
-    $result = $sum/($count - 1) ;
+    if($count!=0 && $count!=1){
+      $result = $sum/($count - 1) ;
+    }else{
+      $result = 0;
+    }
+    
     $result = sqrt($result);
 
     return $result;
@@ -80,7 +88,12 @@ class Stadistics extends CommonMaths
   ------------------------------------------------*/
   public function descRel($value,$reference)
   {
-     $result = ($value - $reference)/$reference ;
+    $result = 0;
+    if($reference!=0)
+    {
+      $result = ($value - $reference)/$reference ;
+    }
+     
 
      return $result;
   }
@@ -93,8 +106,11 @@ class Stadistics extends CommonMaths
   ------------------------------------------------*/
   public function inverseDescRel($value,$reference)
   {
-     $result = ($value - $reference)/$reference ;
-
+    $result = 0;
+    if($reference!=0)
+    {
+       $result = ($value - $reference)/$reference ;
+    }
      return $result;
   }
 

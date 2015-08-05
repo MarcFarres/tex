@@ -11,6 +11,11 @@ ser.parity = serial.PARITY_ODD
 ser.stopbits = serial.STOPBITS_TWO
 ser.xonxoff=1
 
+byte=27
+ser.write(chr(byte))
+ser.write('P')
+
+
 respuesta = ser.readline()
 
 respuesta = respuesta.replace("+","")

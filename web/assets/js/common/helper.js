@@ -5,6 +5,7 @@
 var main_parent = $('#main_parent');
 var tipus_selected = 0;
 var timeo_selected = 0;
+var mesura_num = 0;
 
 /* ------------------------------[ helper functions: ]  */
 // ================================================================

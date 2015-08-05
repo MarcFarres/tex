@@ -235,12 +235,7 @@ class Resultat
 
         $resultat = $math->stdDev($values);
         // apliquem la fórmula del client
-          $mitjana = $this->mitjana;
-          if($mitjana!=0){
-            $resultat = $resultat/($mitjana) ;
-          }else{
-            $resultat = 0 ;
-          }
+          $resultat = $resultat/($this->mitjana) ;
           $resultat = $resultat * 100;
         // comprovacions ...
 

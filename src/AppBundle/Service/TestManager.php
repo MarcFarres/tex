@@ -11,7 +11,6 @@ use AppBundle\Entity\Pes;
 use AppBundle\Entity\Densitat;
 use AppBundle\Entity\Mesura;
 use AppBundle\Entity\Test;
-use AppBundle\Entity\TimeO;
 
 class TestManager
 {
@@ -145,7 +144,7 @@ class TestManager
     $pes = new Pes();
     $pes->setValor($valor);
     $pes->setUnitat('gr');
-    $densitat = '';
+    $densitat = 0;
     $em = $this->entityManager;
   	$Densitat_repo = $em->getRepository('AppBundle:Densitat');
     $Mesures_repo = $em->getRepository('AppBundle:Mesura');
@@ -157,10 +156,15 @@ class TestManager
   	$longitud = $resultat->getLongitud();
 
     if($tipus == 'Continuas'){
-      $densitat = $longitud/$pes->getValor();
+      $pes_temp = $pes->getValor();
+      if($pes_temp!=0){
+        $res=$longitud/$pes_temp;
+        $densitat = round($res,3);
+      }
     }
     else{
-      $densitat = $pes->getValor()/$longitud;
+      $res = $pes->getValor()/$longitud;
+      $densitat = round($res,3);
     }
     // =========================================================
 
